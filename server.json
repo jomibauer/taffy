@@ -1,0 +1,14 @@
+{
+    "app":{
+        "cfengine":"adobe@2018"
+    },
+    "web":{
+        "host":"coldboxbase.loc",
+        "rewrites":{
+            "enable":true
+        },
+        "http":{
+            "port":8079
+        }
+    }
+}
