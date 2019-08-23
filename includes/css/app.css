@@ -1,0 +1,58 @@
+* {
+    border-radius: 0 !important;
+}
+
+ul#groupUL {
+    list-style-type: none;
+    margin-top:10px;
+    margin-left:0px;
+    padding-left:0px;
+}
+
+ul#groupUL li {
+    border:1px solid #ccc;
+    margin-left:5px;
+    margin-top: -1px;
+    padding:5px 10px;
+
+    background-color:white;
+    font-weight:bold;
+
+}
+
+ul#groupUL li i {
+    display:none;
+}
+
+ul#groupUL li.userGroupItem:hover {
+    background-color:#da4f49;
+    color:white;
+}
+
+ul#groupUL li.userGroupItem:hover i {
+    display:inline-block;
+}
+
+label.control-label {
+    font-weight:normal;
+}
+
+label.label-required {
+    font-weight:bold;
+}
+
+.table-detail tr th {
+    text-align: right;
+}
+
+.formTable .form-group {
+    margin-bottom: 0;
+}
+
+.form-control {
+    height: auto;
+}
+
+.ui-spinner-button {
+    display: inline-block;
+}

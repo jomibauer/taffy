@@ -5,17 +5,10 @@
 */
 component{
 	// Application properties
-	this.name = hash( getCurrentTemplatePath() );
+	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "v=2";
 	this.sessionManagement = true;
 	this.sessionTimeout = createTimeSpan(0,0,30,0);
 	this.setClientCookies = true;
-
-	// Java Integration
-	this.javaSettings = { 
-		loadPaths = [ ".\lib" ], 
-		loadColdFusionClassPath = true, 
-		reloadOnChange= false 
-	};
 
 	// COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP
 	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
@@ -30,6 +23,9 @@ component{
 	public boolean function onApplicationStart(){
 		application.cbBootstrap = new coldbox.system.Bootstrap( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );
 		application.cbBootstrap.loadColdbox();
+		this.name = application.cbcontroller.getSetting("appName");
+		this.datasource = application.cbcontroller.getSetting("datasource");
+
 		return true;
 	}
 

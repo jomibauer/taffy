@@ -6,8 +6,9 @@
 		// coldbox directives
 		coldbox = {
 			//Application Setup
-			appName 				= getSystemSetting( "APPNAME", "Your app name here" ),
+			appName 				= getSystemSetting( "APPNAME", "ColdboxBase" ),
 			eventName 				= "event",
+			datasource 				= "fw1base",
 
 			//Development Settings
 			reinitPassword			= "",
@@ -15,9 +16,9 @@
 
 			//Implicit Events
 			defaultEvent			= "",
-			requestStartHandler		= "Main.onRequestStart",
+			requestStartHandler		= "main.onRequestStart",
 			requestEndHandler		= "",
-			applicationStartHandler = "Main.onAppInit",
+			applicationStartHandler = "main.onAppInit",
 			applicationEndHandler	= "",
 			sessionStartHandler 	= "",
 			sessionEndHandler		= "",
@@ -37,7 +38,7 @@
 			invalidHTTPMethodHandler 	= "",
 			exceptionHandler			= "main.onException",
 			invalidEventHandler			= "",
-			customErrorTemplate			= "",
+			customErrorTemplate			= "/coldbox/system/includes/BugReport.cfm",
 
 			//Application Aspects
 			handlerCaching 			= false,
@@ -56,7 +57,7 @@
 		// create a function with the name of the environment so it can be executed if that environment is detected
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
 		environments = {
-			development = "localhost,^127\.0\.0\.1"
+			local = "coldboxbase.loc*"
 		};
 
 		// Module Directives
@@ -67,21 +68,9 @@
 			exclude = []
 		};
 
-		//LogBox DSL
-		logBox = {
-			// Define Appenders
-			appenders = {
-				coldboxTracer = { class="coldbox.system.logging.appenders.ConsoleAppender" }
-			},
-			// Root Logger
-			root = { levelmax="INFO", appenders="*" },
-			// Implicit Level Categories
-			info = [ "coldbox.system" ]
-		};
-
 		//Layout Settings
 		layoutSettings = {
-			defaultLayout = "",
+			defaultLayout = "default",
 			defaultView   = ""
 		};
 
@@ -133,11 +122,9 @@
 
 	}
 
-	/**
-	* Development environment
-	*/
-	function development(){
-		coldbox.customErrorTemplate = "/coldbox/system/includes/BugReport.cfm";
+	// environment functions
+	function local() {
+		//coldbox.customErrorTemplate = "/coldbox/system/includes/BugReport.cfm";
 	}
 
 }
