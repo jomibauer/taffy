@@ -6,60 +6,64 @@
 		// coldbox directives
 		coldbox = {
 			//Application Setup
-			appName 				= getSystemSetting( "APPNAME", "ColdboxBase" ),
-			eventName 				= "event",
-			datasource 				= "fw1base",
+			appName 				= getSystemSetting( "APPNAME", "ColdboxBase" )
+			, eventName 				= "event"
+			, datasource 				= "fw1base"
 
 			//Development Settings
-			reinitPassword			= "",
-			handlersIndexAutoReload = true,
+			, reinitPassword			= ""
+			, handlersIndexAutoReload = true
 
 			//Implicit Events
-			defaultEvent			= "",
-			requestStartHandler		= "main.onRequestStart",
-			requestEndHandler		= "",
-			applicationStartHandler = "main.onAppInit",
-			applicationEndHandler	= "",
-			sessionStartHandler 	= "",
-			sessionEndHandler		= "",
-			missingTemplateHandler	= "",
+			, defaultEvent			= ""
+			, requestStartHandler		= "main.onRequestStart"
+			, requestEndHandler		= ""
+			, applicationStartHandler = "main.onAppInit"
+			, applicationEndHandler	= ""
+			, sessionStartHandler 	= ""
+			, sessionEndHandler		= ""
+			, missingTemplateHandler	= ""
 
 			//Extension Points
-			applicationHelper 			= "includes/helpers/ApplicationHelper.cfm",
-			viewsHelper					= "",
-			modulesExternalLocation		= [],
-			viewsExternalLocation		= "",
-			layoutsExternalLocation 	= "",
-			handlersExternalLocation  	= "",
-			requestContextDecorator 	= "",
-			controllerDecorator			= "",
+			, applicationHelper 			= "includes/helpers/ApplicationHelper.cfm"
+			, viewsHelper					= ""
+			, modulesExternalLocation		= []
+			, viewsExternalLocation		= ""
+			, layoutsExternalLocation 	= ""
+			, handlersExternalLocation  	= ""
+			, requestContextDecorator 	= ""
+			, controllerDecorator			= ""
 
 			//Error/Exception Handling
-			invalidHTTPMethodHandler 	= "",
-			exceptionHandler			= "main.onException",
-			invalidEventHandler			= "",
-			customErrorTemplate			= "/coldbox/system/includes/BugReport.cfm",
+			, invalidHTTPMethodHandler 	= ""
+			, exceptionHandler			= "main.onException"
+			, invalidEventHandler			= ""
+			, customErrorTemplate			= "/coldbox/system/includes/BugReport.cfm"
 
 			//Application Aspects
-			handlerCaching 			= false,
-			eventCaching			= false,
-			viewCaching				= false,
+			, handlerCaching 			= false
+			, eventCaching			= false
+			, viewCaching				= false
 			// Will automatically do a mapDirectory() on your `models` for you.
-			autoMapModels			= true
+			, autoMapModels			= true
 		};
 
-		// custom settings
 		settings = {
+			never = createDateTime(1970,1,1,0,0,0)
+			, dateFormatMask = "yyyy-mm-dd"
+			, timeFormatMask = "h:mm tt"
+			, forgotPasswordEmailFrom = "donotreply@fw1base.com"
+			, passwordRotation = 0 //you cannot use any of your last 5 passwords
+			, loginInstructionsEmailFrom = "donotreply@fw1base.com"
+			, loginURL = "http://fw1base.local"
+			, security_nonSecuredHandlers = ""
+			, security_nonSecuredItems = "main.test,main.viewForgotPassword,main.processForgotPassword,main.robots" //the loginFormItem, loginSubmitItem and logoutSubmitItem will be automatically added to this list
+			, security_loginFormItem = "main.viewLogin"
+			, security_loginSubmitItem = "main.processLogin"
+			, security_logoutSubmitItem = "main.processLogout"
+			, security_resetPasswordFormItem = "main.viewChangePassword"
 
 		};
-
-		// environment settings, create a detectEnvironment() method to detect it yourself.
-		// create a function with the name of the environment so it can be executed if that environment is detected
-		// the value of the environment is a list of regex patterns to match the cgi.http_host.
-		environments = {
-			local = "coldboxbase.loc*"
-		};
-
 		// Module Directives
 		modules = {
 			// An array of modules names to load, empty means all of them
@@ -81,6 +85,7 @@
 
 		//Register interceptors as an array, we need order
 		interceptors = [
+			{class="interceptors.SecurityInterceptor"}
 		];
 
 		/*
@@ -109,16 +114,26 @@
 			  folders = "tags,pdf/single"
 			}
 		];
+		*/
 
 		//Conventions
 		conventions = {
 			handlersLocation = "handlers",
 			viewsLocation 	 = "views",
 			layoutsLocation  = "layouts",
-			modelsLocation 	 = "models",
+			modelsLocation 	 = "domains",
 			eventAction 	 = "index"
 		};
-		*/
+
+
+
+		// environment settings, create a detectEnvironment() method to detect it yourself.
+		// create a function with the name of the environment so it can be executed if that environment is detected
+		// the value of the environment is a list of regex patterns to match the cgi.http_host.
+		environments = {
+			local = "coldboxbase.loc*"
+		};
+
 
 	}
 

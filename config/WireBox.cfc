@@ -26,7 +26,7 @@
 			},
 			
 			// Package scan locations
-			scanLocations = [],
+			scanLocations = ["services", "gateways", "domains"],
 			
 			// Stop Recursions
 			stopRecursions = [],
@@ -39,8 +39,5 @@
 				// { class="", name="", properties={} }
 			]			
 		};
-		
-		// Map Bindings below
-	}	
-
+	}
 }

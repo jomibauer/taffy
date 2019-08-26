@@ -5,7 +5,7 @@
 */
 component{
 	// Application properties
-	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "v=2";
+	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "#now()#v=5"; // TODO: remove now when I'm done reloading all the time
 	this.sessionManagement = true;
 	this.sessionTimeout = createTimeSpan(0,0,30,0);
 	this.setClientCookies = true;
@@ -25,7 +25,6 @@ component{
 		application.cbBootstrap.loadColdbox();
 		this.name = application.cbcontroller.getSetting("appName");
 		this.datasource = application.cbcontroller.getSetting("datasource");
-
 		return true;
 	}
 
