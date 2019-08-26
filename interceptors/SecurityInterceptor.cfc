@@ -99,19 +99,21 @@ component extends="coldbox.system.Interceptor" cache="false" {
 
 		local.isSecuredEvent = false;
 
-		if (!listFindNoCase(variables.config.nonSecuredHandlers,event.getCurrentHandler()) && !listFindNoCase(variables.config.nonSecuredEvents,event.getCurrentEvent())) {
+		if (!listFindNoCase(variables.config.nonSecuredHandlers,event.getCurrentHandler())
+			&& !listFindNoCase(variables.config.nonSecuredEvents,event.getCurrentEvent())
+			&& !listFindNoCase(variables.config.loginFormEvent,event.getCurrentEvent())
+		) {
 			local.isSecuredEvent = true;
 		}
 
 		/* logout */
 		if (event.getCurrentEvent() == variables.config.logoutSubmitEvent) {
+			session.user = new domains.User();
 			session.user.setIsLoggedIn(false);
-			//structDelete(session,"user",false);
 		}
 
 		/* trying to login */
 		if (event.getCurrentEvent() == variables.config.loginSubmitEvent) {
-
 			if (len(trim(local.username)) && len(trim(local.password))) {
 				local.user = userService.authenticateUser(local.username,local.password,cgi.remote_addr);
 
@@ -122,7 +124,7 @@ component extends="coldbox.system.Interceptor" cache="false" {
 
 					if (len(trim(variables.config.resetPasswordFormEvent)) && local.user.getBtIsPasswordExpired()) {
 						session.messenger.addAlert(messageType="INFO",message="You must change your password",messageDetail="");
-						setNextEvent(event=variables.config.resetPasswordFormEvent);
+						relocate(event=variables.config.resetPasswordFormEvent);
 					}
 				} else {
 					/* failed authentication */
@@ -131,15 +133,14 @@ component extends="coldbox.system.Interceptor" cache="false" {
 					rc.loginError = true;
 					session.messenger.addAlert(messageType="ERROR",message="Invalid Username and/or Password",messageDetail="",field="username");
 
-					setNextEvent(event=variables.config.loginFormEvent,queryString="authenticationError",persist="requestedPage,loginError");
-					abort;
+					relocate(event=variables.config.loginFormEvent,queryString="authenticationError",persist="requestedPage,loginError");
 				}
 			}
 		}
 
 		if (local.isSecuredEvent && !session.user.isLoggedIn()) {
 			saveAttemptedURL(arguments.event);
-			setNextEvent(event=variables.config.loginFormEvent,queryString="securedNotLoggedIn");
+			relocate(event=variables.config.loginFormEvent);
 		}
 
 	}

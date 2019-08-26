@@ -71,7 +71,7 @@ component accessors="true" extends="baseService" singleton=true {
 		var qLoad = groupGateway.load(groupID);
 
 		if (qLoad.recordCount) {
-			populate(group, queryRowData(qLoad, 1));
+			populate(group, queryGetRow(qLoad, 1));
 		}
 
 		return group;

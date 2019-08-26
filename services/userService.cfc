@@ -92,7 +92,7 @@ component accessors=true extends="baseService" singleton=true {
 		var qLoad = userGateway.load(userID);
 
 		if (qLoad.recordCount) {
-			populate(user, queryRowData(qLoad, 1));
+			populate(user, queryGetRow(qLoad, 1));
 			var qGroups = userGateway.getGroupsForUser(userID);
 			qGroups.each(function(row){
 				user.addUserGroup(groupService.load(row.intGroupID));
