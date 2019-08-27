@@ -121,7 +121,7 @@
 			handlersLocation = "handlers",
 			viewsLocation 	 = "views",
 			layoutsLocation  = "layouts",
-			modelsLocation 	 = "domains",
+			modelsLocation 	 = "model.domains",
 			eventAction 	 = "index"
 		};
 

@@ -1,4 +1,4 @@
-<cfcomponent name="groupGateway" extends="gateways.baseGateway" output="false" singleton="true">
+<cfcomponent name="groupGateway" extends="baseGateway" output="false" singleton="true">
 
 	<cffunction name="create" access="public" returntype="numeric" output="false">
 		<cfargument name="group" type="any" required="true" />

@@ -26,7 +26,7 @@
 			},
 			
 			// Package scan locations
-			scanLocations = ["services", "gateways", "domains"],
+			scanLocations = ["model.domains","model.gateways","model.services"],
 			
 			// Stop Recursions
 			stopRecursions = [],

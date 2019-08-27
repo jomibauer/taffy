@@ -4,7 +4,7 @@
 		<base href="<cfoutput>#iif( CGI.HTTPS eq "on", de("https"), de("http") ) & "://" & CGI.HTTP_HOST & getDirectoryFromPath( CGI.SCRIPT_NAME )#</cfoutput>" />
 
 		<title><cfoutput>#getSetting("appName")#</cfoutput></title>
-<!--- 		<link rel="shortcut icon" href="includes/img/favicon.ico" /> --->
+		<!---<link rel="shortcut icon" href="../includes/img/favicon.ico" /> --->
 
 		<link rel="stylesheet" type="text/css" href="../includes/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="../includes/css/bootstrap-grid.min.css" />
@@ -25,11 +25,11 @@
 	</head>
 	<body>
 
-		<cfinclude template="includes/navbar.cfm" />
+		<cfinclude template="./includes/navbar.cfm" />
 		<br />
 		<div class="container">
 			<div id="primary">
-				<cfinclude template="includes/messages.cfm" />
+				<cfinclude template="./includes/messages.cfm" />
 				<cfoutput>#renderView()#</cfoutput>
 			</div>
 		</div>

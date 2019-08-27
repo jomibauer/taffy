@@ -87,9 +87,9 @@ component extends="coldbox.system.Interceptor" cache="false" {
 		local.password = event.getValue("password","");
 		local.action = event.getValue("action","");
 
-		param name="session.user" default="#new domains.User()#";
-		param name="session.messenger" default="#new domains.Messenger()#";
-		param name="session.flash" default="#new domains.FlashStorage()#";
+		param name="session.user" default="#userService.getEmptyDomain()#";
+		param name="session.messenger" default="#new model.domains.Messenger()#";
+		param name="session.flash" default="#new model.domains.FlashStorage()#";
 
 		/* make sure the messenger exists */
 		if (!structKeyExists(session,"messenger") || event.getValue("clearSession",false) || event.valueExists("fwreinit") || event.getValue("appreinit",false)) {
@@ -109,7 +109,7 @@ component extends="coldbox.system.Interceptor" cache="false" {
 
 		/* logout */
 		if (event.getCurrentEvent() == variables.config.logoutSubmitEvent) {
-			session.user = new domains.User();
+			session.user = userService.getEmptyDomain();
 			session.user.setIsLoggedIn(false);
 		}
 

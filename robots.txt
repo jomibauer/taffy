@@ -25,9 +25,6 @@ Disallow: /handlers/
 Disallow: /includes/
 Disallow: /interceptors/
 Disallow: /layouts/
-Disallow: /logs/
-Disallow: /models/
-Disallow: /modules/
-Disallow: /modules_app/
+Disallow: /model/
 Disallow: /views/
 Allow: /

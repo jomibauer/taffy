@@ -1,6 +1,6 @@
-# Advanced Script Template
+# ColdBox Base
 
-An advanced template with all the bells and whistles in script format
+This is the base template for ColdBox. It follows 
 
 ## License
 Apache License, Version 2.0.
@@ -26,8 +26,3 @@ box server start
 ```
 
 And run the application.
-
----
- 
-###THE DAILY BREAD
- > "I am the way, and the truth, and the life; no one comes to the Father, but by me (JESUS)" Jn 14:1-12

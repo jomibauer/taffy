@@ -39,7 +39,7 @@ component accessors=true extends="baseService" singleton=true {
 	}
 
 	function getEmptyDomain() {
-		return new domains.User();
+		return new model.domains.User();
 	}
 
 	public any function populate (required any user, required struct data ) {

@@ -43,7 +43,7 @@ component accessors="true" extends="baseService" singleton=true {
 	}
 
 	function getEmptyDomain () {
-		return new domains.Group();
+		return new model.domains.Group();
 	}
 
 	public any function populate (required any group, required struct data ) {

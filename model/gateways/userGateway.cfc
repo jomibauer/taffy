@@ -1,4 +1,4 @@
-<cfcomponent name="userGateway" extends="gateways.baseGateway" output="true" singleton="true">
+<cfcomponent name="userGateway" extends="baseGateway" output="true" singleton="true">
 
 	<cffunction name="create" access="public" returntype="numeric" output="false">
 		<cfargument name="user" type="any" required="true" />
