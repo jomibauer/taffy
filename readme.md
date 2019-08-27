@@ -1,28 +1,20 @@
 # ColdBox Base
 
-This is the base template for ColdBox. It follows 
+This is the base template for ColdBox. 
 
-## License
-Apache License, Version 2.0.
+After checking out the project, go to `/Application.cfc` to set your name and datasource accordingly.
 
-## Important Links
+Then navigate to the `/config/Coldbox.cfc` to edit the bulk of the project coniguration.
 
-Source Code
-- https://github.com/coldbox-templates/advanced-script
+If you have any routes, set those up in `/config/Router.cfc`
 
 ## Quick Installation
 
-Each application templates contains a `box.json` so it can leverage [CommandBox](http://www.ortussolutions.com/products/commandbox) for its dependencies.  
+Each application templates contains a `sever.json` so it can leverage [CommandBox](http://www.ortussolutions.com/products/commandbox) to run locally.  
 Just go into each template directory and type:
-
-```
-box install
-```
-
-This will setup all the needed dependencies for each application template.  You can then type:
 
 ```
 box server start
 ```
 
-And run the application.
+And run the application. You will still need to configure datasources and mail servers locally in the ColdFusion administrator. 
