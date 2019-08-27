@@ -10,11 +10,11 @@ If you have any routes, set those up in `/config/Router.cfc`
 
 ## Quick Installation
 
-Each application templates contains a `sever.json` so it can leverage [CommandBox](http://www.ortussolutions.com/products/commandbox) to run locally.  
-Just go into each template directory and type:
+This project contains a `sever.json` so it can leverage [CommandBox](http://www.ortussolutions.com/products/commandbox) to run locally.  
+Just go into the project directory and type:
 
 ```
 box server start
 ```
 
-And run the application. You will still need to configure datasources and mail servers locally in the ColdFusion administrator. 
+to run the application. You will still need to configure datasources and mail servers locally in the ColdFusion administrator. 
