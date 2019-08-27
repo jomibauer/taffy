@@ -1,58 +1,58 @@
+/* - - - - - - - - - - - - - - - - - - - - - - - - -
+	Hacks - fixes rendering bugs (DO NOT REMOVE)
+- - - - - - - - - - - - - - - - - - - - - - - - - */
+.clear:after {clear: both; content: "."; display: block; height: 0; visibility: hidden;}
+.clear {min-width: 0; display: inline-block; /* \*/display: block;}
+* html .clear, * html form ol.selection li label {/* \*/height: 1%;}
+* html form.unfamiliar .help {padding-left: 3px;}
+* html form.unfamiliar ol.selection, * html form.unfamiliar select.selection {left: 3px; position: relative;}
+* html form div.control input {overflow: visible; padding: 0 .25em; width: auto;} /* IE6 button width fix */
+* html form div fieldset legend {margin-left: -7px;}	/* for IE6 as legend is indented */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - -
+	Site Color Theme (background, border, color)
+- - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+body {
+	margin: 0;
+}
+.wrap {
+	border: green 2px solid;
+	margin: 5px;
+	padding: 5px;
+	font-family: verdana, helvetica;
+}
+.page {
+	padding: 5px;
+}
+.footer {
+	text-align: center;
+	font-size: small;
+}
 * {
-    border-radius: 0 !important;
+	border-radius: 0 !important;
 }
-
-ul#groupUL {
-    list-style-type: none;
-    margin-top:10px;
-    margin-left:0px;
-    padding-left:0px;
+div.dataTables_wrapper div.dataTables_filter input {
+	margin-left: 0;
 }
-
-ul#groupUL li {
-    border:1px solid #ccc;
-    margin-left:5px;
-    margin-top: -1px;
-    padding:5px 10px;
-
-    background-color:white;
-    font-weight:bold;
-
+.clickable {
+	cursor: pointer;
 }
-
-ul#groupUL li i {
-    display:none;
+.group-item-remove:hover {
+    background-color: #da4f49;
+    cursor: pointer;
+    color: #ffffff;
 }
-
-ul#groupUL li.userGroupItem:hover {
-    background-color:#da4f49;
-    color:white;
-}
-
-ul#groupUL li.userGroupItem:hover i {
-    display:inline-block;
-}
-
-label.control-label {
-    font-weight:normal;
-}
-
-label.label-required {
-    font-weight:bold;
-}
-
 .table-detail tr th {
     text-align: right;
 }
-
-.formTable .form-group {
-    margin-bottom: 0;
+.control-label {
+    text-align: right;
 }
-
-.form-control {
-    height: auto;
+.label-required {
+    font-weight: bold;
 }
-
-.ui-spinner-button {
-    display: inline-block;
+.help-block {
+    display: block;
+    margin-top: 5px;
 }

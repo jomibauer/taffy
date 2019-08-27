@@ -2,76 +2,70 @@
 	<cfinclude template="includes/_menu.cfm" />
 
 	<div class="row">
-		<div class="col-md-12">
-			<form class="form-inline">
-				<p>Search by user&apos;s first name, last name, email address, <strong>OR</strong> username.</p>
-				<div class="form-group">
-					<input id="inpUserSearch" name="q" value="#rc.q#" type="text" class="form-control col-md-3" placeholder="search">
+		<div class="col">
+
+			<div class="row">
+				<div class="col-6">
+					<h2>Users</h2>
 				</div>
-				<span id="search_loading" style="display:none;"><img src="assets/img/ajax-loader.gif" /></span>
-			</form>
-		</div>
-	</div>
+				<div class="col-6">
+					<a href="#event.buildLink(rc.xeh.viewUserCreate)#" class="float-right btn btn-primary">Create New User</a>
+				</div>
+			</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<h2>Users</h2>
+			<br />
 
-			<table id="usersTable" class="table table-condensed table-bordered table-striped">
-				<tr>
-					<th style="width:225px;">
-						Username
-					</th>
-					<th>
-						Email
-					</th>
-					<th style="width:250px;">
-						Name
-					</th>
-					<th style="width:50px;">
-						&nbsp;
-					</th>
-					<th style="width:50px;">
-						&nbsp;
-					</th>
-					<th style="width:150px;">
-						Password Last Set
-					</th>
-					<th style="width:150px;">
-						Last Login
-					</th>
-				</tr>
+			<table id="usersTable" class="table table-sm table-hover table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>
+							Username
+						</th>
+						<th>
+							Email
+						</th>
+						<th>
+							Name
+						</th>
+						<th>
+							Status
+						</th>
+						<th>
+							Password Last Set
+						</th>
+						<th>
+							Last Login
+						</th>
+					</tr>
+				</thead>
 				<tbody>
 					<cfloop query="rc.qUsers">
-						<tr>
+						<tr class="clickable" data-href="#event.buildLink(rc.xeh.viewUserDetail & '/' & rc.qUsers.intUserID)#">
 							<td>
-								<a href="#buildURL(rc.xeh.viewUserDetail & "/" & rc.qUsers.intUserID)#">#rc.qUsers.vcUsername#</a>
+								#rc.qUsers.vcUsername#
 							</td>
 							<td>
-								<a href="#buildURL(rc.xeh.viewUserDetail & "/" & rc.qUsers.intUserID)#">#rc.qUsers.vcEmail#</a>
+								#rc.qUsers.vcEmail#
 							</td>
 							<td>
-								#rc.qUsers.vcFirstname# #rc.qUsers.vcLastname#
+								#rc.qUsers.vcFirstName# #rc.qUsers.vcLastName#
 							</td>
-							<td style="text-align:center;">
+							<td class="text-center">
 								<cfif rc.qUsers.btIsActive>
-									<span class="label label-success">Active</span>
+									<span class="text-white font-weight-bold bg-success pl-2 pr-2">Active</span>
+								<cfelseif rc.qUsers.btIsLocked>
+									<span class="text-white font-weight-bold bg-danger pl-2 pr-2">Locked</span>
 								<cfelse>
-									<span class="label label-danger">Inactive</span>
+									<span class="text-white font-weight-bold bg-danger pl-2 pr-2">Inactive</span>
 								</cfif>
 							</td>
-							<td style="text-align:center;">
-								<cfif rc.qUsers.btIsLocked>
-									<span class="label label-danger">Locked</span>
-								</cfif>
-							</td>
-							<td>
-								#rc.formatterService.formatDate(rc.qUsers.dtPasswordLastSetOn)#
+							<td class="text-right">
 								<cfif rc.qUsers.btIsPasswordExpired>
 									<span class="label label-danger">Expired</span>
 								</cfif>
+								#rc.formatterService.formatDate(rc.qUsers.dtPasswordLastSetOn)#
 							</td>
-							<td>
+							<td class="text-right">
 								#rc.formatterService.formatDate(rc.qUsers.dtLastLoggedInOn)#
 							</td>
 						</tr>
@@ -81,21 +75,6 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<a href="#buildURL(rc.xeh.viewUserCreate)#" class="btn btn-primary">Create New User</a>
-		</div>
-	</div>
-
-	<script>
-		var PAGE = {
-			xeh: {
-				userDetail: '#buildURL(rc.xeh.viewUserDetail & "/")#',
-				ajaxSearchUsers: '#buildURL(rc.xeh.ajaxSearchUsers)#'
-			}
-		};
-	</script>
-
-	<script src="/assets/js/userManagement/userList.js"></script>
+	<script src="includes/js/userManagement/userList.js"></script>
 
 </cfoutput>

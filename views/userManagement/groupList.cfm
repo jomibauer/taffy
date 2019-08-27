@@ -2,38 +2,44 @@
 	<cfinclude template="includes/_menu.cfm" />
 
 	<div class="row">
-		<div class="col-md-12">
-			<h2>Groups</h2>
+		<div class="col">
 
-			<table id="usersTable" class="table table-condensed table-bordered table-striped">
-				<tr>
-					<th style="width:225px;">
-						Group Name
-					</th>
-					<th>
-						Description
-					</th>
-					<th>
-						Group Abbr.
-					</th>
-					<th>
-						Group Email
-					</th>
-				</tr>
+			<div class="row">
+				<div class="col-6">
+					<h2>Groups</h2>
+				</div>
+				<div class="col-6">
+					<a href="#event.buildLink(rc.xeh.viewGroupCreate)#" class="float-right btn btn-primary">Create New Group</a>
+				</div>
+			</div>
+
+			<br />
+
+			<table id="usersTable" class="table table-sm table-hover table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>
+							Group Name
+						</th>
+						<th>
+							Description
+						</th>
+						<th>
+							Group Abbr.
+						</th>
+					</tr>
+				</thead>
 				<tbody>
 					<cfloop array="#rc.groups#" index="local.group">
-						<tr>
+						<tr class="clickable" data-href="#event.buildLink(rc.xeh.viewGroupDetail & '/' & local.group.getIntGroupID())#">
 							<td>
-								<a href="#buildURL(rc.xeh.viewGroupDetail & "/" & local.group.getIntGroupID())#">#local.group.getVcGroupName()#</a>
+								#local.group.getVcGroupName()#
 							</td>
 							<td>
 								#local.group.getVcGroupDesc()#
 							</td>
 							<td>
 								#local.group.getVcGroupAbbr()#
-							</td>
-							<td>
-								#local.group.getVcGroupEmail()#
 							</td>
 						</tr>
 					</cfloop>
@@ -42,10 +48,6 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<a href="#buildURL(rc.xeh.viewGroupCreate)#" class="btn btn-primary">Create New Group</a>
-		</div>
-	</div>
+	<script src="includes/js/userManagement/userList.js"></script>
 
 </cfoutput>

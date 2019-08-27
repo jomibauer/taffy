@@ -5,7 +5,7 @@
 		<cfset session.messenger.sort() />
 		<cfloop array="#session.messenger.getAlerts()#" index="v.alert">
 			<div class="row noBorder" id="alertsContainer">
-				<div class="col-md-offset-1 col-md-10">
+				<div class="col">
 					<cfswitch expression="#v.alert.messageType#">
 						<cfcase value="SUCCESS">
 							<div class="alert alert-success">

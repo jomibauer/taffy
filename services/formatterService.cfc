@@ -1,16 +1,19 @@
-component accessors=true singleton=true {
+component name="FormatterService" accessors=true singleton=true {
+	property name="never" inject="coldbox:setting:never";
+	property name="dateFormatMask" inject="coldbox:setting:dateFormatMask";
+	property name="timeFormatMask" inject="coldbox:setting:timeFormatMask";
 
 	string function formatDate (required date input) {
-		if (dateCompare(input, getSetting("never")) != 0) {
-			return dateFormat(input, getSetting("dateFormatMask"));
+		if (dateCompare(input, never) != 0) {
+			return dateFormat(input, dateFormatMask);
 		}
 
 		return '';
 	}
 
 	string function formatTime (required date input) {
-		if (dateCompare(input, getSetting("never")) != 0) {
-			return timeFormat(input, getSetting("timeFormatMask"));
+		if (dateCompare(input, never) != 0) {
+			return timeFormat(input, timeFormatMask);
 		}
 
 		return '';

@@ -79,7 +79,7 @@ $('#state').bind('blur', function() {
         // we want to set that as the value of the input and clear the errors for them
         setStateAndClearErrors(PAGE.stateMatch.value);
         return;
-    } 
+    }
 
     var thisValue = $(this).val().toLowerCase();
 
@@ -98,7 +98,7 @@ $('#state').bind('blur', function() {
         }
     });
 
-    if(state !== undefined) {
+    if (state !== undefined) {
         // if we found an exact match, set that as the value and clear the errors for them
         setStateAndClearErrors(state.value);
         return;

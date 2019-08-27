@@ -13,6 +13,10 @@ component{
 		 * Go get Funky!
 		 *
 		 */
+		route("userManagement/viewUserDetail/:userID", "userManagement.viewUserDetail");
+		route("userManagement/viewUserUpdate/:userID", "userManagement.viewUserUpdate");
+		route("userManagement/viewGroupDetail/:groupID", "userManagement.viewGroupDetail");
+		route("userManagement/viewGroupUpdate/:groupID", "userManagement.viewGroupUpdate");
 
 		// A nice healthcheck route example
 		route("/healthcheck",function(event,rc,prc){

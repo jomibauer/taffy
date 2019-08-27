@@ -1,5 +1,5 @@
 component name="User" accessors="true" extends="BaseDomain" {
-	property name="never" inject="coldbox:settings:never";
+	property name="never" inject="coldbox:setting:never";
 
 	property Numeric intUserID;
 	property String vcUsername;
@@ -102,24 +102,8 @@ component name="User" accessors="true" extends="BaseDomain" {
 		return variables.btIsLocked;
 	}
 
-	public boolean function hasBeenModified () {
-		return dateCompare(dtLastModifiedOn, never) != 0;
-	}
-
-	public boolean function hasLoggedIn () {
-		return dateCompare(dtLastLoggedInOn, never) != 0;
-	}
-
 	public array function getUserGroups () {
 		return duplicate(variables.userGroups);
-	}
-
-	public string function getFormattedPhone1() {
-		formatterService.formatPhone(getVcPhone1());
-	}
-
-	public string function getFormattedPhone2() {
-		formatterService.formatPhone(getVcPhone2());
 	}
 
 	public void function addUserGroup ( required any group ) {
@@ -204,10 +188,10 @@ component name="User" accessors="true" extends="BaseDomain" {
 		sb.append(', "vcNameSuffix":' & serializeJSON(getVcNameSuffix()));
 		sb.append(', "vcPassword":' & serializeJSON(getVcPassword()));
 		sb.append(', "btIsPasswordExpired":' & (getBtIsPasswordExpired() ? 'true' : 'false'));
-		sb.append(', "dtPasswordLastSetOn":"' & formatterService.formatDateTime(getDtPasswordLastSetOn()) & '"');
+		sb.append(', "dtPasswordLastSetOn":"' & serializeJSON(getDtPasswordLastSetOn()));
 		sb.append(', "intPasswordLastSetBy":' & getIntPasswordLastSetBy());
 		sb.append(', "vcPasswordLastSetByIP":' & serializeJSON(getVcPasswordLastSetByIP()));
-		sb.append(', "dtLastLoggedInOn":"' & formatterService.formatDateTime(getDtLastLoggedInOn()) & '"');
+		sb.append(', "dtLastLoggedInOn":"' & serializeJSON(getDtLastLoggedInOn()));
 		sb.append(', "vcAddress1":' & serializeJSON(getVcAddress1()));
 		sb.append(', "vcAddress2":' & serializeJSON(getVcAddress2()));
 		sb.append(', "vcAddress3":' & serializeJSON(getVcAddress3()));
@@ -220,10 +204,10 @@ component name="User" accessors="true" extends="BaseDomain" {
 		sb.append(', "btIsActive":' & (getBtIsActive() ? 'true' : 'false'));
 		sb.append(', "btIsProtected":' & (getBtIsProtected() ? 'true' : 'false'));
 		sb.append(', "btIsLocked":' & (getBtIsLocked() ? 'true' : 'false'));
-		sb.append(', "dtCreatedOn":"' & formatterService.formatDateTime(getDtCreatedOn()) & '"');
+		sb.append(', "dtCreatedOn":"' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));
-		sb.append(', "dtLastModifiedOn":"' & formatterService.formatDateTime(getDtLastModifiedOn()) & '"');
+		sb.append(', "dtLastModifiedOn":"' & serializeJSON(getDtLastModifiedOn()));
 		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
 		sb.append(', "vcLastModifiedByIP":' & serializeJSON(getVcLastModifiedByIP()));
 		sb.append(', "groups":[');
@@ -255,10 +239,10 @@ component name="User" accessors="true" extends="BaseDomain" {
 		sb.append(', "vcNameSuffix":' & serializeJSON(getVcNameSuffix()));
 		sb.append(', "vcPassword":' & serializeJSON(getVcPassword()));
 		sb.append(', "btIsPasswordExpired":' & (getBtIsPasswordExpired() ? 'true' : 'false'));
-		sb.append(', "dtPasswordLastSetOn":"' & formatterService.formatDateTime(getDtPasswordLastSetOn()) & '"');
+		sb.append(', "dtPasswordLastSetOn":"' & serializeJSON(getDtPasswordLastSetOn()));
 		sb.append(', "intPasswordLastSetBy":' & getIntPasswordLastSetBy());
 		sb.append(', "vcPasswordLastSetByIP":' & serializeJSON(getVcPasswordLastSetByIP()));
-		sb.append(', "dtLastLoggedInOn":"' & formatterService.formatDateTime(getDtLastLoggedInOn()) & '"');
+		sb.append(', "dtLastLoggedInOn":"' & serializeJSON(getDtLastLoggedInOn()));
 		sb.append(', "vcAddress1":' & serializeJSON(getVcAddress1()));
 		sb.append(', "vcAddress2":' & serializeJSON(getVcAddress2()));
 		sb.append(', "vcAddress3":' & serializeJSON(getVcAddress3()));
@@ -271,10 +255,10 @@ component name="User" accessors="true" extends="BaseDomain" {
 		sb.append(', "btIsActive":' & (getBtIsActive() ? 'true' : 'false'));
 		sb.append(', "btIsProtected":' & (getBtIsProtected() ? 'true' : 'false'));
 		sb.append(', "btIsLocked":' & (getBtIsLocked() ? 'true' : 'false'));
-		sb.append(', "dtCreatedOn":"' & formatterService.formatDateTime(getDtCreatedOn()) & '"');
+		sb.append(', "dtCreatedOn":"' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));
-		sb.append(', "dtLastModifiedOn":"' & formatterService.formatDateTime(getDtLastModifiedOn()) & '"');
+		sb.append(', "dtLastModifiedOn":"' & serializeJSON(getDtLastModifiedOn()));
 		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
 		sb.append(', "vcLastModifiedByIP":' & serializeJSON(getVcLastModifiedByIP()));
 		sb.append(', "groups":[');

@@ -1,18 +1,17 @@
 <cfoutput>
-
 	<cfinclude template="includes/_menu.cfm" />
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-12">
 			<ol class="breadcrumb">
-				<li><a href="#buildURL(rc.xeh.viewGroupList)#">Group List</a></li>
-				<li><a href="#buildURL(rc.xeh.viewGroupDetail & "/" & rc.group.getIntGroupID())#">Group: #rc.group.getVcGroupName()#</a></li>
+				<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewGroupList)#">Group List</a></li>
+				<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewGroupDetail & "/" & rc.group.getIntGroupID())#">Group: #rc.group.getVcGroupName()#</a></li>
 			</ol>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-8">
 
 			<h2>Group: #rc.group.getVcGroupName()#</h2>
 
@@ -31,25 +30,25 @@
 				</tr>
 				<tr>
 					<th>Created:</th>
-					<td>#rc.createdBy.getVcUsername()# / #rc.formatterService.formatDate(rc.group.getDtCreatedOn())#</td>
+					<td><cfif len(rc.createdBy.getVcEmail())>#rc.createdBy.getVcEmail()# /</cfif> #rc.formatterService.formatDate(rc.group.getDtCreatedOn())#</td>
 				</tr>
-				<cfif len(rc.group.getIntLastModifiedBy())>
+				<cfif rc.group.getIntLastModifiedBy()>
 					<tr>
 						<th>Last Modified:</th>
-						<td>#rc.lastModifiedBy.getVcUsername()# / #rc.formatterService.formatDate(rc.group.getDtLastModifiedOn())#</td>
+						<td><cfif len(rc.lastModifiedBy.getVcEmail())>#rc.lastModifiedBy.getVcEmail()# /</cfif> #rc.formatterService.formatDate(rc.group.getDtLastModifiedOn())#</td>
 					</tr>
 				</cfif>
 			</table>
 		</div>
 
-		<div class="col-md-4">
-			<div class="well">
-				<p>To update this group, click the button below.</p>
-				<a href="#buildURL(rc.xeh.viewGroupUpdate & "/" & rc.group.getIntGroupID())#" class="btn btn-default">Update Group</a>
+		<div class="col">
+			<div class="card bg-light mb-3">
+				<div class="card-body">
+					<p>To update this group, click the button below.</p>
+					<a href="#event.buildLink(rc.xeh.viewGroupUpdate & "/" & rc.group.getIntGroupID())#" class="btn btn-primary">Update Group</a>
+				</div>
 			</div>
 		</div>
 	</div>
-
-
 
 </cfoutput>

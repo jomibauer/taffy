@@ -1,4 +1,4 @@
-<cfcomponent name="userGateway" extends="gateways.baseGateway" output="false" singleton="true">
+<cfcomponent name="userGateway" extends="gateways.baseGateway" output="true" singleton="true">
 
 	<cffunction name="create" access="public" returntype="numeric" output="false">
 		<cfargument name="user" type="any" required="true" />
@@ -356,7 +356,7 @@
 	<cfreturn qSearch />
 	</cffunction>
 
-	<cffunction name="loadByUsernameOrEmail" access="public" returntype="query" output="false">
+	<cffunction name="loadByUsernameOrEmail" access="public" returntype="query" output="true">
 		<cfargument name="input" type="string" required="true" />
 
 		<cfquery name="qLoadByUsernameOrEmail">

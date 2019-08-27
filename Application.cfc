@@ -5,27 +5,32 @@
 */
 component{
 	// Application properties
-	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "#now()#v=5"; // TODO: remove now when I'm done reloading all the time
+	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "20190827v=19";
 	this.sessionManagement = true;
-	this.sessionTimeout = createTimeSpan(0,0,30,0);
-	this.setClientCookies = true;
-	this.datasource = "fw1base";
+	this.sessionTimeout = createTimeSpan(0,6,0,0);
+	this.applicationTimeout = createTimeSpan(2,0,0,0);
+	this.datasource = getDSN();
 
 	// COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP
-	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
+	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath( getCurrentTemplatePath() );
 	// The web server mapping to this application. Used for remote purposes or static purposes
-	COLDBOX_APP_MAPPING   = "";
+	COLDBOX_APP_MAPPING   	= "";
 	// COLDBOX PROPERTIES
-	COLDBOX_CONFIG_FILE 	 = "";
+	COLDBOX_CONFIG_FILE  	= "";
 	// COLDBOX APPLICATION KEY OVERRIDE
-	COLDBOX_APP_KEY 		 = "";
+	COLDBOX_APP_KEY 		= "";
+
+	private string function getDSN() {
+		return "fw1base";
+	}
 
 	// application start
 	public boolean function onApplicationStart(){
 		application.cbBootstrap = new coldbox.system.Bootstrap( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );
 		application.cbBootstrap.loadColdbox();
-		application.name = application.cbcontroller.getSetting("appName");
-		application.datasource = application.cbcontroller.getSetting("datasource");
+		// it was a good dream but it doesn't work
+		//application.name = application.cbcontroller.getSetting("appName");
+		//application.datasource = application.cbcontroller.getSetting("datasource");
 
 		return true;
 	}

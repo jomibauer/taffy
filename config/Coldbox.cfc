@@ -6,61 +6,61 @@
 		// coldbox directives
 		coldbox = {
 			//Application Setup
-			appName 				= getSystemSetting( "APPNAME", "ColdboxBase" )
+			appName 					= "ColdboxBase"
 			, eventName 				= "event"
-			, datasource 				= "fw1base"
+			// datasource must be set in Application.cfc
 
 			//Development Settings
 			, reinitPassword			= ""
-			, handlersIndexAutoReload = true
+			, handlersIndexAutoReload 	= true
 
 			//Implicit Events
-			, defaultEvent			= ""
+			, defaultEvent				= ""
 			, requestStartHandler		= "main.onRequestStart"
-			, requestEndHandler		= ""
-			, applicationStartHandler = "main.onAppInit"
-			, applicationEndHandler	= ""
-			, sessionStartHandler 	= ""
-			, sessionEndHandler		= ""
+			, requestEndHandler			= ""
+			, applicationStartHandler 	= "main.onAppInit"
+			, applicationEndHandler		= ""
+			, sessionStartHandler 		= ""
+			, sessionEndHandler			= ""
 			, missingTemplateHandler	= ""
 
 			//Extension Points
-			, applicationHelper 			= "includes/helpers/ApplicationHelper.cfm"
-			, viewsHelper					= ""
-			, modulesExternalLocation		= []
+			, applicationHelper 		= "includes/helpers/ApplicationHelper.cfm"
+			, viewsHelper				= ""
+			, modulesExternalLocation	= []
 			, viewsExternalLocation		= ""
 			, layoutsExternalLocation 	= ""
-			, handlersExternalLocation  	= ""
+			, handlersExternalLocation  = ""
 			, requestContextDecorator 	= ""
-			, controllerDecorator			= ""
+			, controllerDecorator		= ""
 
 			//Error/Exception Handling
 			, invalidHTTPMethodHandler 	= ""
 			, exceptionHandler			= "main.onException"
-			, invalidEventHandler			= ""
-			, customErrorTemplate			= "/coldbox/system/includes/BugReport.cfm"
+			, invalidEventHandler		= ""
+			, customErrorTemplate		= "/coldbox/system/includes/BugReport.cfm"
 
 			//Application Aspects
 			, handlerCaching 			= false
-			, eventCaching			= false
+			, eventCaching				= false
 			, viewCaching				= false
 			// Will automatically do a mapDirectory() on your `models` for you.
-			, autoMapModels			= true
+			, autoMapModels				= true
 		};
 
 		settings = {
-			never = createDateTime(1970,1,1,0,0,0)
-			, dateFormatMask = "yyyy-mm-dd"
-			, timeFormatMask = "h:mm tt"
-			, forgotPasswordEmailFrom = "donotreply@fw1base.com"
-			, passwordRotation = 0 //you cannot use any of your last 5 passwords
-			, loginInstructionsEmailFrom = "donotreply@fw1base.com"
-			, loginURL = "http://fw1base.local"
-			, security_nonSecuredHandlers = ""
-			, security_nonSecuredItems = "main.test,main.viewForgotPassword,main.processForgotPassword,main.robots" //the loginFormItem, loginSubmitItem and logoutSubmitItem will be automatically added to this list
-			, security_loginFormItem = "main.viewLogin"
-			, security_loginSubmitItem = "main.processLogin"
-			, security_logoutSubmitItem = "main.processLogout"
+			never 							= createDateTime(1970,1,1,0,0,0)
+			, dateFormatMask 				= "yyyy-mm-dd"
+			, timeFormatMask 				= "h:mm tt"
+			, forgotPasswordEmailFrom 		= "donotreply@fw1base.com"
+			, passwordRotation 				= 0 //you cannot use any of your last 5 passwords
+			, loginInstructionsEmailFrom 	= "donotreply@fw1base.com"
+			, loginURL 						= "http://coldoxbase.loc:8079/main/viewLogin"
+			, security_nonSecuredHandlers 	= ""
+			, security_nonSecuredItems 		= "main.test,main.viewForgotPassword,main.processForgotPassword,main.robots" //the loginFormItem, loginSubmitItem and logoutSubmitItem will be automatically added to this list
+			, security_loginFormItem 		= "main.viewLogin"
+			, security_loginSubmitItem 		= "main.processLogin"
+			, security_logoutSubmitItem 	= "main.processLogout"
 			, security_resetPasswordFormItem = "main.viewChangePassword"
 
 		};

@@ -79,7 +79,6 @@ component extends="coldbox.system.Interceptor" cache="false" {
 		variables.config.resetPasswordFormEvent = arguments.input;
 	}
 
-
 	public void function preProcess(required any event, required struct interceptData) {
 		var rc = event.getCollection();
 		var prc = event.getCollection(private=true);
@@ -89,6 +88,8 @@ component extends="coldbox.system.Interceptor" cache="false" {
 		local.action = event.getValue("action","");
 
 		param name="session.user" default="#new domains.User()#";
+		param name="session.messenger" default="#new domains.Messenger()#";
+		param name="session.flash" default="#new domains.FlashStorage()#";
 
 		/* make sure the messenger exists */
 		if (!structKeyExists(session,"messenger") || event.getValue("clearSession",false) || event.valueExists("fwreinit") || event.getValue("appreinit",false)) {
@@ -137,6 +138,7 @@ component extends="coldbox.system.Interceptor" cache="false" {
 				}
 			}
 		}
+
 
 		if (local.isSecuredEvent && !session.user.isLoggedIn()) {
 			saveAttemptedURL(arguments.event);

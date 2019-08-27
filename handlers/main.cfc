@@ -1,38 +1,17 @@
 ﻿component extends="coldbox.system.EventHandler" {
-	property name="userService";
-	property name="securityService";
-	property name="beanFactory";
-	property name="validationService";
-	property name="formatterService";
 
-	property name="security_loginFormItem";
-	property name="security_loginSubmitItem";
-	property name="security_logoutSubmitItem";
-	property name="security_resetPasswordFormItem";
+	property name="userService" inject="userService";
+	property name="groupService" inject="groupService";
+	property name="formatterService" inject="formatterService";
 
-	// Default Action
-	function index(event,rc,prc){
-		prc.welcomeMessage = "Welcome to ColdBox!";
-		event.setView("main/index");
-	}
-
-	// Do something
-	function doSomething(event,rc,prc){
-		relocate( "main/index" );
-	}
-
-	/************************************** IMPLICIT ACTIONS *********************************************/
+/************************************ APPLICATION-WIDE IMPLICIT ACTIONS *******************************************/
 
 	function onAppInit(event,rc,prc){
 
 	}
 
 	function onRequestStart(event,rc,prc){
-		rc.xeh.processLogout = 'main/processLogout';
-		rc.xeh.viewAccountDetail = 'userManagement/viewAccountDetail';
-		rc.xeh.userManagementIndex = 'userManagement/index';
 
-		rc.controllerName = "main";
 	}
 
 	function onRequestEnd(event,rc,prc){
@@ -57,36 +36,28 @@
 		abort;
 	}
 
-	// importing fw/1 main
+	/************************************ END APPLICATION-WIDE IMPLICIT ACTIONS *******************************************/
 
-	/*function checkAuthorization (event,rc,prc) {
-		if (isNull(session.user) || isNull(session.messenger) || isNull(session.flash)) {
-			setupSession();
-		}
+	/************************************ IMPLICIT ACTIONS *******************************************/
 
-		var isSecuredEvent = securityService.isSecuredEvent(fw.getSection(), fw.getItem());
-		if ( isSecuredEvent && (isNull(session.user) || !session.user.isLoggedIn())) {
-			if (len(cgi.path_info)) {
-				session.login_requestedPage = cgi.path_info;
-			} else if (findNoCase("index.cfm", cgi.request_url)) {
-				var requestURLList = replaceNoCase(cgi.request_url, "index.cfm", "|");
-				if (listLen(requestURLList,"|") > 1) {
-					session.login_requestedPage = listLast(requestURLList, "|");
-				} else {
-					session.login_requestedPage = "/";
-				}
-			} else {
-				session.login_requestedPage = "/";
-			}
-			relocate(loginFormItem);
-		}
-	}*/
+	function preHandler(event,rc,prc){
+		rc.xeh.processLogout = 'main/processLogout';
+		rc.xeh.viewAccountDetail = 'userManagement/viewAccountDetail';
+		rc.xeh.userManagementIndex = 'userManagement/index';
 
-	/*function setupSession (event,rc,prc) {
-		session.user = userService.load(0);
-		session.messenger = beanFactory.getBean("Messenger");
-		session.flash = beanFactory.getBean("FlashStorage");
-	}*/
+		rc.controllerName = "main";
+	}
+
+	function postHandler(event,rc,prc){
+
+	}
+
+	/************************************ END IMPLICIT ACTIONS *******************************************/
+
+	function index (event,rc,prc) {
+
+	}
+
 
 	function viewLogin (event,rc,prc) {
 		if (session.user.isLoggedIn()) {
@@ -99,28 +70,9 @@
 	}
 
 	function processLogin (event,rc,prc) {
-		if ( session.user.getIntUserID() && session.user.isLoggedIn() ) {
-			session.user = session.user;
-			session.user = session.user;
-
-			if ( session.user.getbtIsPasswordExpired() ) {
-				relocate(action=resetPasswordFormItem);
-			}
-
-			if ( structKeyExists(session, "login_requestedPage") && len(session.login_requestedPage) ) {
-				var redirectTo = session.login_requestedPage;
-				structDelete(session, "login_requestedPage");
-				relocateCustomURL(redirectTo);
-			} else {
-				relocate(action='main/index');
-			}
-		}
+		//SecurityInterceptor should pick up and redirect to requested url, if not, default to index
+		relocate("main/index");
 	}
-
-	/*function processLogout (event,rc,prc) {
-		session.user = userService.load(0);
-		relocate(action=loginFormItem);
-	}*/
 
 	function viewChangePassword (event,rc,prc) {
 		param name="rc.user" default=session.user;
@@ -156,7 +108,7 @@
 
 	function processForgotPassword (event,rc,prc) {
 		if ( isNull(rc.email) || !len(trim(rc.email)) ) {
-			relocate(action=loginFormItem);
+			relocate(action=getSetting("security_loginFormItem"));
 		}
 
 		var user = userService.loadByEmail(rc.email);
@@ -177,12 +129,10 @@
 				, message="Your temporary password has been sent to your email."
 				, messageDetail="Follow the instructions in the email to login and reset your password.");
 
-		relocate(action=loginFormItem);
+		relocate(action=getSetting("security_loginFormItem"));
 	}
 
 	function robots (event,rc,prc) {
 
 	}
-
-
 }

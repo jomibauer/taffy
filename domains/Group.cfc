@@ -1,4 +1,6 @@
-component name="Group" accessors="true" extends="BaseDomain" {
+component name="Group" accessors=true extends="BaseDomain" {
+
+	property name="formatterService" inject="formatterService";
 
 	property Numeric intGroupID;
 	property String vcGroupName;
@@ -34,9 +36,9 @@ component name="Group" accessors="true" extends="BaseDomain" {
 		sb.append(', "vcGroupAbbr":' & serializeJSON(getVcGroupAbbr()));
 		sb.append(', "vcGroupEmail":' & serializeJSON(getVcGroupEmail()));
 		sb.append(', "vcGroupDesc":' & serializeJSON(getVcGroupDesc()));
-		sb.append(', "dtCreatedOn":"' & formatterService.formatDateTime(getDtCreatedOn()) & '"');
+		sb.append(', "dtCreatedOn":"' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
-		sb.append(', "dtLastModifiedOn":"' & formatterService.formatDateTime(getDtLastModifiedOn()) & '"');
+		sb.append(', "dtLastModifiedOn":"' & serializeJSON(getDtLastModifiedOn()));
 		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
 		sb.append("}");
 		return sb.toString();
@@ -49,9 +51,9 @@ component name="Group" accessors="true" extends="BaseDomain" {
 		sb.append(', "vcGroupAbbr":' & serializeJSON(getVcGroupAbbr()));
 		sb.append(', "vcGroupEmail":' & serializeJSON(getVcGroupEmail()));
 		sb.append(', "vcGroupDesc":' & serializeJSON(getVcGroupDesc()));
-		sb.append(', "dtCreatedOn":"' & formatterService.formatDateTime(getDtCreatedOn()) & '"');
+		sb.append(', "dtCreatedOn":"' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
-		sb.append(', "dtLastModifiedOn":"' & formatterService.formatDateTime(getDtLastModifiedOn()) & '"');
+		sb.append(', "dtLastModifiedOn":"' & serializeJSON(getDtLastModifiedOn()));
 		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
 		sb.append("}");
 		return sb.toString();
