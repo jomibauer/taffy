@@ -67,6 +67,7 @@ $('#state').autocomplete({
 
 function setStateAndClearErrors(stateValue) {
     $('#state').val(stateValue);
+    $('#state_valid').show();
     $('#state_invalid').hide();
     $('#state-form-group').removeClass('has-error');
     $('#updateAccountSubmitButton').removeClass('disabled');
@@ -90,7 +91,7 @@ $('#state').bind('blur', function() {
         return;
     }
 
-    var state = _.find(PAGE.statesArray, function(state) {
+    var state = PAGE.statesArray.find(state => {
         // we want to see if there is an exact match between their input and either
         // the label (which is the state's name) or on the value (which is the state's two-character code)
         if (thisValue === state.label.toLowerCase() || thisValue === state.value.toLowerCase()) {
@@ -105,6 +106,7 @@ $('#state').bind('blur', function() {
     }
 
     // otherwise, they have a bad state input, so we can just show the error and disable the submit
+    $('#state_valid').hide();
     $('#state_invalid').show();
     $('#updateAccountSubmitButton').addClass('disabled');
     $('#state-form-group').addClass('has-error');
@@ -113,7 +115,7 @@ $('#state').bind('blur', function() {
 
 $('#userUpdateForm').submit(function () {
 
-    var errorElement = _.find($('.form-group'), function(item) {
+    var errorElement = $('.form-group').find(item => {
         if ($(item).hasClass('has-error')) {
             return true;
         }

@@ -4,6 +4,10 @@ component accessors=true extends="baseService" singleton=true {
 	property name="formatterService" inject="formatterService";
 	property name="cryptoService" inject="cryptoService";
 
+	property name="appName" inject="coldbox:setting:appName";
+	property name="forgotPasswordEmailFrom" inject="coldbox:setting:forgotPasswordEmailFrom";
+	property name="passwordRotation" inject="coldbox:setting:passwordRotation";
+
 	private any function create (required any user) {
 		if (userGateway.getUserIDByUsername(user.getVcUsername())) {
 			throw(type="DuplicateUsername", message="The username " & user.getVcUsername() & " is already taken by another user.");
@@ -132,9 +136,14 @@ component accessors=true extends="baseService" singleton=true {
 
 		var qUser = userGateway.getPreviousPasswords(userID, passwordRotation);
 
-		return !qUser.some(function (row) {
-			return cryptoService.checkPassword(newPassword, row.vcPassword);
-		}, true);
+		for (var row in qUser) {
+			var passwordMatch = cryptoService.checkPassword(newPassword, row.vcPassword);
+
+			if (passwordMatch) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	boolean function changePassword (
@@ -255,8 +264,8 @@ component accessors=true extends="baseService" singleton=true {
 		}
 
 		var mail = new mail();
- 		mail.setSubject("Your " & applicationDisplayName & " password has been reset");
- 		mail.setFrom(getSetting("forgotPasswordEmailFrom"));
+ 		mail.setSubject("Your " & appName & " password has been reset");
+ 		mail.setFrom(forgotPasswordEmailFrom);
  		mail.setTo(user.getVcEmail());
  		mail.setType("html");
  		mail.setBody(local.body);
@@ -267,7 +276,7 @@ component accessors=true extends="baseService" singleton=true {
 		savecontent variable="local.body" {
 			writeoutput('
 				Dear #user.getVcFirstname()# #user.getVcLastname()#,<br />
-				Your account for #applicationDisplayName# has been created.  Click the link below and use the credentials supplied to log in.<br />
+				Your account for #appName# has been created.  Click the link below and use the credentials supplied to log in.<br />
 				<cfif user.isPasswordExpired()>You will be required to change your password once you login.<br /></cfif>
 		        <br/>
 				<a href="#loginURL#">#loginURL#</a><br />
@@ -277,7 +286,7 @@ component accessors=true extends="baseService" singleton=true {
 		}
 
 		var mail = new mail();
- 		mail.setSubject("Your " & applicationDisplayName & " account has been created");
+ 		mail.setSubject("Your " & appName & " account has been created");
  		mail.setFrom(loginInstructionsEmailFrom);
  		mail.setTo(user.getVcEmail());
  		mail.setType("html");

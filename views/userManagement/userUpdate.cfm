@@ -109,7 +109,7 @@
 						<input type="text" id="state" name="vcState" class="form-control <cfif session.messenger.fieldHasAlert("vcState")>has-error</cfif>" value="#rc.user.getVcState()#" />
 					</div>
 					<div>
-						<span class="help-block" id="state_invalid" style="display:none;"><span class="oi oi-check"></span></span>
+						<span class="help-block" id="state_valid" style="display:none;"><span class="oi oi-check"></span></span>
 						<span class="help-block" id="state_invalid" style="display:none;"><span class="oi oi-warning"></span> Invalid state.</span>
 					</div>
 				</div>
@@ -159,6 +159,7 @@
 				ajaxIsEmailAvailable: '#event.buildLink(rc.xeh.ajaxIsEmailAvailable)#'
 			},
 			userID: #rc.user.getIntUserID()#,
+			statesArray: JSON.parse('#rc.statesArray#')
 		};
 	</script>
 

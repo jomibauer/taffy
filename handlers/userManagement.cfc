@@ -152,7 +152,7 @@ component extends="coldbox.system.EventHandler" {
 			, field="");
 
 		rc.userID = rc.user.getIntUserID();
-		relocate(uri="/userManagement/viewUserDetail/:userID");
+		relocate(uri="/userManagement/viewUserDetail/#rc.user.getIntUserID()#");
 	}
 
 	function viewAccountDetail (event,rc,prc) {
@@ -254,7 +254,7 @@ component extends="coldbox.system.EventHandler" {
 			, messageDetail=""
 			, field="");
 
-		relocate(uri="/userManagement/viewUserDetail/:userID");
+		relocate(uri="/userManagement/viewUserDetail/#rc.userID#");
 	}
 
 	function viewUserUpdate (event,rc,prc) {
@@ -274,6 +274,7 @@ component extends="coldbox.system.EventHandler" {
 
 		rc.isAccountDetail = false;
 		rc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
+		rc.formatterService = formatterService;
 
 		rc.xeh.viewUserDetail = "userManagement/viewUserDetail";
 		rc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
@@ -334,9 +335,9 @@ component extends="coldbox.system.EventHandler" {
 			}
 		}
 
-		if (rc.referringAction == "userManagement/viewUserUpdate") {
+		if (rc.referringAction == "userManagement.viewUserUpdate") {
 			//must use custom url because we are redirecting to a route, can use :variable to pull data out of the rc
-			relocate(uri='/userManagement/viewUserDetail/:userID');
+			relocate(uri='/userManagement/viewUserDetail/#rc.userID#');
 		} else {
 			relocate(event="userManagement/viewAccountDetail");
 		}
