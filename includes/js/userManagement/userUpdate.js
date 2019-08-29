@@ -113,19 +113,6 @@ $('#state').bind('blur', function() {
 });
 // end @jquery-autocomplete
 
-$('#userUpdateForm').submit(function () {
-
-    var errorElement = $('.form-group').find(item => {
-        if ($(item).hasClass('has-error')) {
-            return true;
-        }
-    });
-
-    if (errorElement !== undefined) {
-        return false;
-    }
-});
-
 $(function(){
     $('#email').focus();
 });

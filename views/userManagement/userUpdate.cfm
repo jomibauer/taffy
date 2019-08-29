@@ -106,7 +106,7 @@
 				<div id="state-form-group" class="row mb-3">
 					<label class="control-label col-3" for="state">State:</label>
 					<div class="col-5">
-						<input type="text" id="state" name="vcState" class="form-control <cfif session.messenger.fieldHasAlert("vcState")>has-error</cfif>" value="#rc.user.getVcState()#" />
+						<input type="text" id="state" name="vcState" class="form-control has-error <cfif session.messenger.fieldHasAlert("vcState")>has-error</cfif>" value="#rc.user.getVcState()#" />
 					</div>
 					<div>
 						<span class="help-block" id="state_valid" style="display:none;"><span class="oi oi-check"></span></span>
