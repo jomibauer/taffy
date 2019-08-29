@@ -43,13 +43,13 @@ component name="Messenger" {
 	}
 
 	void function addAlert(
-			  required string message
-	        , string messageType = "ERROR"
-	        , string messageDetail = ""
-	        , string messageCode = ""
-	        , string field = ""
-	        , string alertingEvent = ""
-	        , date messageSetOn = now()
+			required string message
+			, string messageType = "ERROR"
+			, string messageDetail = ""
+			, string messageCode = ""
+			, string field = ""
+			, string alertingEvent = ""
+			, date messageSetOn = now()
 			)
 	{
 
@@ -64,16 +64,22 @@ component name="Messenger" {
 		arrayAppend(alerts, arguments);
 	}
 
-	boolean function fieldHasAlert (required string field) {
-		return alerts.some(function(item) {
-			return listFindNoCase(item.field, field);
-		}, true);
+	any function fieldHasAlert (required string field) {
+		for (var alert in alerts) {
+			if (alert.field == arguments.field) {
+				return true;
+			}
+		}
+		return false;;
 	}
 
 	array function getAlertsByField (required string field) {
-		return alerts.filter(function(item) {
-			return listFindNoCase(item.field, field);
-		}, true)
+		for (var alert in alerts) {
+			if (alert.field == arguments.field) {
+				return alert;
+			}
+		}
+		return [];
 	}
 
 	struct function getAlertForField (required string field) {
@@ -128,7 +134,7 @@ component name="Messenger" {
 		return sb.toString();
 	}
 
-	//iterator methods
+//iterator methods
 
 	boolean function hasNext() {
 		return arrayIsDefined(alerts, currentIndex + 1);
@@ -158,5 +164,4 @@ component name="Messenger" {
 		});
 
 	}
-
 }

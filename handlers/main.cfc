@@ -92,10 +92,10 @@
 					, setBy=session.user.getIntUserID()
 					, setByIP=cgi.remote_addr);
 			session.messenger.addAlert(messageType="INFO", message="The password has been successfully changed");
-			relocate(action='userManagement/viewAccountDetail');
+			relocate(event='userManagement/viewAccountDetail');
 		} else {
 			//this wont work if we let someone change a password for someone else
-			relocate(action='main/viewChangePassword');
+			relocate(event='main/viewChangePassword');
 		}
 	}
 
@@ -108,7 +108,7 @@
 
 	function processForgotPassword (event,rc,prc) {
 		if ( isNull(rc.email) || !len(trim(rc.email)) ) {
-			relocate(action=getSetting("security_loginFormItem"));
+			relocate(event=getSetting("security_loginFormItem"));
 		}
 
 		var user = userService.loadByEmail(rc.email);
@@ -119,7 +119,7 @@
 					, message="Invalid Email"
 					, messageDetail="We do not have an account for that email address.  Please check the input and try again."
 					, field="email");
-			relocate(action='main/viewForgotPassword', persist='email');
+			relocate(event='main/viewForgotPassword', persist='email');
 		}
 
 		userService.sendPasswordResetEmail(user);
@@ -129,7 +129,7 @@
 				, message="Your temporary password has been sent to your email."
 				, messageDetail="Follow the instructions in the email to login and reset your password.");
 
-		relocate(action=getSetting("security_loginFormItem"));
+		relocate(event=getSetting("security_loginFormItem"));
 	}
 
 	function robots (event,rc,prc) {

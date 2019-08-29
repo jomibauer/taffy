@@ -5,7 +5,7 @@
 */
 component{
 	// Application properties
-	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "20190827v=25";
+	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "20190829";
 	this.sessionManagement = true;
 	this.sessionTimeout = createTimeSpan(0,6,0,0);
 	this.applicationTimeout = createTimeSpan(2,0,0,0);

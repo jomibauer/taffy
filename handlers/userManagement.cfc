@@ -48,19 +48,18 @@ component extends="coldbox.system.EventHandler" {
 		event.setView("userManagement/userList");
 	}
 
-	function ajaxSearchUsers (event,rc,prc) output="false" {
+	function ajaxSearchUsers (event,rc,prc) output="false" renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			relocate("main/index");
 		}
 
 		if ( !structKeyExists(rc, "q") || !structKeyExists(rc, "token") || !len(trim(rc.token)) ) {
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
 		var output = '{"token":' & rc.token & ', "data":' & userService.searchUsersJSON(rc.q) & '}';
 
-		fw.renderData("text", output);
+		return output;
 	}
 
 	function viewUserCreate (event,rc,prc) {
@@ -109,7 +108,7 @@ component extends="coldbox.system.EventHandler" {
 
 		var hasError = userService.validateCreate(rc, session.messenger);
 
-		fw.populate(rc.user);
+		populateModel(rc.user);
 
 		if ( hasError ) {
 			session.flash.store(rc, "user");
@@ -117,7 +116,7 @@ component extends="coldbox.system.EventHandler" {
 			session.flash.store(rc, "requireUserToChangePassword");
 			session.flash.store(rc, "sendLoginInstructions");
 
-			relocate(action='userManagement/viewUserCreate', preserve='user');
+			relocate(event='userManagement/viewUserCreate', preserve='user');
 		}
 
 		rc.user = userService.save(rc.user);
@@ -186,14 +185,14 @@ component extends="coldbox.system.EventHandler" {
 		}
 
 		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
-			relocate(action="main/index");
+			relocate(event="main/index");
 		}
 
 		rc.isAccountDetail = false;
 
 		rc.user = userService.load(rc.userID);
 		if (!rc.user.getIntUserID()) {
-			relocate(action="main/index");
+			relocate(event="main/index");
 		}
 
 		rc.createdBy = userService.load(rc.user.getIntCreatedBy());
@@ -221,6 +220,7 @@ component extends="coldbox.system.EventHandler" {
 		rc.isAccountDetail = true;
 		rc.user = session.user;
 		rc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
+		rc.formatterService = formatterService;
 
 		rc.xeh.viewUserDetail = "userManagement/viewUserDetail";
 		rc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
@@ -237,12 +237,12 @@ component extends="coldbox.system.EventHandler" {
 		}
 
 		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
-			relocate(action="main/index");
+			relocate(event="main/index");
 		}
 
 		rc.user = userService.load(rc.userID);
 		if ( !rc.user.getIntUserID() ) {
-			relocate(action="main/index");
+			relocate(event="main/index");
 		}
 
 		rc.user.setBtIsPasswordExpired(true);
@@ -263,13 +263,13 @@ component extends="coldbox.system.EventHandler" {
 		}
 
 		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
-			relocate(action="main/index");
+			relocate(event="main/index");
 		}
 
 		param name="rc.user" default=userService.load(rc.userID);
 
 		if (!rc.user.getIntUserID()) {
-			relocate(action="main/index");
+			relocate(event="main/index");
 		}
 
 		rc.isAccountDetail = false;
@@ -286,17 +286,17 @@ component extends="coldbox.system.EventHandler" {
 		rc.intLastModifiedBy = session.user.getIntUserID();
 
 		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
-			relocate(action="main/index");
+			relocate(event="main/index");
 		}
 
 		rc.user = userService.load(rc.userID);
 		if (!rc.user.getIntUserID()) {
-			relocate(action="main/index");
+			relocate(event="main/index");
 		}
 
 		if (rc.user.getIntUserID() != session.user.getIntUserID() &&
 		    !session.user.isUserInGroup("USERMANAGE")) {
-			relocate(action="main/index");
+			relocate(event="main/index");
 		}
 
 		rc.dtLastModifiedOn = now();
@@ -304,20 +304,19 @@ component extends="coldbox.system.EventHandler" {
 
 		var hasError = userService.validateUpdate(rc, session.messenger);
 
-		fw.populate(rc.user);
+		populateModel(rc.user);
 
 		rc.userID = rc.user.getIntUserID();
 
 		//redirectCustomURL( string uri, string preserve = 'none', statusCode = '302' )
-
 		if ( hasError ) {
 
 			session.flash.set("user", rc.user);
 
-			if (rc.referringAction == "userManagement/viewUserUpdate") {
-				relocate(action='userManagement/viewUserUpdate', append="userID", preserve='user');
+			if (rc.referringAction == "userManagement.viewUserUpdate") {
+				relocate(event='userManagement/viewUserUpdate', append="userID", preserve='user');
 			} else {
-				relocate(action='userManagement/viewUpdateAccount', append="userID", preserve='user');
+				relocate(event='userManagement/viewUpdateAccount', append="userID", preserve='user');
 			}
 		} else {
 
@@ -329,9 +328,9 @@ component extends="coldbox.system.EventHandler" {
 					, messageDetail=""
 					, field="");
 
-			if (rc.referringAction == "userManagement/viewUpdateAccount") {
+			if (rc.referringAction == "userManagement.viewUpdateAccount") {
 			//it is account detail, update the in session user object
-				fw.populate(session.user);
+				populateModel(session.user);
 			}
 		}
 
@@ -339,12 +338,12 @@ component extends="coldbox.system.EventHandler" {
 			//must use custom url because we are redirecting to a route, can use :variable to pull data out of the rc
 			relocate(uri='/userManagement/viewUserDetail/:userID');
 		} else {
-			relocate(action="userManagement/viewAccountDetail");
+			relocate(event="userManagement/viewAccountDetail");
 		}
 
 	}
 
-	function ajaxIsUsernameAvailable (event,rc,prc) output="false"{
+	function ajaxIsUsernameAvailable (event,rc,prc) output="false" renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			relocate("main/index");
 		}
@@ -354,22 +353,19 @@ component extends="coldbox.system.EventHandler" {
 			!structKeyExists(rc, "username") ||
 			!len(rc.username)) {
 
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
 		var userByUsername = userService.loadByUsername(rc.username);
 
 		if ( userByUsername.getIntUserID() && userByUsername.getIntUserID() != rc.userID) {
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
-		fw.renderData("json", true);
-		return;
+		return true;
 	}
 
-	function ajaxIsEmailAvailable (event,rc,prc) output="false"{
+	function ajaxIsEmailAvailable (event,rc,prc) output="false" renderdata="json"{
 		// IWB - 2015/02/11
 		// I'm not going to limit this to only users in USERMANAGE because 
 		// we need this for the updateAccount() event which can be used by any user.
@@ -379,51 +375,44 @@ component extends="coldbox.system.EventHandler" {
 			!structKeyExists(rc, "email") ||
 			!len(rc.email)) {
 
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
 		var userByEmail = userService.loadByEmail(rc.email);
 
 		if ( userByEmail.getIntUserID() && userByEmail.getIntUserID() != rc.userID) {
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
-		fw.renderData("json", true);
-		return;
+		return true;
 	}
 
-	function ajaxAddUserToGroup (event,rc,prc) {
+	function ajaxAddUserToGroup (event,rc,prc) output="false" renderdata="json"{
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			relocate("main/index");
 		}
 
 		if (isNull(rc.userID) || !isNumeric(rc.userID) || isNull(rc.groupID) || !isNumeric(rc.groupID)){
-			fw.renderData("json", rc);
-			return;
+			return false;
 		}
 
 		userService.addUserToGroup(rc.userID, rc.groupID);
 
-		fw.renderData("json", true);
-		return;
+		return true;
 	}
 
-	function ajaxRemoveUserFromGroup (event,rc,prc) {
+	function ajaxRemoveUserFromGroup (event,rc,prc)output="false" renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			relocate("main/index");
 		}
 
 		if (isNull(rc.userID) || !isNumeric(rc.userID) || isNull(rc.groupID) || !isNumeric(rc.groupID)){
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
 		userService.removeUserFromGroup(rc.userID, rc.groupID);
 
-		fw.renderData("json", true);
-		return;
+		return true;
 	}
 
 	function viewGroupList (event,rc,prc) {
@@ -445,19 +434,19 @@ component extends="coldbox.system.EventHandler" {
 
 		if (!structKeyExists(rc, "groupID") ||
 			!isNumeric(rc.groupID)) {
-			relocate(action = "userManagement/viewGroupList");
+			relocate(event = "userManagement/viewGroupList");
 		}
 
 		rc.group = groupService.load(rc.groupID);
 		if (!rc.group.getIntGroupID()) {
-			relocate(action = "userManagement/viewGroupList");
+			relocate(event = "userManagement/viewGroupList");
 		}
 
 		rc.createdBy = userService.load(rc.group.getIntCreatedBy());
 		rc.lastModifiedBy = userService.load(rc.group.getIntLastModifiedBy());
 
 		if (rc.group.getIntGroupID() != rc.groupID) {
-			relocate(action = "userManagement/viewGroupList");
+			relocate(event = "userManagement/viewGroupList");
 		}
 
 		rc.formatterService = formatterService;
@@ -482,52 +471,44 @@ component extends="coldbox.system.EventHandler" {
 		event.setView("userManagement/groupCreate");
 	}
 
-	function ajaxIsGroupNameAvailable(event,rc,prc) output="false" {
+	function ajaxIsGroupNameAvailable(event,rc,prc) output="false" renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
 		if( !structKeyExists(rc, "vcGroupName") ||
 			!len(rc.vcGroupName)) {
 
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
 		var groupByName = groupService.loadByName(rc.vcGroupName);
 
 		if ( groupByName.getIntGroupID()) {
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
-		fw.renderData("json", true);
-		return;
+		return true;
 	}
 
-	function ajaxIsGroupAbbrAvailable(event,rc,prc) output="false" {
+	function ajaxIsGroupAbbrAvailable(event,rc,prc) output="false" renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
 		if( !structKeyExists(rc, "vcGroupAbbr") ||
 			!len(rc.vcGroupAbbr)) {
 
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
 		var groupByAbbr = groupService.loadByAbbr(rc.vcGroupAbbr);
 
 		if ( groupByAbbr.getIntGroupID()) {
-			fw.renderData("json", false);
-			return;
+			return false;
 		}
 
-		fw.renderData("json", true);
-		return;
+		return true;
 	}
 
 	function processGroupCreate (event,rc,prc) {
@@ -541,10 +522,10 @@ component extends="coldbox.system.EventHandler" {
 		var hasError = groupService.validateCreate(rc, session.messenger);
 
 		rc.group = groupService.getEmptyDomain();
-		fw.populate(rc.group);
+		populateModel(rc.group);
 
 		if ( hasError ) {
-			relocate(action='userManagement/viewGroupCreate', preserve='group');
+			relocate(event='userManagement/viewGroupCreate', preserve='group');
 		}
 
 		rc.group = groupService.save(rc.group);
@@ -561,13 +542,13 @@ component extends="coldbox.system.EventHandler" {
 
 		if (!structKeyExists(rc, "groupID") ||
 			!isNumeric(rc.groupID)) {
-			relocate(action = "userManagement/groupList");
+			relocate(event = "userManagement/groupList");
 		}
 
 		param name="rc.group" default=groupService.load(rc.groupID);
 
 		if (!rc.group.getIntGroupID()) {
-			relocate(action = "userManagement/groupList");
+			relocate(event = "userManagement/groupList");
 		}
 
 		rc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
@@ -583,12 +564,12 @@ component extends="coldbox.system.EventHandler" {
 
 		if (!structKeyExists(rc, "groupID") ||
 			!isNumeric(rc.groupID)) {
-			relocate(action = "userManagement/viewGroupList");
+			relocate(event = "userManagement/viewGroupList");
 		}
 
 		rc.group = groupService.load(rc.groupID);
 		if (!rc.group.getIntGroupID()) {
-			relocate(action = "userManagement/viewGroupList");
+			relocate(event = "userManagement/viewGroupList");
 		}
 
 		rc.intLastModifiedBy = session.user.getIntUserID();
@@ -596,11 +577,11 @@ component extends="coldbox.system.EventHandler" {
 
 		var hasError = groupService.validateUpdate(rc, session.messenger);
 
-		fw.populate(rc.group);
+		populateModel(rc.group);
 
 		if ( hasError ) {
 			session.flash.set("group", rc.group);
-			relocate(action='userManagement/viewGroupUpdate', append="groupID", preserve='group');
+			relocate(event='userManagement/viewGroupUpdate', append="groupID", preserve='group');
 		}
 
 		rc.group = groupService.save(rc.group);

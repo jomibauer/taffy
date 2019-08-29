@@ -17,7 +17,7 @@
 		<br />
 	</cfif>
 
-	<form class="form-horizontal" action="#event.buildLink(action=rc.xeh.processUserUpdate)#" method="POST" id="userUpdateForm">
+	<form class="form-horizontal" action="#event.buildLink(rc.xeh.processUserUpdate)#" method="POST" id="userUpdateForm">
 		<div class="row">
 			<div class="col">
 				<h2>Update User: #rc.user.getVcFirstName()# #rc.user.getVcLastName()#</h2>
@@ -124,14 +124,14 @@
 				<div class="row mb-3">
 					<label class="control-label col-3" for="phone1">Primary Phone:</label>
 					<div class="col-5">
-						<input type="text" id="phone1" name="vcPhone1" class="form-control <cfif session.messenger.fieldHasAlert("vcPhone1")>has-error</cfif>" value="#formatterService.formatPhone(rc.user.getVcPhone1())#" />
+						<input type="text" id="phone1" name="vcPhone1" class="form-control <cfif session.messenger.fieldHasAlert("vcPhone1")>has-error</cfif>" value="#rc.formatterService.formatPhone(rc.user.getVcPhone1())#" />
 					</div>
 				</div>
 
 				<div class="row mb-3">
 					<label class="control-label col-3" for="phone2">Alternate Phone:</label>
 					<div class="col-5">
-						<input type="text" id="phone2" name="vcPhone2" class="form-control <cfif session.messenger.fieldHasAlert("vcPhone2")>has-error</cfif>" value="#formatterService.formatPhone(rc.user.getVcPhone2())#" />
+						<input type="text" id="phone2" name="vcPhone2" class="form-control <cfif session.messenger.fieldHasAlert("vcPhone2")>has-error</cfif>" value="#rc.formatterService.formatPhone(rc.user.getVcPhone2())#" />
 					</div>
 				</div>
 
@@ -139,7 +139,7 @@
 					<div class="col-5 offset-3">
 						<input type="hidden" name="modifiedBy" value="#session.user.getVcEmail()#" />
 						<input type="hidden" name="userID" value="#rc.user.getIntUserID()#" />
-						<input type="hidden" name="referringAction" value="#getFullyQualifiedAction()#"/>
+						<input type="hidden" name="referringAction" value="#event.getCurrentEvent()#"/>
 						<input id="updateSubmit" type="submit" value="Update" class="float-right btn btn-primary" id="updateAccountSubmitButton" />
 					</div>
 				</div>

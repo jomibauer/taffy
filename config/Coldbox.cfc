@@ -44,6 +44,7 @@
 			, handlerCaching 			= false
 			, eventCaching				= false
 			, viewCaching				= false
+			, singletonReload 			= false
 			// Will automatically do a mapDirectory() on your `models` for you.
 			, autoMapModels				= true
 		};
@@ -125,21 +126,18 @@
 			eventAction 	 = "index"
 		};
 
-
-
 		// environment settings, create a detectEnvironment() method to detect it yourself.
 		// create a function with the name of the environment so it can be executed if that environment is detected
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
 		environments = {
 			local = "coldboxbase.loc*"
 		};
-
-
 	}
 
 	// environment functions
 	function local() {
 		//coldbox.customErrorTemplate = "/coldbox/system/includes/BugReport.cfm";
+		coldbox.singletonReload = true;
 	}
 
 }

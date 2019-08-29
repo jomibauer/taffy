@@ -69,7 +69,7 @@ component accessors="true" extends="baseService" singleton=true {
 			var data["label"] = item.stateName;
 				data["value"] = item.stateAbbr;
 			return data;
-		}, true);
+		});
 
 		return serializeJSON(output);
 	}

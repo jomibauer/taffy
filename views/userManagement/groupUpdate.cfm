@@ -11,7 +11,7 @@
 		</div>
 	</div>
 
-	<form class="form-horizontal" action="#event.buildLink(action=rc.xeh.processGroupUpdate)#" method="POST">
+	<form class="form-horizontal" action="#event.buildLink(rc.xeh.processGroupUpdate)#" method="POST">
 		<div class="row">
 			<div class="col">
 				<h2>Update Group: #rc.group.getVcGroupName()#</h2>
