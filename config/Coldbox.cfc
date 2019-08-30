@@ -11,8 +11,8 @@
 			// datasource must be set in Application.cfc
 
 			//Development Settings
-			, reinitPassword			= ""
-			, handlersIndexAutoReload 	= true
+			, reinitPassword			= "2019mInd"
+			, handlersIndexAutoReload 	= false
 
 			//Implicit Events
 			, defaultEvent				= "main.index"
@@ -41,9 +41,9 @@
 			, customErrorTemplate		= "/coldbox/system/includes/BugReport.cfm"
 
 			//Application Aspects
-			, handlerCaching 			= false
-			, eventCaching				= false
-			, viewCaching				= false
+			, handlerCaching 			= true
+			, eventCaching				= true
+			, viewCaching				= true
 			, singletonReload 			= false
 			// Will automatically do a mapDirectory() on your `models` for you.
 			, autoMapModels				= true
@@ -137,6 +137,11 @@
 	// environment functions
 	function local() {
 		//coldbox.customErrorTemplate = "/coldbox/system/includes/BugReport.cfm";
+		coldbox.reinitPassword = "";
+		coldbox.handlersIndexAutoReload = true;
+		coldbox.handlerCaching = false;
+		coldbox.eventCaching = false;
+		coldbox.viewCaching = false;
 		coldbox.singletonReload = true;
 	}
 
