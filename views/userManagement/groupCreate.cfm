@@ -4,13 +4,13 @@
 	<div class="row">
 		<div class="col-12">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewGroupList)#">Group List</a></li>
-				<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewGroupCreate)#">Create Group</a></li>
+				<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewGroupList)#">Group List</a></li>
+				<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewGroupCreate)#">Create Group</a></li>
 			</ol>
 		</div>
 	</div>
 
-	<form class="form-horizontal" action="#event.buildLink(rc.xeh.processGroupCreate)#" method="POST">
+	<form class="form-horizontal" action="#event.buildLink(prc.xeh.processGroupCreate)#" method="POST">
 		<div class="row">
 			<div class="col-8">
 
@@ -83,8 +83,8 @@
 	<script>
 		var PAGE = {
 			xeh: {
-				ajaxIsGroupNameAvailable: '#event.buildLink(rc.xeh.ajaxIsGroupNameAvailable)#',
-				ajaxIsGroupAbbrAvailable: '#event.buildLink(rc.xeh.ajaxIsGroupAbbrAvailable)#'
+				ajaxIsGroupNameAvailable: '#event.buildLink(prc.xeh.ajaxIsGroupNameAvailable)#',
+				ajaxIsGroupAbbrAvailable: '#event.buildLink(prc.xeh.ajaxIsGroupAbbrAvailable)#'
 			}
 		};
 	</script>

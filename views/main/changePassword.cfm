@@ -5,7 +5,7 @@
 
 			<h2>Change password for #rc.user.getVcFirstName()# #rc.user.getVcLastName()#</h2>
 
-			<form id="changePasswordForm" class="form-horizontal" action="#event.buildLink(rc.xeh.processChangePassword)#" method="POST">
+			<form id="changePasswordForm" class="form-horizontal" action="#event.buildLink(prc.xeh.processChangePassword)#" method="POST">
 				<div class="form-group row">
 					<label class="control-label col-3" for="showPasswordText">Show Passwords:</label>
 					<div class="col-5">

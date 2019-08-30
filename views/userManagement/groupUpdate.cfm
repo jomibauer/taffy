@@ -4,14 +4,14 @@
 	<div class="row">
 		<div class="col-12">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewGroupList)#">Group List</a></li>
-				<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewGroupDetail & "/" & rc.group.getIntGroupID())#">Group: #rc.group.getVcGroupName()#</a></li>
-				<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewGroupUpdate & "/" & rc.group.getIntGroupID())#">Update Group: #rc.group.getVcGroupName()#</a></li>
+				<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewGroupList)#">Group List</a></li>
+				<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewGroupDetail & "/" & rc.group.getIntGroupID())#">Group: #rc.group.getVcGroupName()#</a></li>
+				<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewGroupUpdate & "/" & rc.group.getIntGroupID())#">Update Group: #rc.group.getVcGroupName()#</a></li>
 			</ol>
 		</div>
 	</div>
 
-	<form class="form-horizontal" action="#event.buildLink(rc.xeh.processGroupUpdate)#" method="POST">
+	<form class="form-horizontal" action="#event.buildLink(prc.xeh.processGroupUpdate)#" method="POST">
 		<div class="row">
 			<div class="col">
 				<h2>Update Group: #rc.group.getVcGroupName()#</h2>

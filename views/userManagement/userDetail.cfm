@@ -6,9 +6,9 @@
 		<div class="row">
 			<div class="col">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewUserList)#">User List</a></li>
+					<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewUserList)#">User List</a></li>
 					<li class="breadcrumb-item">
-						<a href="#event.buildLink(rc.xeh.viewUserDetail & "/" & rc.user.getIntUserID())#">
+						<a href="#event.buildLink(prc.xeh.viewUserDetail & "/" & rc.user.getIntUserID())#">
 							User: #rc.user.getVcFirstName()# #rc.user.getVcLastName()#
 						</a>
 					</li>
@@ -162,10 +162,10 @@
 
 					<cfif rc.isAccountDetail>
 						<p>To update your account, click the button below.</p>
-						<a href="#event.buildLink(rc.xeh.viewUpdateAccount)#" class="btn btn-primary">Update Account</a>
+						<a href="#event.buildLink(prc.xeh.viewUpdateAccount)#" class="btn btn-primary">Update Account</a>
 					<cfelse>
 						<p>To update this user, click the button below.</p>
-						<a href="#event.buildLink(rc.xeh.viewUserUpdate & "/" & rc.userID)#" class="btn btn-primary">Update User</a>
+						<a href="#event.buildLink(prc.xeh.viewUserUpdate & "/" & rc.userID)#" class="btn btn-primary">Update User</a>
 					</cfif>
 
 				</div>
@@ -183,7 +183,7 @@
 
 						<p class="text-danger font-weight-bold" >Are you sure you want to remove this user? This cannot be undone.</p>
 						<a id="removeBtnCancel" class="btn btn-primary text-white mb-3">No, cancel removing this user</a>
-						<a href="#event.buildLink(rc.xeh.processUserRemove & "/" & rc.userID)#" class="btn btn-danger text-white">Yes, remove this user</a>
+						<a href="#event.buildLink(prc.xeh.processUserRemove & "/" & rc.userID)#" class="btn btn-danger text-white">Yes, remove this user</a>
 
 					</div>
 				</div>
@@ -196,7 +196,7 @@
 					<div class="card-body">
 
 						<p>To change your password, click the button below.</p>
-						<a href="#event.buildLink(rc.xeh.viewChangePassword)#" class="btn btn-primary">Change Password</a>
+						<a href="#event.buildLink(prc.xeh.viewChangePassword)#" class="btn btn-primary">Change Password</a>
 
 					</div>
 				</div>
@@ -205,7 +205,7 @@
 					<div class="card-body">
 
 						<p>To require the user to change their password, click the button below.</p>
-						<a href="#event.buildLink(to=rc.xeh.processUserExpirePassword, queryString="userID=" & rc.userID)#" class="btn btn-primary">Require user to Change Password</a>
+						<a href="#event.buildLink(to=prc.xeh.processUserExpirePassword, queryString="userID=" & rc.userID)#" class="btn btn-primary">Require user to Change Password</a>
 
 					</div>
 				</div>
@@ -219,8 +219,8 @@
 				arAllGroups: JSON.parse('#rc.groupsJSON#'),
 				userID: #rc.user.getIntUserID()#,
 				xeh: {
-					ajaxAddUserToGroup: '#event.buildLink(rc.xeh.ajaxAddUserToGroup)#',
-					ajaxRemoveUserFromGroup: '#event.buildLink(rc.xeh.ajaxRemoveUserFromGroup)#'
+					ajaxAddUserToGroup: '#event.buildLink(prc.xeh.ajaxAddUserToGroup)#',
+					ajaxRemoveUserFromGroup: '#event.buildLink(prc.xeh.ajaxRemoveUserFromGroup)#'
 				}
 			}
 		</script>

@@ -45,11 +45,9 @@
 	/************************************ IMPLICIT ACTIONS *******************************************/
 
 	function preHandler(event,rc,prc){
-		rc.xeh.processLogout = 'main/processLogout';
-		rc.xeh.viewAccountDetail = 'userManagement/viewAccountDetail';
-		rc.xeh.userManagementIndex = 'userManagement/index';
-
-		rc.controllerName = "main";
+		prc.xeh.processLogout = 'main/processLogout';
+		prc.xeh.viewAccountDetail = 'userManagement/viewAccountDetail';
+		prc.xeh.userManagementIndex = 'userManagement/index';
 	}
 
 	function postHandler(event,rc,prc){
@@ -68,8 +66,8 @@
 			relocate("main/index");
 		}
 
-		rc.xeh.processLogin = "main/processLogin";
-		rc.xeh.viewForgotPassword = "main/viewForgotPassword";
+		prc.xeh.processLogin = "main/processLogin";
+		prc.xeh.viewForgotPassword = "main/viewForgotPassword";
 		event.setView("main/login");
 	}
 
@@ -81,7 +79,7 @@
 	function viewChangePassword (event,rc,prc) {
 		param name="rc.user" default=session.user;
 
-		rc.xeh.processChangePassword = 'main/processChangePassword';
+		prc.xeh.processChangePassword = 'main/processChangePassword';
 		event.setView("main/changePassword");
 	}
 
@@ -106,7 +104,7 @@
 	function viewForgotPassword (event,rc,prc) {
 		param name="rc.email" default="";
 
-		rc.xeh.processForgotPassword = 'main/processForgotPassword';
+		prc.xeh.processForgotPassword = 'main/processForgotPassword';
 		event.setView("main/forgotPassword");
 	}
 

@@ -9,7 +9,7 @@
 					<h2>Users</h2>
 				</div>
 				<div class="col-6">
-					<a href="#event.buildLink(rc.xeh.viewUserCreate)#" class="float-right btn btn-primary">Create New User</a>
+					<a href="#event.buildLink(prc.xeh.viewUserCreate)#" class="float-right btn btn-primary">Create New User</a>
 				</div>
 			</div>
 
@@ -40,7 +40,7 @@
 				</thead>
 				<tbody>
 					<cfloop query="rc.qUsers">
-						<tr class="clickable" data-href="#event.buildLink(rc.xeh.viewUserDetail & '/' & rc.qUsers.intUserID)#">
+						<tr class="clickable" data-href="#event.buildLink(prc.xeh.viewUserDetail & '/' & rc.qUsers.intUserID)#">
 							<td>
 								#rc.qUsers.vcUsername#
 							</td>

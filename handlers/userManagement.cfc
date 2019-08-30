@@ -10,15 +10,13 @@ component extends="coldbox.system.EventHandler" {
 	function preHandler(event,rc,prc){
 		session.flash.restore(event,rc,prc);
 
-		rc.hideMenu = false;
+		prc.hideMenu = false;
 
-		rc.controllerName = "userManagement";
-
-		rc.xeh.viewUserList = "userManagement/viewUserList";
-		rc.xeh.viewGroupList = "userManagement/viewGroupList";
-		rc.xeh.viewAccountDetail = 'userManagement/viewAccountDetail';
-		rc.xeh.userManagementIndex = 'userManagement/index';
-		rc.xeh.processLogout = 'main/processLogout';
+		prc.xeh.viewUserList = "userManagement/viewUserList";
+		prc.xeh.viewGroupList = "userManagement/viewGroupList";
+		prc.xeh.viewAccountDetail = 'userManagement/viewAccountDetail';
+		prc.xeh.userManagementIndex = 'userManagement/index';
+		prc.xeh.processLogout = 'main/processLogout';
 	}
 
 	function postHandler(event,rc,prc){
@@ -42,9 +40,9 @@ component extends="coldbox.system.EventHandler" {
 
 		rc.formatterService = formatterService;
 
-		rc.xeh.viewUserDetail = "userManagement/viewUserDetail";
-		rc.xeh.viewUserCreate = "userManagement/viewUserCreate";
-		rc.xeh.ajaxSearchUsers = "userManagement/ajaxSearchUsers";
+		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
+		prc.xeh.viewUserCreate = "userManagement/viewUserCreate";
+		prc.xeh.ajaxSearchUsers = "userManagement/ajaxSearchUsers";
 		event.setView("userManagement/userList");
 	}
 
@@ -79,10 +77,10 @@ component extends="coldbox.system.EventHandler" {
 		// here we are setting rc.statesArray for use in the javascript at the bottom of userCreate.js
 		rc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
 
-		rc.xeh.viewUserCreate = "userManagement/viewUserCreate";
-		rc.xeh.processUserCreate = "userManagement/processUserCreate";
-		rc.xeh.ajaxIsEmailAvailable = "userManagement/ajaxIsEmailAvailable";
-		rc.xeh.ajaxIsUsernameAvailable = "userManagement/ajaxIsUsernameAvailable";
+		prc.xeh.viewUserCreate = "userManagement/viewUserCreate";
+		prc.xeh.processUserCreate = "userManagement/processUserCreate";
+		prc.xeh.ajaxIsEmailAvailable = "userManagement/ajaxIsEmailAvailable";
+		prc.xeh.ajaxIsUsernameAvailable = "userManagement/ajaxIsUsernameAvailable";
 		event.setView("userManagement/userCreate");
 	}
 
@@ -167,15 +165,15 @@ component extends="coldbox.system.EventHandler" {
 		rc.groups = groupService.getAllGroups();
 		rc.groupsJSON = groupService.getAllGroupsJSON();
 
-		rc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
-		rc.xeh.viewUserDetail = "userManagement/viewUserDetail";
-		rc.xeh.viewUpdateAccount = "userManagement/viewUpdateAccount";
-		rc.xeh.viewChangePassword = "main/viewChangePassword";
-		rc.xeh.processUserExpirePassword = "userManagement/processUserExpirePassword";
-		rc.xeh.ajaxAddUserToGroup = "userManagement/ajaxAddUserToGroup";
-		rc.xeh.ajaxRemoveUserFromGroup = "userManagement/ajaxRemoveUserFromGroup";
+		prc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
+		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
+		prc.xeh.viewUpdateAccount = "userManagement/viewUpdateAccount";
+		prc.xeh.viewChangePassword = "main/viewChangePassword";
+		prc.xeh.processUserExpirePassword = "userManagement/processUserExpirePassword";
+		prc.xeh.ajaxAddUserToGroup = "userManagement/ajaxAddUserToGroup";
+		prc.xeh.ajaxRemoveUserFromGroup = "userManagement/ajaxRemoveUserFromGroup";
 
-		rc.hideMenu = true;
+		prc.hideMenu = true;
 		event.setView("userManagement/userDetail");
 	}
 
@@ -202,13 +200,13 @@ component extends="coldbox.system.EventHandler" {
 		rc.groups = groupService.getAllGroups();
 		rc.groupsJSON = groupService.getAllGroupsJSON();
 
-		rc.xeh.viewUserUpdate = 'userManagement/viewUserUpdate';
-		rc.xeh.viewUserDetail = "userManagement/viewUserDetail";
-		rc.xeh.viewChangePassword = 'main/viewChangePassword';
-		rc.xeh.processUserExpirePassword = "userManagement/processUserExpirePassword";
-		rc.xeh.ajaxRemoveUserFromGroup = "userManagement/ajaxRemoveUserFromGroup";
-		rc.xeh.ajaxAddUserToGroup = "userManagement/ajaxAddUserToGroup";
-		rc.xeh.processUserRemove = "userManagement.processUserRemove";
+		prc.xeh.viewUserUpdate = 'userManagement/viewUserUpdate';
+		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
+		prc.xeh.viewChangePassword = 'main/viewChangePassword';
+		prc.xeh.processUserExpirePassword = "userManagement/processUserExpirePassword";
+		prc.xeh.ajaxRemoveUserFromGroup = "userManagement/ajaxRemoveUserFromGroup";
+		prc.xeh.ajaxAddUserToGroup = "userManagement/ajaxAddUserToGroup";
+		prc.xeh.processUserRemove = "userManagement.processUserRemove";
 		event.setView("userManagement/userDetail");
 	}
 
@@ -222,12 +220,12 @@ component extends="coldbox.system.EventHandler" {
 		rc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
 		rc.formatterService = formatterService;
 
-		rc.xeh.viewUserDetail = "userManagement/viewUserDetail";
-		rc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
-		rc.xeh.processUserUpdate = "userManagement/processUserUpdate";
-		rc.xeh.ajaxIsEmailAvailable = "userManagement/ajaxIsEmailAvailable";
+		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
+		prc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
+		prc.xeh.processUserUpdate = "userManagement/processUserUpdate";
+		prc.xeh.ajaxIsEmailAvailable = "userManagement/ajaxIsEmailAvailable";
 
-		rc.hideMenu = true;
+		prc.hideMenu = true;
 		event.setView("userManagement/userUpdate");
 	}
 
@@ -276,10 +274,10 @@ component extends="coldbox.system.EventHandler" {
 		rc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
 		rc.formatterService = formatterService;
 
-		rc.xeh.viewUserDetail = "userManagement/viewUserDetail";
-		rc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
-		rc.xeh.processUserUpdate = "userManagement/processUserUpdate";
-		rc.xeh.ajaxIsEmailAvailable = "userManagement/ajaxIsEmailAvailable";
+		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
+		prc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
+		prc.xeh.processUserUpdate = "userManagement/processUserUpdate";
+		prc.xeh.ajaxIsEmailAvailable = "userManagement/ajaxIsEmailAvailable";
 		event.setView("userManagement/userUpdate");
 	}
 
@@ -423,8 +421,8 @@ component extends="coldbox.system.EventHandler" {
 
 		rc.groups = groupService.getAllGroups();
 
-		rc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
-		rc.xeh.viewGroupCreate = "userManagement/viewGroupCreate";
+		prc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
+		prc.xeh.viewGroupCreate = "userManagement/viewGroupCreate";
 		event.setView("userManagement/groupList");
 	}
 
@@ -452,8 +450,8 @@ component extends="coldbox.system.EventHandler" {
 
 		rc.formatterService = formatterService;
 
-		rc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
-		rc.xeh.viewGroupUpdate = "userManagement/viewGroupUpdate";
+		prc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
+		prc.xeh.viewGroupUpdate = "userManagement/viewGroupUpdate";
 		event.setView("userManagement/groupDetail");
 	}
 
@@ -464,11 +462,11 @@ component extends="coldbox.system.EventHandler" {
 
 		param name="rc.group" default=groupService.load(0);
 
-		rc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
-		rc.xeh.viewGroupCreate = "userManagement/viewGroupCreate";
-		rc.xeh.processGroupCreate = "userManagement/processGroupCreate";
-		rc.xeh.ajaxIsGroupNameAvailable = "userManagement/ajaxIsGroupNameAvailable";
-		rc.xeh.ajaxIsGroupAbbrAvailable = "userManagement/ajaxIsGroupAbbrAvailable";
+		prc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
+		prc.xeh.viewGroupCreate = "userManagement/viewGroupCreate";
+		prc.xeh.processGroupCreate = "userManagement/processGroupCreate";
+		prc.xeh.ajaxIsGroupNameAvailable = "userManagement/ajaxIsGroupNameAvailable";
+		prc.xeh.ajaxIsGroupAbbrAvailable = "userManagement/ajaxIsGroupAbbrAvailable";
 		event.setView("userManagement/groupCreate");
 	}
 
@@ -552,9 +550,9 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event = "userManagement/groupList");
 		}
 
-		rc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
-		rc.xeh.viewGroupUpdate = "userManagement/viewGroupUpdate";
-		rc.xeh.processGroupUpdate = "userManagement/processGroupUpdate";
+		prc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
+		prc.xeh.viewGroupUpdate = "userManagement/viewGroupUpdate";
+		prc.xeh.processGroupUpdate = "userManagement/processGroupUpdate";
 		event.setView("userManagement/groupUpdate");
 	}
 

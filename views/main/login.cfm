@@ -3,7 +3,7 @@
 	<div class="row justify-content-md-center">
 		<div class="col-4">
 			<br />
-			<form class="form-horizontal" method="post" action="#event.buildLink(rc.xeh.processLogin)#">
+			<form class="form-horizontal" method="post" action="#event.buildLink(prc.xeh.processLogin)#">
 				<fieldset>
 					<legend>Log In</legend>
 					<br />
@@ -23,7 +23,7 @@
 						<div class="col">
 							<button type="submit" class="btn btn-primary float-right">LOGIN</button>
 							<br/><br />
-							<a class="float-right" href="#event.buildLink(rc.xeh.viewForgotPassword)#">Forgot Password?</a>
+							<a class="float-right" href="#event.buildLink(prc.xeh.viewForgotPassword)#">Forgot Password?</a>
 						</div>
 					</div>
 				</fieldset>

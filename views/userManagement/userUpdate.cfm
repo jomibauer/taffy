@@ -6,9 +6,9 @@
 		<div class="row">
 			<div class="col">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewUserList)#">User List</a></li>
-					<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewUserDetail & "/" & rc.user.getIntUserID())#">User: #rc.user.getVcFirstName()# #rc.user.getVcLastName()#</a></li>
-					<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewUserUpdate & "/" & rc.user.getIntUserID())#">Update User: #rc.user.getVcFirstName()# #rc.user.getVcLastName()#</a></li>
+					<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewUserList)#">User List</a></li>
+					<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewUserDetail & "/" & rc.user.getIntUserID())#">User: #rc.user.getVcFirstName()# #rc.user.getVcLastName()#</a></li>
+					<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewUserUpdate & "/" & rc.user.getIntUserID())#">Update User: #rc.user.getVcFirstName()# #rc.user.getVcLastName()#</a></li>
 				</ol>
 			</div>
 		</div>
@@ -17,7 +17,7 @@
 		<br />
 	</cfif>
 
-	<form class="form-horizontal" action="#event.buildLink(rc.xeh.processUserUpdate)#" method="POST" id="userUpdateForm">
+	<form class="form-horizontal" action="#event.buildLink(prc.xeh.processUserUpdate)#" method="POST" id="userUpdateForm">
 		<div class="row">
 			<div class="col">
 				<h2>Update User: #rc.user.getVcFirstName()# #rc.user.getVcLastName()#</h2>
@@ -156,7 +156,7 @@
 	<script>
 		var PAGE = {
 			xeh: {
-				ajaxIsEmailAvailable: '#event.buildLink(rc.xeh.ajaxIsEmailAvailable)#'
+				ajaxIsEmailAvailable: '#event.buildLink(prc.xeh.ajaxIsEmailAvailable)#'
 			},
 			userID: #rc.user.getIntUserID()#,
 			statesArray: JSON.parse('#rc.statesArray#')

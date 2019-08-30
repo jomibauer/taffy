@@ -9,7 +9,7 @@
 					<h2>Groups</h2>
 				</div>
 				<div class="col-6">
-					<a href="#event.buildLink(rc.xeh.viewGroupCreate)#" class="float-right btn btn-primary">Create New Group</a>
+					<a href="#event.buildLink(prc.xeh.viewGroupCreate)#" class="float-right btn btn-primary">Create New Group</a>
 				</div>
 			</div>
 
@@ -31,7 +31,7 @@
 				</thead>
 				<tbody>
 					<cfloop array="#rc.groups#" index="local.group">
-						<tr class="clickable" data-href="#event.buildLink(rc.xeh.viewGroupDetail & '/' & local.group.getIntGroupID())#">
+						<tr class="clickable" data-href="#event.buildLink(prc.xeh.viewGroupDetail & '/' & local.group.getIntGroupID())#">
 							<td>
 								#local.group.getVcGroupName()#
 							</td>

@@ -4,8 +4,8 @@
 	<div class="row">
 		<div class="col-12">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewGroupList)#">Group List</a></li>
-				<li class="breadcrumb-item"><a href="#event.buildLink(rc.xeh.viewGroupDetail & "/" & rc.group.getIntGroupID())#">Group: #rc.group.getVcGroupName()#</a></li>
+				<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewGroupList)#">Group List</a></li>
+				<li class="breadcrumb-item"><a href="#event.buildLink(prc.xeh.viewGroupDetail & "/" & rc.group.getIntGroupID())#">Group: #rc.group.getVcGroupName()#</a></li>
 			</ol>
 		</div>
 	</div>
@@ -45,7 +45,7 @@
 			<div class="card bg-light mb-3">
 				<div class="card-body">
 					<p>To update this group, click the button below.</p>
-					<a href="#event.buildLink(rc.xeh.viewGroupUpdate & "/" & rc.group.getIntGroupID())#" class="btn btn-primary">Update Group</a>
+					<a href="#event.buildLink(prc.xeh.viewGroupUpdate & "/" & rc.group.getIntGroupID())#" class="btn btn-primary">Update Group</a>
 				</div>
 			</div>
 		</div>
