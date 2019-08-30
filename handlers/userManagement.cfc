@@ -206,7 +206,7 @@ component extends="coldbox.system.EventHandler" {
 		prc.xeh.processUserExpirePassword = "userManagement/processUserExpirePassword";
 		prc.xeh.ajaxRemoveUserFromGroup = "userManagement/ajaxRemoveUserFromGroup";
 		prc.xeh.ajaxAddUserToGroup = "userManagement/ajaxAddUserToGroup";
-		prc.xeh.processUserRemove = "userManagement.processUserRemove";
+		prc.xeh.processUserRemove = "userManagement/processUserRemove";
 		event.setView("userManagement/userDetail");
 	}
 
@@ -312,7 +312,7 @@ component extends="coldbox.system.EventHandler" {
 
 			session.flash.set("user", rc.user);
 
-			if (rc.referringAction == "userManagement.viewUserUpdate") {
+			if (rc.referringAction == "userManagement/viewUserUpdate") {
 				relocate(event='userManagement/viewUserUpdate', append="userID", preserve='user');
 			} else {
 				relocate(event='userManagement/viewUpdateAccount', append="userID", preserve='user');
@@ -327,13 +327,13 @@ component extends="coldbox.system.EventHandler" {
 					, messageDetail=""
 					, field="");
 
-			if (rc.referringAction == "userManagement.viewUpdateAccount") {
+			if (rc.referringAction == "userManagement/viewUpdateAccount") {
 			//it is account detail, update the in session user object
 				populateModel(session.user);
 			}
 		}
 
-		if (rc.referringAction == "userManagement.viewUserUpdate") {
+		if (rc.referringAction == "userManagement/viewUserUpdate") {
 			//must use custom url because we are redirecting to a route, can use :variable to pull data out of the rc
 			relocate(uri='/userManagement/viewUserDetail/#rc.userID#');
 		} else {
