@@ -6,7 +6,11 @@
 
 /************************************ APPLICATION-WIDE IMPLICIT ACTIONS *******************************************/
 
-	function onAppInit(event,rc,prc){
+	function onAppStart(event,rc,prc){
+
+	}
+
+	function onAppEnd(event,rc,prc){
 
 	}
 

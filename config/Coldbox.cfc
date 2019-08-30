@@ -15,13 +15,13 @@
 			, handlersIndexAutoReload 	= true
 
 			//Implicit Events
-			, defaultEvent				= ""
+			, defaultEvent				= "main.index"
 			, requestStartHandler		= "main.onRequestStart"
-			, requestEndHandler			= ""
-			, applicationStartHandler 	= "main.onAppInit"
-			, applicationEndHandler		= ""
-			, sessionStartHandler 		= ""
-			, sessionEndHandler			= ""
+			, requestEndHandler			= "main.onRequestEnd"
+			, applicationStartHandler 	= "main.onAppStart"
+			, applicationEndHandler		= "main.onAppEnd"
+			, sessionStartHandler 		= "main.onSessionStart"
+			, sessionEndHandler			= "main.onSessionEnd"
 			, missingTemplateHandler	= ""
 
 			//Extension Points
