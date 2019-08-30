@@ -77,7 +77,7 @@
 	}
 
 	function viewChangePassword (event,rc,prc) {
-		param name="rc.user" default=session.user;
+		prc.user = session.user;
 
 		prc.xeh.processChangePassword = 'main/processChangePassword';
 		event.setView("main/changePassword");

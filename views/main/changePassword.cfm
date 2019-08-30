@@ -1,9 +1,7 @@
 <cfoutput>
-
 	<div class="row">
 		<div class="col-8">
-
-			<h2>Change password for #rc.user.getVcFirstName()# #rc.user.getVcLastName()#</h2>
+			<h2>Change password for #prc.user.getVcFirstName()# #prc.user.getVcLastName()#</h2>
 
 			<form id="changePasswordForm" class="form-horizontal" action="#event.buildLink(prc.xeh.processChangePassword)#" method="POST">
 				<div class="form-group row">
@@ -12,7 +10,6 @@
 						<input type="checkbox" id="showPasswordText" class="checkbox mt-2" value="true" />
 					</div>
 				</div>
-
 				<div class="form-group row passwordInputControlGroup <cfif session.messenger.fieldHasAlert("password")>has-error</cfif>">
 					<label class="control-label col-3" for="password">Password:</label>
 					<div class="col-5">
@@ -29,18 +26,15 @@
 						<span class="help-block otherPasswordErrorMessage" <cfif NOT session.messenger.fieldHasAlert("password")>style="display:none;"</cfif>>#session.messenger.getAlertForField("password").message#</span>
 					</div>
 				</div>
-
-
 				<div class="form-group row">
 					<div class="offset-3 col-5">
 						<input type="hidden" name="intPasswordLastSetBy" value="#session.user.getintUserID()#" />
-						<input type="hidden" name="userID" value="#rc.user.getIntUserID()#" />
+						<input type="hidden" name="userID" value="#prc.user.getIntUserID()#" />
 						<input type="submit" value="Update Account" class="btn btn-primary" />
 					</div>
 				</div>
 			</form>
 		</div>
-
 		<div class="col-4">
 			<div class="card bg-light">
 				<div class="card-body">
@@ -48,29 +42,28 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
-
+</cfoutput>
 
 	<script>
-		$(function(){init();})
+		$(function(){init();});
 
-		$("##changePasswordForm").submit(function(e) {
-
-			if ( $("##password").val() == $("##password2").val() ) {
+		$("#changePasswordForm").submit(function(e) {
+		    console.log('testing');
+			if ( $("#password").val() == $("#password2").val() ) {
 				return true;
 			} else {
 				$(".passwordInputControlGroup").addClass("has-error");
 				$(".passwordsDontMatchErrorMessage").show();
-				$('##password').select();
-				$('##password').focus();
+				$('#password').select();
+				$('#password').focus();
 
 				e.preventDefault();
 				return false;
 			}
 		});
 
-		$("##showPasswordText").change(function(e){
+		$("#showPasswordText").change(function(e){
 			if (this.checked){
 				$(".passwordInput").attr("type","text");
 			} else {
@@ -89,11 +82,9 @@
 
 
 		function init() {
-			$('##password').select();
-			$('##password').focus();
+			$('#password').select();
+			$('#password').focus();
 		}
 
 	</script>
 
-
-</cfoutput>
