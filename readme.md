@@ -34,4 +34,23 @@ Try to maintain clear organization between the request collection (rc) and priva
 
 The rc contains FORM/REMOTE/URL data merged into a single structure. You should access this information (and validate it) to perform operations.
 
-The prc is a structure you can put processed data into and display on the page. (You can still display rc values just be aware if you have validated its format). 
+The prc is a structure you can put processed data into and display on the page. (You can still display rc values just be aware if you have validated its format).
+
+You cannot inject sevices into domains in Coldbox. For example, previously we could use `property formatterService;` at the top of User.cfc and use it to format things in helper functions like `getFormattedName()`. Now you'll need to process that data with the formatter service in the handler or view to display it.
+
+## FW/1 Things in Coldbox
+`fw.redirect` is `relocate` and you pass an "event" instead of an "action"
+
+`fw.populate` is `populateModel`
+
+`fw.setView` is `event.setView`
+
+`fw.setLayout` is `event.setLayout`
+
+`fw.renderData("json", false)` (like for ajax events) is instead done by setting `renderdata="json"` on the event function and just returning the data.
+
+`property userService` is `property name="userService" inject="userService"`. The inject is necessary because wirebox will use that to find the model.
+
+`property never` is `property name="never" inject="coldbox:setting:never"`. You can inject any coldbox setting from the config/Coldbox.cfc this way. (Note: in most places, you can also do a `getSetting("never"")` call to retrieve it. This is useful if you only need a setting in one place.)
+
+`beanFactory.getBean("User")` is `new model.domains.User()`. Coldbox does not use bean factory but wirebox lets you create an object using the `new` command with the path to the domain
