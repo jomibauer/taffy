@@ -11,13 +11,13 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarText">
 				<ul class="navbar-nav mr-auto">
-					<!---<cfif session.user.isLoggedIn()>
+					<cfif session.user.isLoggedIn()>
 						<cfif session.user.isUserInGroup("ADMIN")>
 							<li class="nav-item <cfif rc.controllerName EQ "main">active</cfif>">
-								<a class="nav-link" href="#event.buildLink("main.index")#">Main Home</a>
+								<a class="nav-link" href="#getSetting("appMapping")#/testbox/tests/runner.cfm">Tests</a>
 							</li>
 						</cfif>
-					</cfif>--->
+					</cfif>
 				</ul>
 
 				<ul class="navbar-nav navbar-right">
