@@ -45,9 +45,9 @@
 	/************************************ IMPLICIT ACTIONS *******************************************/
 
 	function preHandler(event,rc,prc){
-		prc.xeh.processLogout = 'main/processLogout';
-		prc.xeh.viewAccountDetail = 'userManagement/viewAccountDetail';
-		prc.xeh.userManagementIndex = 'userManagement/index';
+		prc.xeh.processLogout = "main/processLogout";
+		prc.xeh.viewAccountDetail = "userManagement/viewAccountDetail";
+		prc.xeh.userManagementIndex = "userManagement/index";
 	}
 
 	function postHandler(event,rc,prc){
@@ -78,7 +78,7 @@
 	function viewChangePassword (event,rc,prc) {
 		prc.user = session.user;
 
-		prc.xeh.processChangePassword = 'main/processChangePassword';
+		prc.xeh.processChangePassword = "main/processChangePassword";
 		event.setView("main/changePassword");
 	}
 
@@ -93,17 +93,17 @@
 					, setBy=session.user.getIntUserID()
 					, setByIP=cgi.remote_addr);
 			session.messenger.addAlert(messageType="INFO", message="The password has been successfully changed");
-			relocate(event='userManagement/viewAccountDetail');
+			relocate(event="userManagement/viewAccountDetail");
 		} else {
 			//this wont work if we let someone change a password for someone else
-			relocate(event='main/viewChangePassword');
+			relocate(event="main/viewChangePassword");
 		}
 	}
 
 	function viewForgotPassword (event,rc,prc) {
 		param name="rc.email" default="";
 
-		prc.xeh.processForgotPassword = 'main/processForgotPassword';
+		prc.xeh.processForgotPassword = "main/processForgotPassword";
 		event.setView("main/forgotPassword");
 	}
 
@@ -120,7 +120,9 @@
 					, message="Invalid Email"
 					, messageDetail="We do not have an account for that email address.  Please check the input and try again."
 					, field="email");
-			relocate(event='main/viewForgotPassword', persist='email');
+
+            flash.put(name="email", value=rc.email);
+			relocate(event="main/viewForgotPassword");
 		}
 
 		userService.sendPasswordResetEmail(user);
