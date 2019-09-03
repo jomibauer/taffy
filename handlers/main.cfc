@@ -36,7 +36,7 @@
 		//Grab Exception From private request collection, placed by ColdBox Exception Handling
 		var exception = prc.exception;
 		//Place exception handler below:
-		writeDump(exception);
+		writeDump(exception.getExceptionStruct());
 		abort;
 	}
 
@@ -45,11 +45,9 @@
 	/************************************ IMPLICIT ACTIONS *******************************************/
 
 	function preHandler(event,rc,prc){
-		rc.xeh.processLogout = 'main/processLogout';
-		rc.xeh.viewAccountDetail = 'userManagement/viewAccountDetail';
-		rc.xeh.userManagementIndex = 'userManagement/index';
-
-		rc.controllerName = "main";
+		prc.xeh.processLogout = "main/processLogout";
+		prc.xeh.viewAccountDetail = "userManagement/viewAccountDetail";
+		prc.xeh.userManagementIndex = "userManagement/index";
 	}
 
 	function postHandler(event,rc,prc){
@@ -62,26 +60,25 @@
 
 	}
 
-
 	function viewLogin (event,rc,prc) {
 		if (session.user.isLoggedIn()) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
-		rc.xeh.processLogin = "main/processLogin";
-		rc.xeh.viewForgotPassword = "main/viewForgotPassword";
+		prc.xeh.processLogin = "main/processLogin";
+		prc.xeh.viewForgotPassword = "main/viewForgotPassword";
 		event.setView("main/login");
 	}
 
 	function processLogin (event,rc,prc) {
 		//SecurityInterceptor should pick up and redirect to requested url, if not, default to index
-		relocate("main/index");
+		relocate(event="main/index");
 	}
 
 	function viewChangePassword (event,rc,prc) {
-		param name="rc.user" default=session.user;
+		prc.user = session.user;
 
-		rc.xeh.processChangePassword = 'main/processChangePassword';
+		prc.xeh.processChangePassword = "main/processChangePassword";
 		event.setView("main/changePassword");
 	}
 
@@ -96,17 +93,17 @@
 					, setBy=session.user.getIntUserID()
 					, setByIP=cgi.remote_addr);
 			session.messenger.addAlert(messageType="INFO", message="The password has been successfully changed");
-			relocate(event='userManagement/viewAccountDetail');
+			relocate(event="userManagement/viewAccountDetail");
 		} else {
 			//this wont work if we let someone change a password for someone else
-			relocate(event='main/viewChangePassword');
+			relocate(event="main/viewChangePassword");
 		}
 	}
 
 	function viewForgotPassword (event,rc,prc) {
 		param name="rc.email" default="";
 
-		rc.xeh.processForgotPassword = 'main/processForgotPassword';
+		prc.xeh.processForgotPassword = "main/processForgotPassword";
 		event.setView("main/forgotPassword");
 	}
 
@@ -123,7 +120,9 @@
 					, message="Invalid Email"
 					, messageDetail="We do not have an account for that email address.  Please check the input and try again."
 					, field="email");
-			relocate(event='main/viewForgotPassword', persist='email');
+
+            flash.put(name="email", value=rc.email);
+			relocate(event="main/viewForgotPassword");
 		}
 
 		userService.sendPasswordResetEmail(user);

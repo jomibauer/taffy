@@ -11,20 +11,20 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarText">
 				<ul class="navbar-nav mr-auto">
-					<!---<cfif session.user.isLoggedIn()>
+					<cfif session.user.isLoggedIn()>
 						<cfif session.user.isUserInGroup("ADMIN")>
-							<li class="nav-item <cfif rc.controllerName EQ "main">active</cfif>">
-								<a class="nav-link" href="#event.buildLink("main.index")#">Main Home</a>
+							<li class="nav-item <cfif event.getCurrentHandler() EQ "main">active</cfif>">
+								<a class="nav-link" href="#getSetting("appMapping")#/testbox/tests/runner.cfm">Tests</a>
 							</li>
 						</cfif>
-					</cfif>--->
+					</cfif>
 				</ul>
 
 				<ul class="navbar-nav navbar-right">
 					<cfif session.user.isLoggedIn()>
 						<cfif session.user.isUserInGroup("ADMIN")>
-							<li class="nav-item <cfif rc.controllerName EQ "userManagement">active</cfif>">
-								<a class="nav-link" href="#event.buildLink(rc.xeh.userManagementIndex)#">User Management</a>
+							<li class="nav-item <cfif event.getCurrentHandler() EQ "userManagement">active</cfif>">
+								<a class="nav-link" href="#event.buildLink(prc.xeh.userManagementIndex)#">User Management</a>
 							</li>
 						</cfif>
 						<li class="nav-item dropdown">
@@ -32,8 +32,8 @@
 								#session.user.getVcFirstName()#&nbsp;#session.user.getVcLastName()#
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" href="#event.buildLink(rc.xeh.viewAccountDetail)#">Account Settings</a>
-								<a class="dropdown-item" href="#event.buildLink(rc.xeh.processLogout)#">Logout</a>
+								<a class="dropdown-item" href="#event.buildLink(prc.xeh.viewAccountDetail)#">Account Settings</a>
+								<a class="dropdown-item" href="#event.buildLink(prc.xeh.processLogout)#">Logout</a>
 							</div>
 						</li>
 					</cfif>

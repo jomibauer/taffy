@@ -1,4 +1,4 @@
-component accessors="true" singleton=true {
+component accessors=true singleton=true {
 
 	property name="formatterService" inject="formatterService";
 

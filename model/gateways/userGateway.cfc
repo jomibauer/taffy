@@ -30,7 +30,7 @@
 				, vcPhone2		/*  - varchar(25)*/
 				, btIsActive		/*  - bit*/
 				, btIsProtected		/*  - bit*/
-				, btIsLocked		/*  - bit*/
+				, btIsRemoved		/*  - bit*/
 				, dtCreatedOn		/*  - datetime*/
 				, intCreatedBy		/*  - int*/
 				, vcCreatedByIP		/*  - varchar(50)*/
@@ -64,7 +64,7 @@
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcPhone2()#"/>	/* vcPhone2 - varchar (25) */
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsActive()#"/>	/* btIsActive - bit */
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
-				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsLocked()#"/>	/* btIsLocked - bit */
+				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
 				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedBy()#"/>	/* intCreatedBy - int */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
@@ -107,7 +107,7 @@
 				, vcPhone2 = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcPhone2()#"/>	/* vcPhone2 - varchar (25) */
 				, btIsActive = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsActive()#"/>	/* btIsActive - bit */
 				, btIsProtected = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
-				, btIsLocked = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsLocked()#"/>	/* btIsLocked - bit */
+				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, dtCreatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
 				, intCreatedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedBy()#"/>	/* intCreatedBy - int */
 				, vcCreatedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
@@ -149,7 +149,7 @@
 				, tblUser.vcPhone2		/*  - varchar(25)*/
 				, tblUser.btIsActive		/*  - bit*/
 				, tblUser.btIsProtected		/*  - bit*/
-				, tblUser.btIsLocked		/*  - bit*/
+				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
 				, tblUser.intCreatedBy		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
@@ -192,7 +192,7 @@
 				, tblUser.vcPhone2		/*  - varchar(25)*/
 				, tblUser.btIsActive		/*  - bit*/
 				, tblUser.btIsProtected		/*  - bit*/
-				, tblUser.btIsLocked		/*  - bit*/
+				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
 				, tblUser.intCreatedBy		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
@@ -200,6 +200,7 @@
 				, tblUser.intLastModifiedBy	/*  - int*/
 				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
+			WHERE tblUser.btIsRemoved = 0
 			ORDER BY 1 ASC
 		</cfquery>
 
@@ -288,7 +289,7 @@
 				, tblUser.vcPhone2		/*  - varchar(25)*/
 				, tblUser.btIsActive		/*  - bit*/
 				, tblUser.btIsProtected		/*  - bit*/
-				, tblUser.btIsLocked		/*  - bit*/
+				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
 				, tblUser.intCreatedBy		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
@@ -296,6 +297,7 @@
 				, tblUser.intLastModifiedBy	/*  - int*/
 				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
+            WHERE tblUser.btIsRemoved = 0
 			ORDER BY tblUser.vcUsername ASC
 		</cfquery>
 
@@ -331,7 +333,7 @@
 				--, tblUser.vcPhone2
 				, tblUser.btIsActive
 				, tblUser.btIsProtected
-				, tblUser.btIsLocked
+				, tblUser.btIsRemoved
 				--, tblUser.dtCreatedOn
 				--, tblUser.intCreatedBy
 				--, tblUser.vcCreatedByIP
@@ -349,6 +351,7 @@
 				OR
 					tblUser.vcEmail LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.q#%" />
 				)
+				AND tblUser.btIsRemoved = 0
 			ORDER BY
 				tblUser.vcUsername ASC
 		</cfquery>
@@ -386,7 +389,7 @@
 				, tblUser.vcPhone2		/*  - varchar(25)*/
 				, tblUser.btIsActive		/*  - bit*/
 				, tblUser.btIsProtected		/*  - bit*/
-				, tblUser.btIsLocked		/*  - bit*/
+				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
 				, tblUser.intCreatedBy		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
@@ -396,6 +399,7 @@
 			FROM dbo.tblUser
 			WHERE
 				1 = 1
+            AND tblUser.btIsRemoved = 0
 			AND
 				(
 					tblUser.vcUsername = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.input#" />
@@ -415,6 +419,7 @@
 				tblUser.intUserID
 			FROM dbo.tblUser
 			WHERE tblUser.vcUsername = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.vcUsername#" />
+				AND tblUser.btIsRemoved = 0
 		</cfquery>
 
 		<cfif qGetUserID.recordCount>
@@ -432,6 +437,7 @@
 				 tblUser.intUserID
 			FROM dbo.tblUser
 			WHERE tblUser.vcEmail = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.vcEmail#" />
+            	AND tblUser.btIsRemoved = 0
 		</cfquery>
 
 		<cfif qGetUserID.recordCount>
@@ -454,6 +460,7 @@
 				OR
 					tblUser.vcUsername = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.input#" />
 				)
+                AND tblUser.btIsRemoved = 0
 		</cfquery>
 
 		<cfif qGetUserID.recordCount>
@@ -596,7 +603,10 @@
 		<cfquery name="qGetGroupsForUser">
 			SELECT tblUser_Group.intGroupID
 			FROM dbo.tblUser_Group
+			JOIN tblGroup
+				ON tblUser_Group.intGroupID = tblGroup.intGroupID
 			WHERE tblUser_Group.intUserID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.intUserID#" />
+				AND tblGroup.btIsRemoved = 0
 		</cfquery>
 
 	<cfreturn qGetGroupsForUser />
@@ -618,6 +628,8 @@
 			INNER JOIN dbo.tbluser
 				ON tblUser_Group.intUserID = tblUser.intUserID
 			WHERE tblGroup.vcGroupAbbr = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.vcGroupAbbr#" />
+	            AND tblUser.btIsRemoved = 0
+	            AND tblGroup.btIsRemoved = 0
 			ORDER BY tblUser.vcUsername ASC
 		</cfquery>
 

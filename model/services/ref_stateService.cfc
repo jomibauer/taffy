@@ -1,4 +1,4 @@
-component accessors="true" extends="baseService" singleton=true {
+component accessors=true extends="baseService" singleton=true {
 
 	public any function init() {
 

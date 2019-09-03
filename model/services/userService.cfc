@@ -4,8 +4,11 @@ component accessors=true extends="baseService" singleton=true {
 	property name="formatterService" inject="formatterService";
 	property name="cryptoService" inject="cryptoService";
 
+	property name="never" inject="coldbox:setting:never";
 	property name="appName" inject="coldbox:setting:appName";
 	property name="forgotPasswordEmailFrom" inject="coldbox:setting:forgotPasswordEmailFrom";
+	property name="loginInstructionsEmailFrom" inject="coldbox:setting:loginInstructionsEmailFrom";
+	property name="loginURL" inject="coldbox:setting:loginURL";
 	property name="passwordRotation" inject="coldbox:setting:passwordRotation";
 
 	private any function create (required any user) {
@@ -44,7 +47,12 @@ component accessors=true extends="baseService" singleton=true {
 	}
 
 	function getEmptyDomain() {
-		return new model.domains.User();
+		var emptyUser = new model.domains.User();
+		emptyUser.setDtPasswordLastSetOn(never);
+		emptyUser.setDtLastLoggedInOn(never);
+		emptyUser.setDtCreatedOn(never);
+		emptyUser.setDtLastModifiedOn(never);
+		return emptyUser;
 	}
 
 	public any function populate (required any user, required struct data ) {
@@ -74,7 +82,7 @@ component accessors=true extends="baseService" singleton=true {
 		user.setVcPhone2(data.vcPhone2);
 		user.setBtIsActive(data.btIsActive);
 		user.setBtIsProtected(data.btIsProtected);
-		user.setBtIsLocked(data.btIsLocked);
+		user.setBtIsRemoved(data.btIsRemoved);
 		user.setDtCreatedOn(data.dtCreatedOn);
 		user.setIntCreatedBy(data.intCreatedBy);
 		user.setVcCreatedByIP(data.vcCreatedByIP);
@@ -194,8 +202,8 @@ component accessors=true extends="baseService" singleton=true {
 			sb.append(user.btIsActive ? 'true' : 'false');
 			sb.append(',"isPasswordExpired":');
 			sb.append(user.btIsPasswordExpired ? 'true' : 'false');
-			sb.append(',"isLocked":');
-			sb.append(user.btIsLocked ? 'true' : 'false');
+			sb.append(',"isRemoved":');
+			sb.append(user.btIsRemoved ? 'true' : 'false');
 			sb.append(',"isProtected":');
 			sb.append(user.btIsProtected ? 'true' : 'false');
 			sb.append(',"passwordLastSetOn":"');

@@ -1,6 +1,4 @@
-component name="BaseDomain" accessors="true" {
-	property name="formatterService" inject="formatterService";
-	property string dataDir;
+component name="BaseDomain" accessors=true {
 	property string idField;
 
 	public numeric function getID() {
@@ -33,7 +31,7 @@ component name="BaseDomain" accessors="true" {
 	}
 
 	function convertDataPathToRelativeLink (inputPath) {
-		var dataDir = replace(replace(expandPath(dataDir), "\", "/", "all"), "/data", "");
+		var dataDir = replace(replace(expandPath(''), "\", "/", "all"), "/data", "");
 		inputPath = replace(inputPath, "\", "/", "all");
 		inputPath = replaceNoCase(inputPath, dataDir, "");
 		return inputPath;

@@ -25,7 +25,8 @@
         "testbox":"testbox/"
     },
     "dependencies":{
-        "coldbox":"^5.0.0"
+        "coldbox":"^5.0.0",
+        "testbox":"^3.0.0-snapshot"
     },
     "scripts":{}
 }

@@ -1,7 +1,7 @@
 <cfoutput>
 	<div class="row mt-3">
 		<div class="offset-1 col-10">
-			<form class="form-horizontal" method="post" action="#event.buildLink(rc.xeh.processForgotPassword)#">
+			<form class="form-horizontal" method="post" action="#event.buildLink(prc.xeh.processForgotPassword)#">
 				<fieldset>
 					<legend>Forgot Password</legend>
 					<div class="form-group">

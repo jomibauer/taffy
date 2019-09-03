@@ -1,7 +1,9 @@
-component accessors="true" extends="baseService" singleton=true {
+component accessors=true extends="baseService" singleton=true {
 
 	property name="groupGateway" inject="groupGateway";
 	property name="userService" inject="userService";
+
+	property name="never" inject="coldbox:setting:never";
 
 	private any function create (required any group) {
 		if (groupGateway.getGroupIDByGroupName(group.getVcGroupName())) {
@@ -43,7 +45,10 @@ component accessors="true" extends="baseService" singleton=true {
 	}
 
 	function getEmptyDomain () {
-		return new model.domains.Group();
+		var emptyGroup = new model.domains.Group();
+		emptyGroup.setDtCreatedOn(never);
+		emptyGroup.setDtLastModifiedOn(never);
+		return emptyGroup;
 	}
 
 	public any function populate (required any group, required struct data ) {
@@ -53,6 +58,8 @@ component accessors="true" extends="baseService" singleton=true {
 		group.setVcGroupAbbr(data.vcGroupAbbr);
 		group.setVcGroupEmail(data.vcGroupEmail);
 		group.setVcGroupDesc(data.vcGroupDesc);
+		group.setBtIsProtected(data.btIsProtected);
+		group.setBtIsRemoved(data.btIsRemoved);
 		group.setDtCreatedOn(data.dtCreatedOn);
 		group.setIntCreatedBy(data.intCreatedBy);
 		group.setDtLastModifiedOn(data.dtLastModifiedOn);

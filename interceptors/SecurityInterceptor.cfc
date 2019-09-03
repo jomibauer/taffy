@@ -30,27 +30,27 @@ component extends="coldbox.system.Interceptor" cache="false" {
 	public void function checkConfig() {
 
 		if (!structKeyExists(variables.config,"nonSecuredHandlers")) {
-			throw(message="SecurityInterceptor: Missing config setting  for nonSecuredHandlers.  Please call setNonSecuredHandlers() in the config.");
+			throw(message="SecurityInterceptor: Missing config setting for nonSecuredHandlers. Please call setNonSecuredHandlers() in the config.");
 		}
 
 		if (!structKeyExists(variables.config,"nonSecuredEvents")) {
-			throw(message="SecurityInterceptor: Missing config setting  for nonSecuredEvents.  Please call setNonSecuredEvents() in the config.");
+			throw(message="SecurityInterceptor: Missing config setting for nonSecuredEvents. Please call setNonSecuredEvents() in the config.");
 		}
 
 		if (!structKeyExists(variables.config,"loginFormEvent")) {
-			throw(message="SecurityInterceptor: Missing config setting  for loginFormEvent.  Please call setLoginFormEvent() in the config.");
+			throw(message="SecurityInterceptor: Missing config setting for loginFormEvent. Please call setLoginFormEvent() in the config.");
 		}
 
 		if (!structKeyExists(variables.config,"loginSubmitEvent")) {
-			throw(message="SecurityInterceptor: Missing config setting  for loginSubmitEvent.  Please call setLoginSubmitEvent() in the config.");
+			throw(message="SecurityInterceptor: Missing config setting for loginSubmitEvent. Please call setLoginSubmitEvent() in the config.");
 		}
 
 		if (!structKeyExists(variables.config,"logoutSubmitEvent")) {
-			throw(message="SecurityInterceptor: Missing config setting  for logoutSubmitEvent.  Please call setLogoutSubmitEvent() in the config.");
+			throw(message="SecurityInterceptor: Missing config setting for logoutSubmitEvent. Please call setLogoutSubmitEvent() in the config.");
 		}
 
 		if (!structKeyExists(variables.config,"resetPasswordFormEvent")) {
-			throw(message="SecurityInterceptor: Missing config setting for resetPasswordFormEvent.  Please call setResetPasswordFormEvent() in the config.");
+			throw(message="SecurityInterceptor: Missing config setting for resetPasswordFormEvent. Please call setResetPasswordFormEvent() in the config.");
 		}
 
 	}
@@ -89,7 +89,6 @@ component extends="coldbox.system.Interceptor" cache="false" {
 
 		param name="session.user" default="#userService.getEmptyDomain()#";
 		param name="session.messenger" default="#new model.domains.Messenger()#";
-		param name="session.flash" default="#new model.domains.FlashStorage()#";
 
 		/* make sure the messenger exists */
 		if (!structKeyExists(session,"messenger") || event.getValue("clearSession",false) || event.valueExists("fwreinit") || event.getValue("appreinit",false)) {
@@ -130,21 +129,17 @@ component extends="coldbox.system.Interceptor" cache="false" {
 				} else {
 					/* failed authentication */
 					session.user.setIsLoggedIn(false);
-
-					rc.loginError = true;
 					session.messenger.addAlert(messageType="ERROR",message="Invalid Username and/or Password",messageDetail="",field="username");
 
-					relocate(event=variables.config.loginFormEvent,queryString="authenticationError",persist="requestedPage,loginError");
+					relocate(event=variables.config.loginFormEvent);
 				}
 			}
 		}
-
 
 		if (local.isSecuredEvent && !session.user.isLoggedIn()) {
 			saveAttemptedURL(arguments.event);
 			relocate(event=variables.config.loginFormEvent);
 		}
-
 	}
 
 	public void function saveAttemptedURL(required any event) {
