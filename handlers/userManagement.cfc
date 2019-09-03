@@ -218,6 +218,16 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="main/index");
 		}
 
+		if (rc.user.btIsProtected()) {
+			session.messenger.addAlert(
+				messageType="SUCCESS"
+					, message="Protected users cannot be removed."
+					, messageDetail=""
+					, field="");
+
+			relocate(uri="/userManagement/viewUserDetail/#rc.userID#");
+		}
+
 		rc.user.setBtIsRemoved(true);
 		rc.user.setIntLastModifiedBy(session.user.getIntUserID());
 		rc.user.setDtLastModifiedOn(now());
