@@ -36,7 +36,7 @@
 		//Grab Exception From private request collection, placed by ColdBox Exception Handling
 		var exception = prc.exception;
 		//Place exception handler below:
-		writeDump(exception);
+		writeDump(exception.getExceptionStruct());
 		abort;
 	}
 
