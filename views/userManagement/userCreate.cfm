@@ -222,11 +222,15 @@
 				<div class="card bg-light">
 					<p class="card-body mb-0">Fields that are <strong>bold</strong> are required.</p>
 					<p class="card-body mb-0">You will be able to add groups for this user in the next step.</p>
-					<p class="card-body mb-0">The user will be able to edit this information for themselves once they log in through
-						Account Settings.</p>
-					<p class="card-body mb-0">You can choose to have the system generate a temporary password which will be emailed to the new user
-						with instructions on how to log in and change their password, or you can set the initial password
-						for the user and optionally send it in an email.</p>
+					<p class="card-body mb-0">
+						The user will be able to edit this information for themselves
+						once they log in through Account Settings.
+					</p>
+					<p class="card-body mb-0">
+						You can choose to have the system generate a temporary password which will be emailed to the
+						new user with instructions on how to log in and change their password, or you can set the
+						initial password for the user and optionally send it in an email.
+					</p>
 				</div>
 			</div>
 		</div>
