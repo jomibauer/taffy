@@ -103,10 +103,10 @@ component extends="coldbox.system.EventHandler" {
 		populateModel(rc.user);
 
 		if ( hasError ) {
-			flash.put(name="user", value=rc.user, inflateToRC=true, inflateToPRC=false);
-			flash.put(name="generatePassword", value=rc.generatePassword, inflateToRC=true, inflateToPRC=false);
-			flash.put(name="requireUserToChangePassword", value=rc.requireUserToChangePassword, inflateToRC=true, inflateToPRC=false);
-			flash.put(name="sendLoginInstructions", value=rc.sendLoginInstructions, inflateToRC=true, inflateToPRC=false);
+			flash.put(name="user", value=rc.user);
+			flash.put(name="generatePassword", value=rc.generatePassword);
+			flash.put(name="requireUserToChangePassword", value=rc.requireUserToChangePassword);
+			flash.put(name="sendLoginInstructions", value=rc.sendLoginInstructions);
 
 			relocate(event='userManagement/viewUserCreate');
 		}
@@ -302,7 +302,7 @@ component extends="coldbox.system.EventHandler" {
 
 		//redirectCustomURL( string uri, string preserve = 'none', statusCode = '302' )
 		if ( hasError ) {
-			flash.put(name="user", value=rc.user, inflateToRC=true, inflateToPRC=false);
+			flash.put(name="user", value=rc.user);
 
 			if (rc.referringAction == "userManagement/viewUserUpdate") {
 				relocate(uri='userManagement/viewUserUpdate/#rc.user.getIntUserID()#');
@@ -556,7 +556,7 @@ component extends="coldbox.system.EventHandler" {
 		populateModel(rc.group);
 
 		if ( hasError ) {
-			flash.put(name="group", value=rc.group, inflateToRC=true, inflateToPRC=false);
+			flash.put(name="group", value=rc.group);
 			relocate(uri='userManagement/viewGroupUpdate/#rc.group.getIntGroupID()#');
 		}
 
