@@ -53,8 +53,6 @@
 							<td class="text-center">
 								<cfif prc.qUsers.btIsActive>
 									<span class="text-white font-weight-bold bg-success pl-2 pr-2">Active</span>
-								<cfelseif prc.qUsers.btIsLocked>
-									<span class="text-white font-weight-bold bg-danger pl-2 pr-2">Locked</span>
 								<cfelse>
 									<span class="text-white font-weight-bold bg-danger pl-2 pr-2">Inactive</span>
 								</cfif>

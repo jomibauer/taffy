@@ -1,12 +1,12 @@
 component name="Group" accessors=true extends="BaseDomain" {
 
-	property name="formatterService" inject="formatterService";
-
 	property Numeric intGroupID;
 	property String vcGroupName;
 	property String vcGroupAbbr;
 	property String vcGroupEmail;
 	property String vcGroupDesc;
+	property boolean btIsProtected;
+	property boolean btIsRemoved;
 	property date dtCreatedOn;
 	property Numeric intCreatedBy;
 	property date dtLastModifiedOn;
@@ -21,9 +21,11 @@ component name="Group" accessors=true extends="BaseDomain" {
 		setVcGroupAbbr("");
 		setVcGroupEmail("");
 		setVcGroupDesc("");
-		setDtCreatedOn(variables.instance.never);
+		setBtIsProtected(false);
+		setBtIsRemoved(false);
+		//setDtCreatedOn(variables.instance.never);
 		setIntCreatedBy(0);
-		setDtLastModifiedOn(variables.instance.never);
+		//setDtLastModifiedOn(variables.instance.never);
 		setIntLastModifiedBy(0);
 
 		return this;
@@ -36,7 +38,9 @@ component name="Group" accessors=true extends="BaseDomain" {
 		sb.append(', "vcGroupAbbr":' & serializeJSON(getVcGroupAbbr()));
 		sb.append(', "vcGroupEmail":' & serializeJSON(getVcGroupEmail()));
 		sb.append(', "vcGroupDesc":' & serializeJSON(getVcGroupDesc()));
-		sb.append(', "dtCreatedOn":"' & serializeJSON(getDtCreatedOn()));
+		sb.append(', "btIsProtected":' & serializeJSON(getBtIsProtected()));
+		sb.append(', "btIsRemoved":' & serializeJSON(getBtIsRemoved()));
+		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
 		sb.append(', "dtLastModifiedOn":"' & serializeJSON(getDtLastModifiedOn()));
 		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
@@ -51,6 +55,9 @@ component name="Group" accessors=true extends="BaseDomain" {
 		sb.append(', "vcGroupAbbr":' & serializeJSON(getVcGroupAbbr()));
 		sb.append(', "vcGroupEmail":' & serializeJSON(getVcGroupEmail()));
 		sb.append(', "vcGroupDesc":' & serializeJSON(getVcGroupDesc()));
+		sb.append(', "btIsProtected":' & serializeJSON(getBtIsProtected()));
+		sb.append(', "btIsRemoved":' & serializeJSON(getBtIsRemoved()));
+		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
 		sb.append(', "dtLastModifiedOn":' & serializeJSON(getDtLastModifiedOn()));

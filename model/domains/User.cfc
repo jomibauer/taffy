@@ -1,6 +1,4 @@
 component name="User" accessors=true extends="BaseDomain" {
-	property name="never" inject="coldbox:setting:never";
-
 	property Numeric intUserID;
 	property String vcUsername;
 	property String vcEmail;
@@ -26,7 +24,7 @@ component name="User" accessors=true extends="BaseDomain" {
 	property String vcPhone2;
 	property boolean btIsActive;
 	property boolean btIsProtected;
-	property boolean btIsLocked;
+	property boolean btIsRemoved;
 	property date dtCreatedOn;
 	property Numeric intCreatedBy;
 	property String vcCreatedByIP;
@@ -52,10 +50,10 @@ component name="User" accessors=true extends="BaseDomain" {
 		setVcNameSuffix("");
 		setVcPassword("");
 		setBtIsPasswordExpired(false);
-		setDtPasswordLastSetOn(variables.instance.never);
+		//setDtPasswordLastSetOn(variables.instance.never);
 		setIntPasswordLastSetBy(0);
 		setVcPasswordLastSetByIP("");
-		setDtLastLoggedInOn(variables.instance.never);
+		//setDtLastLoggedInOn(variables.instance.never);
 		setVcAddress1("");
 		setVcAddress2("");
 		setVcAddress3("");
@@ -67,11 +65,11 @@ component name="User" accessors=true extends="BaseDomain" {
 		setVcPhone2("");
 		setBtIsActive(false);
 		setBtIsProtected(false);
-		setBtIsLocked(false);
-		setDtCreatedOn(variables.instance.never);
+		setBtIsRemoved(false);
+		//setDtCreatedOn(variables.instance.never);
 		setIntCreatedBy(0);
 		setVcCreatedByIP("");
-		setDtLastModifiedOn(variables.instance.never);
+		//setDtLastModifiedOn(variables.instance.never);
 		setIntLastModifiedBy(0);
 		setVcLastModifiedByIP("");
 
@@ -98,8 +96,8 @@ component name="User" accessors=true extends="BaseDomain" {
 		return variables.btIsProtected;
 	}
 
-	public boolean function btIsLocked() {
-		return variables.btIsLocked;
+	public boolean function btIsRemoved() {
+		return variables.btIsRemoved;
 	}
 
 	public array function getUserGroups () {
@@ -203,7 +201,7 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "vcPhone2":' & serializeJSON(getVcPhone2()));
 		sb.append(', "btIsActive":' & (getBtIsActive() ? 'true' : 'false'));
 		sb.append(', "btIsProtected":' & (getBtIsProtected() ? 'true' : 'false'));
-		sb.append(', "btIsLocked":' & (getBtIsLocked() ? 'true' : 'false'));
+		sb.append(', "btIsRemoved":' & (getBtIsRemoved() ? 'true' : 'false'));
 		sb.append(', "dtCreatedOn":"' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));
@@ -254,7 +252,7 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "vcPhone2":' & serializeJSON(getVcPhone2()));
 		sb.append(', "btIsActive":' & (getBtIsActive() ? 'true' : 'false'));
 		sb.append(', "btIsProtected":' & (getBtIsProtected() ? 'true' : 'false'));
-		sb.append(', "btIsLocked":' & (getBtIsLocked() ? 'true' : 'false'));
+		sb.append(', "btIsRemoved":' & (getBtIsRemoved() ? 'true' : 'false'));
 		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));

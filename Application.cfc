@@ -21,7 +21,7 @@ component{
 	COLDBOX_APP_KEY 		= "";
 
 	private string function getDSN() {
-		return "fw1base";
+		return "coldboxbase";
 	}
 
 	// application start

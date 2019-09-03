@@ -96,7 +96,7 @@ component extends="coldbox.system.EventHandler" {
 		rc.vcLastModifiedByIP = cgi.remote_addr;
 		rc.btIsActive = true;
 		rc.btIsProtected = false;
-		rc.btIsLocked = false;
+		rc.btIsRemoved = false;
 
 		var hasError = userService.validateCreate(rc, session.messenger);
 
@@ -219,7 +219,7 @@ component extends="coldbox.system.EventHandler" {
 		}
 
 		rc.user.setBtIsRemoved(true);
-		rc.user.setIntLastModifiedBy(session.user.getIntUserID);
+		rc.user.setIntLastModifiedBy(session.user.getIntUserID());
 		rc.user.setDtLastModifiedOn(now());
 
 		rc.user = userService.save(rc.user);

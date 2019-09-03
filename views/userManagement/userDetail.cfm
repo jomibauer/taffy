@@ -146,7 +146,7 @@
 						</cfloop>
 					</ul>
 
-					<cfif NOT prc.isAccountDetail AND (NOT rc.user.getBtIsProtected() OR session.user.isUserInGroup("ADMIN")) >
+					<cfif NOT prc.isAccountDetail AND NOT rc.user.getBtIsProtected() >
 						<select id="newGroupID" class="addGroupSelect form-control" >
 							<option value="-1" data-user-id="-1" data-group-id="-1" disabled="true" selected="true">- Choose Group -</option>
 							<cfloop array="#prc.groups#" item="variables.group">
@@ -171,49 +171,39 @@
 				</div>
 			</div>
 
-			<cfif NOT prc.isAccountDetail AND false> <!---remove process not implemented yet--->
-				<div class="card bg-light mb-3">
-					<div id="removeCardBody" class="card-body">
-
-						<p>To remove this user, click the button below.</p>
-						<a id="removeBtn" class="btn btn-primary text-white">Remove User</a>
-
-					</div>
-					<div id="removeCardBodyConfirm" class="card-body" style="display:none;">
-
-						<p class="text-danger font-weight-bold" >Are you sure you want to remove this user? This cannot be undone.</p>
-						<a id="removeBtnCancel" class="btn btn-primary text-white mb-3">No, cancel removing this user</a>
-						<a href="#event.buildLink(prc.xeh.processUserRemove & "/" & rc.userID)#" class="btn btn-danger text-white">Yes, remove this user</a>
-
-					</div>
-				</div>
-			</cfif>
-
-
-
 			<cfif prc.isAccountDetail>
 				<div class="card bg-light mb-3">
 					<div class="card-body">
-
 						<p>To change your password, click the button below.</p>
 						<a href="#event.buildLink(prc.xeh.viewChangePassword)#" class="btn btn-primary">Change Password</a>
-
 					</div>
 				</div>
 			<cfelse>
 				<div class="card bg-light mb-3">
 					<div class="card-body">
-
 						<p>To require the user to change their password, click the button below.</p>
 						<a href="#event.buildLink(to=prc.xeh.processUserExpirePassword, queryString="userID=" & rc.userID)#" class="btn btn-primary">Require user to Change Password</a>
+					</div>
+				</div>
+			</cfif>
 
+			<cfif NOT prc.isAccountDetail AND NOT rc.user.btIsProtected()>
+				<div class="card bg-light mb-3">
+					<div id="removeCardBody" class="card-body">
+						<p>To remove this user, click the button below.</p>
+						<a id="removeBtn" class="btn btn-primary text-white">Remove User</a>
+					</div>
+					<div id="removeCardBodyConfirm" class="card-body" style="display:none;">
+						<p class="text-danger font-weight-bold" >Are you sure you want to remove this user? This cannot be undone.</p>
+						<a id="removeBtnCancel" class="btn btn-primary text-white mb-3">No, cancel removing this user</a>
+						<a href="#event.buildLink(prc.xeh.processUserRemove & "?userID=" & rc.userID)#" class="btn btn-danger text-white">Yes, remove this user</a>
 					</div>
 				</div>
 			</cfif>
 		</div>
 	</div>
 
-	<cfif !prc.isAccountDetail AND (!rc.user.getBtIsLocked() OR session.user.hasRole("GLOBAL", "GLOBAL", "ADMIN"))>
+	<cfif NOT prc.isAccountDetail AND NOT rc.user.getBtIsProtected() >
 		<script>
 			var PAGE = {
 				arAllGroups: JSON.parse('#prc.groupsJSON#'),
