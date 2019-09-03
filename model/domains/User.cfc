@@ -1,4 +1,4 @@
-component name="User" accessors="true" extends="BaseDomain" {
+component name="User" accessors=true extends="BaseDomain" {
 	property name="never" inject="coldbox:setting:never";
 
 	property Numeric intUserID;

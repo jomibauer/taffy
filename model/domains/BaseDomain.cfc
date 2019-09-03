@@ -1,4 +1,4 @@
-component name="BaseDomain" accessors="true" {
+component name="BaseDomain" accessors=true {
 	property name="formatterService" inject="formatterService";
 	property string dataDir;
 	property string idField;

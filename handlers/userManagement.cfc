@@ -43,7 +43,7 @@ component extends="coldbox.system.EventHandler" {
 		event.setView("userManagement/userList");
 	}
 
-	function ajaxSearchUsers (event,rc,prc) output="false" renderdata="json" {
+	function ajaxSearchUsers (event,rc,prc) output=false renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			relocate(event="main/index");
 		}
@@ -68,8 +68,7 @@ component extends="coldbox.system.EventHandler" {
 		param name="rc.requireUserToChangePassword" default=false;
 		param name="rc.sendLoginInstructions" default=false;
 
-		// @jquery-autocomplete (<- search for this tag to find other places where jquery-autocomplete is being documented)
-		// here we are setting prc.statesArray for use in the javascript at the bottom of userCreate.js
+        prc.formatterService = formatterService;
 		prc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
 
 		prc.xeh.viewUserCreate = "userManagement/viewUserCreate";
@@ -87,8 +86,8 @@ component extends="coldbox.system.EventHandler" {
 		rc.intCreatedBy = session.user.getIntUserID();
 		rc.user = userService.getEmptyDomain();
 
-		param name="rc.requireUserToChangePassword" default="false";
-		param name="rc.sendLoginInstructions" default="false";
+		param name="rc.requireUserToChangePassword" default=false;
+		param name="rc.sendLoginInstructions" default=false;
 
 		rc.dtCreatedOn = now();
 		rc.dtLastModifiedOn = rc.dtCreatedOn;
@@ -329,7 +328,7 @@ component extends="coldbox.system.EventHandler" {
 		}
 	}
 
-	function ajaxIsUsernameAvailable (event,rc,prc) output="false" renderdata="json" {
+	function ajaxIsUsernameAvailable (event,rc,prc) output=false renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			relocate(event="main/index");
 		}
@@ -349,7 +348,7 @@ component extends="coldbox.system.EventHandler" {
 		return true;
 	}
 
-	function ajaxIsEmailAvailable (event,rc,prc) output="false" renderdata="json"{
+	function ajaxIsEmailAvailable (event,rc,prc) output=false renderdata="json"{
 		// IWB - 2015/02/11
 		// I'm not going to limit this to only users in USERMANAGE because 
 		// we need this for the updateAccount() event which can be used by any user.
@@ -368,7 +367,7 @@ component extends="coldbox.system.EventHandler" {
 		return true;
 	}
 
-	function ajaxAddUserToGroup (event,rc,prc) output="false" renderdata="json"{
+	function ajaxAddUserToGroup (event,rc,prc) output=false renderdata="json"{
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			relocate(event="main/index");
 		}
@@ -382,7 +381,7 @@ component extends="coldbox.system.EventHandler" {
 		return true;
 	}
 
-	function ajaxRemoveUserFromGroup (event,rc,prc)output="false" renderdata="json" {
+	function ajaxRemoveUserFromGroup (event,rc,prc)output=false renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			relocate(event="main/index");
 		}
@@ -451,7 +450,7 @@ component extends="coldbox.system.EventHandler" {
 		event.setView("userManagement/groupCreate");
 	}
 
-	function ajaxIsGroupNameAvailable(event,rc,prc) output="false" renderdata="json" {
+	function ajaxIsGroupNameAvailable(event,rc,prc) output=false renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			return false;
 		}
@@ -471,7 +470,7 @@ component extends="coldbox.system.EventHandler" {
 		return true;
 	}
 
-	function ajaxIsGroupAbbrAvailable(event,rc,prc) output="false" renderdata="json" {
+	function ajaxIsGroupAbbrAvailable(event,rc,prc) output=false renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
 			return false;
 		}

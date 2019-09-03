@@ -1,4 +1,4 @@
-component accessors="true" extends="baseService" singleton=true {
+component accessors=true extends="baseService" singleton=true {
 
 	property name="groupGateway" inject="groupGateway";
 	property name="userService" inject="userService";

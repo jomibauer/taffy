@@ -6,6 +6,8 @@ component accessors=true extends="baseService" singleton=true {
 
 	property name="appName" inject="coldbox:setting:appName";
 	property name="forgotPasswordEmailFrom" inject="coldbox:setting:forgotPasswordEmailFrom";
+	property name="loginInstructionsEmailFrom" inject="coldbox:setting:loginInstructionsEmailFrom";
+	property name="loginURL" inject="coldbox:setting:loginURL";
 	property name="passwordRotation" inject="coldbox:setting:passwordRotation";
 
 	private any function create (required any user) {
