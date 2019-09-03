@@ -31,6 +31,14 @@ component name="Group" accessors=true extends="BaseDomain" {
 		return this;
 	}
 
+	public boolean function btIsProtected() {
+		return variables.btIsProtected;
+	}
+
+	public boolean function btIsRemoved() {
+		return variables.btIsRemoved;
+	}
+
 	public string function toJSON() {
 		var sb = createObject("java","java.lang.StringBuffer").init("{");
 		sb.append('"intGroupID":' & getIntGroupID());
@@ -42,7 +50,7 @@ component name="Group" accessors=true extends="BaseDomain" {
 		sb.append(', "btIsRemoved":' & serializeJSON(getBtIsRemoved()));
 		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
-		sb.append(', "dtLastModifiedOn":"' & serializeJSON(getDtLastModifiedOn()));
+		sb.append(', "dtLastModifiedOn":' & serializeJSON(getDtLastModifiedOn()));
 		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
 		sb.append("}");
 		return sb.toString();
@@ -57,7 +65,6 @@ component name="Group" accessors=true extends="BaseDomain" {
 		sb.append(', "vcGroupDesc":' & serializeJSON(getVcGroupDesc()));
 		sb.append(', "btIsProtected":' & serializeJSON(getBtIsProtected()));
 		sb.append(', "btIsRemoved":' & serializeJSON(getBtIsRemoved()));
-		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
 		sb.append(', "intCreatedBy":' & getIntCreatedBy());
 		sb.append(', "dtLastModifiedOn":' & serializeJSON(getDtLastModifiedOn()));

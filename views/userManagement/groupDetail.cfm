@@ -48,7 +48,24 @@
 					<a href="#event.buildLink(prc.xeh.viewGroupUpdate & "/" & rc.group.getIntGroupID())#" class="btn btn-primary">Update Group</a>
 				</div>
 			</div>
+
+			<cfif NOT rc.group.btIsProtected()>
+				<div class="card bg-light mb-3">
+					<div id="removeCardBody" class="card-body">
+						<p>To remove this group, click the button below.</p>
+						<a id="removeBtn" class="btn btn-primary text-white">Remove Group</a>
+					</div>
+					<div id="removeCardBodyConfirm" class="card-body" style="display:none;">
+						<p class="text-danger font-weight-bold" >Are you sure you want to remove this group? All users will be removed from this group and this cannot be undone.</p>
+						<a id="removeBtnCancel" class="btn btn-primary text-white mb-3">No, cancel removing this group</a>
+						<a href="#event.buildLink(prc.xeh.processGroupRemove & "?groupID=" & rc.groupID)#" class="btn btn-danger text-white">Yes, remove this group</a>
+					</div>
+				</div>
+			</cfif>
 		</div>
 	</div>
+
+
+	<script src="includes/js/userManagement/groupDetail.js"></script>
 
 </cfoutput>

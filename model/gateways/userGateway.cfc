@@ -603,7 +603,10 @@
 		<cfquery name="qGetGroupsForUser">
 			SELECT tblUser_Group.intGroupID
 			FROM dbo.tblUser_Group
+			JOIN tblGroup
+				ON tblUser_Group.intGroupID = tblGroup.intGroupID
 			WHERE tblUser_Group.intUserID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.intUserID#" />
+				AND tblGroup.btIsRemoved = 0
 		</cfquery>
 
 	<cfreturn qGetGroupsForUser />
@@ -626,6 +629,7 @@
 				ON tblUser_Group.intUserID = tblUser.intUserID
 			WHERE tblGroup.vcGroupAbbr = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.vcGroupAbbr#" />
 	            AND tblUser.btIsRemoved = 0
+	            AND tblGroup.btIsRemoved = 0
 			ORDER BY tblUser.vcUsername ASC
 		</cfquery>
 

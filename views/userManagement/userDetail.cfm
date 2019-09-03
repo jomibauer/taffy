@@ -138,9 +138,9 @@
 					<br />
 
 					<ul id="groupUL" class="p-0 mt-1">
-						<cfloop array="#rc.user.getUserGroups()#" item="variables.group">
-							<li class="#(session.user.isUserInGroup('ADMIN') OR session.user.isUserInGroup('USERMANAGE') ? 'group-item-remove' : '')# list-group-item" data-user-id="#rc.userID#" data-group-id="#variables.group.getIntGroupID()#" id="group_#variables.group.getIntGroupID()#">
-								#variables.group.getVcGroupName()#
+						<cfloop array="#rc.user.getUserGroups()#" item="group">
+							<li class="#(session.user.isUserInGroup('ADMIN') OR session.user.isUserInGroup('USERMANAGE') ? 'group-item-remove' : '')# list-group-item" data-user-id="#rc.userID#" data-group-id="#group.getIntGroupID()#" id="group_#group.getIntGroupID()#">
+								#group.getVcGroupName()#
 								<span class="oi oi-x float-right text-white"></span>
 							</li>
 						</cfloop>
@@ -149,7 +149,7 @@
 					<cfif NOT prc.isAccountDetail AND NOT rc.user.getBtIsProtected() >
 						<select id="newGroupID" class="addGroupSelect form-control" >
 							<option value="-1" data-user-id="-1" data-group-id="-1" disabled="true" selected="true">- Choose Group -</option>
-							<cfloop array="#prc.groups#" item="variables.group">
+							<cfloop array="#prc.groups#" item="group">
 								<option class="newGroupOption" value="#group.getIntGroupID()#" data-user-id="#rc.user.getIntUserID()#" data-group-id="#group.getIntGroupID()#">#group.getVcGroupName()#</option>
 							</cfloop>
 						</select>
@@ -219,7 +219,6 @@
 			</cfif>
 		</div>
 	</div>
-
 	<cfif NOT prc.isAccountDetail AND NOT rc.user.getBtIsProtected() >
 		<script>
 			var PAGE = {
@@ -235,4 +234,3 @@
 		<script src="includes/js/userManagement/userDetail.js"></script>
 	</cfif>
 </cfoutput>
-

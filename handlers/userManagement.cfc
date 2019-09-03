@@ -518,8 +518,42 @@ component extends="coldbox.system.EventHandler" {
 
 		prc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
 		prc.xeh.viewGroupUpdate = "userManagement/viewGroupUpdate";
+		prc.xeh.processGroupRemove = "userManagement/processGroupRemove";
 		event.setView("userManagement/groupDetail");
 	}
+
+    function processGroupRemove (event,rc,prc) {
+        if ( !session.user.isUserInGroup("USERMANAGE") ) {
+            relocate(event="main/index");
+        }
+
+        if (isNull(rc.groupID) || !isNumeric(rc.groupID)) {
+            relocate(event="main/index");
+        }
+
+        rc.group = groupService.load(rc.groupID);
+        if (rc.group.getIntGroupID() != rc.groupID) {
+            relocate(event="main/index");
+        }
+
+        if (rc.group.btIsProtected()) {
+            session.messenger.addAlert(
+                messageType="SUCCESS"
+                    , message="Protected groups cannot be removed."
+                    , messageDetail=""
+                    , field="");
+
+            relocate(uri="/userManagement/viewGroupDetail/#rc.groupID#");
+        }
+
+        rc.group.setBtIsRemoved(true);
+        rc.group.setIntLastModifiedBy(session.user.getIntUserID());
+        rc.group.setDtLastModifiedOn(now());
+
+        rc.group = groupService.save(rc.group);
+
+        relocate(event="userManagement/viewGroupList");
+    }
 
 	function viewGroupCreate (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {

@@ -23,8 +23,8 @@
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getVcGroupAbbr()#"/>	/* vcGroupAbbr - varchar (25) */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getVcGroupEmail()#"/>	/* vcGroupEmail - varchar (200) */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getVcGroupDesc()#"/>	/* vcGroupDesc - varchar (2000) */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getBtIsProtected()#"/>	/* btIsProtected - bit */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
+				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsProtected()#"/>	/* btIsProtected - bit */
+				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
 				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedBy()#"/>	/* intCreatedBy - int */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
@@ -45,8 +45,8 @@
 				, vcGroupAbbr = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getVcGroupAbbr()#"/>	/* vcGroupAbbr - varchar (25) */
 				, vcGroupEmail = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getVcGroupEmail()#"/>	/* vcGroupEmail - varchar (200) */
 				, vcGroupDesc = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getVcGroupDesc()#"/>	/* vcGroupDesc - varchar (2000) */
-				, btIsProtected = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getBtIsProtected()#"/>	/* btIsProtected - bit */
-				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.group.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
+				, btIsProtected = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsProtected()#"/>	/* btIsProtected - bit */
+				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, dtCreatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
 				, intCreatedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedBy()#"/>	/* intCreatedBy - int */
 				, dtLastModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
