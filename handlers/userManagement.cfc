@@ -163,6 +163,8 @@ component extends="coldbox.system.EventHandler" {
 		prc.xeh.viewUpdateAccount = "userManagement/viewUpdateAccount";
 		prc.xeh.viewChangePassword = "main/viewChangePassword";
 		prc.xeh.processUserExpirePassword = "userManagement/processUserExpirePassword";
+		prc.xeh.processUserDeactivate = "userManagement/processUserDeactivate";
+		prc.xeh.processUserActivate = "userManagement/processUserActivate";
 		prc.xeh.processUserRemove = "userManagement/processUserRemove";
 		prc.xeh.ajaxAddUserToGroup = "userManagement/ajaxAddUserToGroup";
 		prc.xeh.ajaxRemoveUserFromGroup = "userManagement/ajaxRemoveUserFromGroup";
@@ -198,6 +200,8 @@ component extends="coldbox.system.EventHandler" {
 		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
 		prc.xeh.viewChangePassword = "main/viewChangePassword";
 		prc.xeh.processUserExpirePassword = "userManagement/processUserExpirePassword";
+		prc.xeh.processUserDeactivate = "userManagement/processUserDeactivate";
+		prc.xeh.processUserActivate = "userManagement/processUserActivate";
 		prc.xeh.processUserRemove = "userManagement/processUserRemove";
 		prc.xeh.ajaxRemoveUserFromGroup = "userManagement/ajaxRemoveUserFromGroup";
 		prc.xeh.ajaxAddUserToGroup = "userManagement/ajaxAddUserToGroup";
@@ -274,6 +278,58 @@ component extends="coldbox.system.EventHandler" {
 			, message="The user will now be required to change their password the next time they log in."
 			, messageDetail=""
 			, field="");
+
+		relocate(uri="/userManagement/viewUserDetail/#rc.user.getIntUserID()#");
+	}
+
+	function processUserDeactivate (event,rc,prc) {
+		if ( !session.user.isUserInGroup("USERMANAGE") ) {
+			relocate(event="main/index");
+		}
+
+		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
+			relocate(event="main/index");
+		}
+
+		rc.user = userService.load(rc.userID);
+		if ( !rc.user.getIntUserID() ) {
+			relocate(event="main/index");
+		}
+
+		rc.user.setBtIsActive(false);
+		rc.user = userService.save(rc.user);
+
+		session.messenger.addAlert(
+			messageType="SUCCESS"
+				, message="The user is now deactivated."
+				, messageDetail=""
+				, field="");
+
+		relocate(uri="/userManagement/viewUserDetail/#rc.user.getIntUserID()#");
+	}
+
+	function processUserActivate(event,rc,prc) {
+		if ( !session.user.isUserInGroup("USERMANAGE") ) {
+			relocate(event="main/index");
+		}
+
+		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
+			relocate(event="main/index");
+		}
+
+		rc.user = userService.load(rc.userID);
+		if ( !rc.user.getIntUserID() ) {
+			relocate(event="main/index");
+		}
+
+		rc.user.setBtIsActive(true);
+		rc.user = userService.save(rc.user);
+
+		session.messenger.addAlert(
+			messageType="SUCCESS"
+				, message="The user is now active."
+				, messageDetail=""
+				, field="");
 
 		relocate(uri="/userManagement/viewUserDetail/#rc.user.getIntUserID()#");
 	}

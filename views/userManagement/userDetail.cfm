@@ -185,6 +185,23 @@
 						<a href="#event.buildLink(to=prc.xeh.processUserExpirePassword, queryString="userID=" & rc.userID)#" class="btn btn-primary">Require user to Change Password</a>
 					</div>
 				</div>
+
+
+				<cfif rc.user.getBtIsActive()>
+					<div class="card bg-light mb-3">
+						<div class="card-body">
+							<p>To deactivate this user, click the button below.</p>
+                            <a href="#event.buildLink(to=prc.xeh.processUserDeactivate, queryString="userID=" & rc.userID)#" class="btn btn-warning">Deactivate User</a>
+						</div>
+					</div>
+				<cfelse>
+					<div class="card bg-light mb-3">
+						<div class="card-body">
+							<p>To activate this user, click the button below.</p>
+                            <a href="#event.buildLink(to=prc.xeh.processUserActivate, queryString="userID=" & rc.userID)#" class="btn btn-primary">Activate User</a>
+						</div>
+					</div>
+				</cfif>
 			</cfif>
 
 			<cfif NOT prc.isAccountDetail AND NOT rc.user.btIsProtected()>
