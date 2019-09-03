@@ -2,7 +2,7 @@
 
 	<cfinclude template="includes/_menu.cfm" />
 
-	<cfif NOT rc.isAccountDetail>
+	<cfif NOT prc.isAccountDetail>
 		<div class="row">
 			<div class="col">
 				<ol class="breadcrumb">
@@ -124,14 +124,14 @@
 				<div class="row mb-3">
 					<label class="control-label col-3" for="phone1">Primary Phone:</label>
 					<div class="col-5">
-						<input type="text" id="phone1" name="vcPhone1" class="form-control <cfif session.messenger.fieldHasAlert("vcPhone1")>has-error</cfif>" value="#rc.formatterService.formatPhone(rc.user.getVcPhone1())#" />
+						<input type="text" id="phone1" name="vcPhone1" class="form-control <cfif session.messenger.fieldHasAlert("vcPhone1")>has-error</cfif>" value="#prc.formatterService.formatPhone(rc.user.getVcPhone1())#" />
 					</div>
 				</div>
 
 				<div class="row mb-3">
 					<label class="control-label col-3" for="phone2">Alternate Phone:</label>
 					<div class="col-5">
-						<input type="text" id="phone2" name="vcPhone2" class="form-control <cfif session.messenger.fieldHasAlert("vcPhone2")>has-error</cfif>" value="#rc.formatterService.formatPhone(rc.user.getVcPhone2())#" />
+						<input type="text" id="phone2" name="vcPhone2" class="form-control <cfif session.messenger.fieldHasAlert("vcPhone2")>has-error</cfif>" value="#prc.formatterService.formatPhone(rc.user.getVcPhone2())#" />
 					</div>
 				</div>
 
@@ -159,7 +159,7 @@
 				ajaxIsEmailAvailable: '#event.buildLink(prc.xeh.ajaxIsEmailAvailable)#'
 			},
 			userID: #rc.user.getIntUserID()#,
-			statesArray: JSON.parse('#rc.statesArray#')
+			statesArray: JSON.parse('#prc.statesArray#')
 		};
 	</script>
 

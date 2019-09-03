@@ -60,10 +60,9 @@
 
 	}
 
-
 	function viewLogin (event,rc,prc) {
 		if (session.user.isLoggedIn()) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		prc.xeh.processLogin = "main/processLogin";
@@ -73,7 +72,7 @@
 
 	function processLogin (event,rc,prc) {
 		//SecurityInterceptor should pick up and redirect to requested url, if not, default to index
-		relocate("main/index");
+		relocate(event="main/index");
 	}
 
 	function viewChangePassword (event,rc,prc) {

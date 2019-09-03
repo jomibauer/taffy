@@ -2,7 +2,7 @@
 
 	<cfinclude template="includes/_menu.cfm" />
 
-	<cfif NOT rc.isAccountDetail>
+	<cfif NOT prc.isAccountDetail>
 		<div class="row">
 			<div class="col">
 				<ol class="breadcrumb">
@@ -68,7 +68,7 @@
 						Phone:
 					</th>
 					<td>
-						#rc.formatterService.formatPhone(rc.user.getVcPhone1())#
+						#prc.formatterService.formatPhone(rc.user.getVcPhone1())#
 					</td>
 				</tr>
 				<cfif len(trim(rc.user.getVcPhone2()))>
@@ -77,17 +77,17 @@
 							Alternate Phone:
 						</th>
 						<td>
-							#rc.formatterService.formatPhone(rc.user.getVcPhone2())#
+							#prc.formatterService.formatPhone(rc.user.getVcPhone2())#
 						</td>
 					</tr>
 				</cfif>
-				<cfif NOT rc.isAccountDetail>
+				<cfif NOT prc.isAccountDetail>
 					<tr>
 						<th>
 							Created:
 						</th>
 						<td>
-							#rc.createdBy.getVcFirstName()# #rc.createdBy.getVcLastName()# &##64; #rc.formatterService.formatDateTime(rc.user.getDtCreatedOn())#
+							#rc.createdBy.getVcFirstName()# #rc.createdBy.getVcLastName()# &##64; #prc.formatterService.formatDateTime(rc.user.getDtCreatedOn())#
 						</td>
 					</tr>
 					<cfif dateCompare(rc.user.getDtLastModifiedOn(), getSetting("never")) != 0>
@@ -96,7 +96,7 @@
 								Last Modified:
 							</th>
 							<td>
-								#rc.lastModifiedBy.getVcFirstName()# #rc.lastModifiedBy.getVcLastName()# &##64; #rc.formatterService.formatDateTime(rc.user.getDtLastModifiedOn())#
+								#rc.lastModifiedBy.getVcFirstName()# #rc.lastModifiedBy.getVcLastName()# &##64; #prc.formatterService.formatDateTime(rc.user.getDtLastModifiedOn())#
 							</td>
 						</tr>
 					</cfif>
@@ -105,7 +105,7 @@
 							Password Last Set:
 						</th>
 						<td>
-							#rc.passwordLastSetBy.getVcFirstName()# #rc.passwordLastSetBy.getVcLastName()# &##64; #rc.formatterService.formatDateTime(rc.user.getDtPasswordLastSetOn())#
+							#rc.passwordLastSetBy.getVcFirstName()# #rc.passwordLastSetBy.getVcLastName()# &##64; #prc.formatterService.formatDateTime(rc.user.getDtPasswordLastSetOn())#
 							<cfif rc.user.getBtIsPasswordExpired()><span class="label label-danger">Expired</span></cfif>
 						</td>
 					</tr>
@@ -116,7 +116,7 @@
 						</th>
 						<td>
 							<cfif dateCompare(rc.user.getDtLastLoggedInOn(), getSetting("never")) != 0>
-								#rc.formatterService.formatDateTime(rc.user.getDtLastLoggedInOn())#
+								#prc.formatterService.formatDateTime(rc.user.getDtLastLoggedInOn())#
 							<cfelse>
 								Never
 							</cfif>
@@ -129,7 +129,7 @@
 			<div class="card bg-light mb-3">
 				<div class="card-body">
 
-					<cfif rc.isAccountDetail>
+					<cfif prc.isAccountDetail>
 						<strong>Your Groups</strong>
 					<cfelse>
 						<strong>#rc.user.getVcFirstName()# #rc.user.getVcLastName()#'s Groups</strong>
@@ -146,10 +146,10 @@
 						</cfloop>
 					</ul>
 
-					<cfif NOT rc.isAccountDetail AND (NOT rc.user.getBtIsProtected() OR session.user.isUserInGroup("ADMIN")) >
+					<cfif NOT prc.isAccountDetail AND (NOT rc.user.getBtIsProtected() OR session.user.isUserInGroup("ADMIN")) >
 						<select id="newGroupID" class="addGroupSelect form-control" >
 							<option value="-1" data-user-id="-1" data-group-id="-1" disabled="true" selected="true">- Choose Group -</option>
-							<cfloop array="#rc.groups#" item="variables.group">
+							<cfloop array="#prc.groups#" item="variables.group">
 								<option class="newGroupOption" value="#group.getIntGroupID()#" data-user-id="#rc.user.getIntUserID()#" data-group-id="#group.getIntGroupID()#">#group.getVcGroupName()#</option>
 							</cfloop>
 						</select>
@@ -160,7 +160,7 @@
 			<div class="card bg-light mb-3">
 				<div class="card-body">
 
-					<cfif rc.isAccountDetail>
+					<cfif prc.isAccountDetail>
 						<p>To update your account, click the button below.</p>
 						<a href="#event.buildLink(prc.xeh.viewUpdateAccount)#" class="btn btn-primary">Update Account</a>
 					<cfelse>
@@ -171,7 +171,7 @@
 				</div>
 			</div>
 
-			<cfif NOT rc.isAccountDetail AND false> <!---remove process not implemented yet--->
+			<cfif NOT prc.isAccountDetail AND false> <!---remove process not implemented yet--->
 				<div class="card bg-light mb-3">
 					<div id="removeCardBody" class="card-body">
 
@@ -191,7 +191,7 @@
 
 
 
-			<cfif rc.isAccountDetail>
+			<cfif prc.isAccountDetail>
 				<div class="card bg-light mb-3">
 					<div class="card-body">
 
@@ -213,10 +213,10 @@
 		</div>
 	</div>
 
-	<cfif !rc.isAccountDetail AND (!rc.user.getBtIsLocked() OR session.user.hasRole("GLOBAL", "GLOBAL", "ADMIN"))>
+	<cfif !prc.isAccountDetail AND (!rc.user.getBtIsLocked() OR session.user.hasRole("GLOBAL", "GLOBAL", "ADMIN"))>
 		<script>
 			var PAGE = {
-				arAllGroups: JSON.parse('#rc.groupsJSON#'),
+				arAllGroups: JSON.parse('#prc.groupsJSON#'),
 				userID: #rc.user.getIntUserID()#,
 				xeh: {
 					ajaxAddUserToGroup: '#event.buildLink(prc.xeh.ajaxAddUserToGroup)#',

@@ -89,7 +89,6 @@ component extends="coldbox.system.Interceptor" cache="false" {
 
 		param name="session.user" default="#userService.getEmptyDomain()#";
 		param name="session.messenger" default="#new model.domains.Messenger()#";
-		param name="session.flash" default="#new model.domains.FlashStorage()#";
 
 		/* make sure the messenger exists */
 		if (!structKeyExists(session,"messenger") || event.getValue("clearSession",false) || event.valueExists("fwreinit") || event.getValue("appreinit",false)) {

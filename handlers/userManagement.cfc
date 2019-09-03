@@ -8,8 +8,6 @@ component extends="coldbox.system.EventHandler" {
 /************************************** IMPLICIT ACTIONS *********************************************/
 
 	function preHandler(event,rc,prc){
-		session.flash.restore(event,rc,prc);
-
 		prc.hideMenu = false;
 
 		prc.xeh.viewUserList = "userManagement/viewUserList";
@@ -32,13 +30,12 @@ component extends="coldbox.system.EventHandler" {
 
 	function viewUserList (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
-		rc.qUsers = userService.getAllUsers();
-		rc.q = "";
+		prc.qUsers = userService.getAllUsers();
 
-		rc.formatterService = formatterService;
+		prc.formatterService = formatterService;
 
 		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
 		prc.xeh.viewUserCreate = "userManagement/viewUserCreate";
@@ -48,24 +45,22 @@ component extends="coldbox.system.EventHandler" {
 
 	function ajaxSearchUsers (event,rc,prc) output="false" renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		if ( !structKeyExists(rc, "q") || !structKeyExists(rc, "token") || !len(trim(rc.token)) ) {
 			return false;
 		}
 
-		var output = '{"token":' & rc.token & ', "data":' & userService.searchUsersJSON(rc.q) & '}';
+		var output = '{"token":' & rc.token & ', "data":' & userService.searchUsersJSON(prc.q) & '}';
 
 		return output;
 	}
 
 	function viewUserCreate (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
-
-		//rc.user might be coming from session.flash.restore(event,rc,prc) see before()
 
 		param name="rc.user" default=userService.load(0);
 
@@ -74,8 +69,8 @@ component extends="coldbox.system.EventHandler" {
 		param name="rc.sendLoginInstructions" default=false;
 
 		// @jquery-autocomplete (<- search for this tag to find other places where jquery-autocomplete is being documented)
-		// here we are setting rc.statesArray for use in the javascript at the bottom of userCreate.js
-		rc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
+		// here we are setting prc.statesArray for use in the javascript at the bottom of userCreate.js
+		prc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
 
 		prc.xeh.viewUserCreate = "userManagement/viewUserCreate";
 		prc.xeh.processUserCreate = "userManagement/processUserCreate";
@@ -86,7 +81,7 @@ component extends="coldbox.system.EventHandler" {
 
 	function processUserCreate (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		rc.intCreatedBy = session.user.getIntUserID();
@@ -109,12 +104,12 @@ component extends="coldbox.system.EventHandler" {
 		populateModel(rc.user);
 
 		if ( hasError ) {
-			session.flash.store(rc, "user");
-			session.flash.store(rc, "generatePassword");
-			session.flash.store(rc, "requireUserToChangePassword");
-			session.flash.store(rc, "sendLoginInstructions");
+			flash.put(name="user", value=rc.user, inflateToRC=true, inflateToPRC=false);
+			flash.put(name="generatePassword", value=rc.generatePassword, inflateToRC=true, inflateToPRC=false);
+			flash.put(name="requireUserToChangePassword", value=rc.requireUserToChangePassword, inflateToRC=true, inflateToPRC=false);
+			flash.put(name="sendLoginInstructions", value=rc.sendLoginInstructions, inflateToRC=true, inflateToPRC=false);
 
-			relocate(event='userManagement/viewUserCreate', preserve='user');
+			relocate(event='userManagement/viewUserCreate');
 		}
 
 		rc.user = userService.save(rc.user);
@@ -149,21 +144,20 @@ component extends="coldbox.system.EventHandler" {
 			, messageDetail=""
 			, field="");
 
-		rc.userID = rc.user.getIntUserID();
 		relocate(uri="/userManagement/viewUserDetail/#rc.user.getIntUserID()#");
 	}
 
 	function viewAccountDetail (event,rc,prc) {
-		rc.isAccountDetail = true;
+		prc.isAccountDetail = true;
 		rc.user = session.user;
 		rc.userID = session.user.getIntUserID();
 
 		rc.createdBy = userService.load(rc.user.getIntCreatedBy());
 		rc.lastModifiedBy = userService.load(rc.user.getIntLastModifiedBy());
 		rc.passwordLastSetBy = userService.load(rc.user.getIntPasswordLastSetBy());
-		rc.formatterService = formatterService;
-		rc.groups = groupService.getAllGroups();
-		rc.groupsJSON = groupService.getAllGroupsJSON();
+		prc.formatterService = formatterService;
+		prc.groups = groupService.getAllGroups();
+		prc.groupsJSON = groupService.getAllGroupsJSON();
 
 		prc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
 		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
@@ -179,14 +173,14 @@ component extends="coldbox.system.EventHandler" {
 
 	function viewUserDetail (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
 			relocate(event="main/index");
 		}
 
-		rc.isAccountDetail = false;
+		prc.isAccountDetail = false;
 
 		rc.user = userService.load(rc.userID);
 		if (!rc.user.getIntUserID()) {
@@ -196,9 +190,9 @@ component extends="coldbox.system.EventHandler" {
 		rc.createdBy = userService.load(rc.user.getIntCreatedBy());
 		rc.lastModifiedBy = userService.load(rc.user.getIntLastModifiedBy());
 		rc.passwordLastSetBy = userService.load(rc.user.getIntPasswordLastSetBy());
-		rc.formatterService = formatterService;
-		rc.groups = groupService.getAllGroups();
-		rc.groupsJSON = groupService.getAllGroupsJSON();
+		prc.formatterService = formatterService;
+		prc.groups = groupService.getAllGroups();
+		prc.groupsJSON = groupService.getAllGroupsJSON();
 
 		prc.xeh.viewUserUpdate = 'userManagement/viewUserUpdate';
 		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
@@ -215,10 +209,10 @@ component extends="coldbox.system.EventHandler" {
 	}
 
 	function viewUpdateAccount (event,rc,prc) {
-		rc.isAccountDetail = true;
+		prc.isAccountDetail = true;
 		rc.user = session.user;
-		rc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
-		rc.formatterService = formatterService;
+		prc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
+		prc.formatterService = formatterService;
 
 		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
 		prc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
@@ -231,7 +225,7 @@ component extends="coldbox.system.EventHandler" {
 
 	function processUserExpirePassword (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
@@ -252,12 +246,12 @@ component extends="coldbox.system.EventHandler" {
 			, messageDetail=""
 			, field="");
 
-		relocate(uri="/userManagement/viewUserDetail/#rc.userID#");
+		relocate(uri="/userManagement/viewUserDetail/#rc.user.getIntUserID()#");
 	}
 
 	function viewUserUpdate (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
@@ -270,9 +264,9 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="main/index");
 		}
 
-		rc.isAccountDetail = false;
-		rc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
-		rc.formatterService = formatterService;
+		prc.isAccountDetail = false;
+		prc.statesArray = ref_stateService.getAllStatesJSONforAutocomplete();
+		prc.formatterService = formatterService;
 
 		prc.xeh.viewUserDetail = "userManagement/viewUserDetail";
 		prc.xeh.viewUserUpdate = "userManagement/viewUserUpdate";
@@ -293,8 +287,8 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="main/index");
 		}
 
-		if (rc.user.getIntUserID() != session.user.getIntUserID() &&
-		    !session.user.isUserInGroup("USERMANAGE")) {
+		//if the user is trying to update another user and is not in the USERMANAGE group
+		if (rc.user.getIntUserID() != session.user.getIntUserID() && !session.user.isUserInGroup("USERMANAGE")) {
 			relocate(event="main/index");
 		}
 
@@ -309,16 +303,14 @@ component extends="coldbox.system.EventHandler" {
 
 		//redirectCustomURL( string uri, string preserve = 'none', statusCode = '302' )
 		if ( hasError ) {
-
-			session.flash.set("user", rc.user);
+			flash.put(name="user", value=rc.user, inflateToRC=true, inflateToPRC=false);
 
 			if (rc.referringAction == "userManagement/viewUserUpdate") {
-				relocate(event='userManagement/viewUserUpdate', append="userID", preserve='user');
+				relocate(uri='userManagement/viewUserUpdate/#rc.user.getIntUserID()#');
 			} else {
-				relocate(event='userManagement/viewUpdateAccount', append="userID", preserve='user');
+				relocate(uri='userManagement/viewUpdateAccount/#rc.user.getIntUserID()#');
 			}
 		} else {
-
 			rc.user = userService.save(rc.user);
 
 			session.messenger.addAlert(
@@ -330,27 +322,20 @@ component extends="coldbox.system.EventHandler" {
 			if (rc.referringAction == "userManagement/viewUpdateAccount") {
 			//it is account detail, update the in session user object
 				populateModel(session.user);
+				relocate(event="userManagement/viewAccountDetail");
+			} else {
+				relocate(uri='/userManagement/viewUserDetail/#rc.userID#');
 			}
 		}
-
-		if (rc.referringAction == "userManagement/viewUserUpdate") {
-			//must use custom url because we are redirecting to a route, can use :variable to pull data out of the rc
-			relocate(uri='/userManagement/viewUserDetail/#rc.userID#');
-		} else {
-			relocate(event="userManagement/viewAccountDetail");
-		}
-
 	}
 
 	function ajaxIsUsernameAvailable (event,rc,prc) output="false" renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
-		if( !structKeyExists(rc, "userID") ||
-			!isNumeric(rc.userID) ||
-			!structKeyExists(rc, "username") ||
-			!len(rc.username)) {
+		if( !structKeyExists(rc, "userID") || !isNumeric(rc.userID) ||
+			!structKeyExists(rc, "username") || !len(rc.username)) {
 
 			return false;
 		}
@@ -369,11 +354,8 @@ component extends="coldbox.system.EventHandler" {
 		// I'm not going to limit this to only users in USERMANAGE because 
 		// we need this for the updateAccount() event which can be used by any user.
 
-		if( !structKeyExists(rc, "userID") ||
-			!isNumeric(rc.userID) ||
-			!structKeyExists(rc, "email") ||
-			!len(rc.email)) {
-
+		if( !structKeyExists(rc, "userID") || !isNumeric(rc.userID) ||
+			!structKeyExists(rc, "email") || !len(rc.email)) {
 			return false;
 		}
 
@@ -388,7 +370,7 @@ component extends="coldbox.system.EventHandler" {
 
 	function ajaxAddUserToGroup (event,rc,prc) output="false" renderdata="json"{
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		if (isNull(rc.userID) || !isNumeric(rc.userID) || isNull(rc.groupID) || !isNumeric(rc.groupID)){
@@ -402,7 +384,7 @@ component extends="coldbox.system.EventHandler" {
 
 	function ajaxRemoveUserFromGroup (event,rc,prc)output="false" renderdata="json" {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		if (isNull(rc.userID) || !isNumeric(rc.userID) || isNull(rc.groupID) || !isNumeric(rc.groupID)){
@@ -416,10 +398,10 @@ component extends="coldbox.system.EventHandler" {
 
 	function viewGroupList (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
-		rc.groups = groupService.getAllGroups();
+		prc.groups = groupService.getAllGroups();
 
 		prc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
 		prc.xeh.viewGroupCreate = "userManagement/viewGroupCreate";
@@ -427,28 +409,27 @@ component extends="coldbox.system.EventHandler" {
 	}
 
 	function viewGroupDetail (event,rc,prc) {
-		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+		if (!session.user.isUserInGroup("USERMANAGE") ) {
+			relocate(event="main/index");
 		}
 
-		if (!structKeyExists(rc, "groupID") ||
-			!isNumeric(rc.groupID)) {
-			relocate(event = "userManagement/viewGroupList");
+		if (!structKeyExists(rc, "groupID") || !isNumeric(rc.groupID)) {
+			relocate(event="userManagement/viewGroupList");
 		}
 
 		rc.group = groupService.load(rc.groupID);
 		if (!rc.group.getIntGroupID()) {
-			relocate(event = "userManagement/viewGroupList");
+			relocate(event="userManagement/viewGroupList");
 		}
 
 		rc.createdBy = userService.load(rc.group.getIntCreatedBy());
 		rc.lastModifiedBy = userService.load(rc.group.getIntLastModifiedBy());
 
 		if (rc.group.getIntGroupID() != rc.groupID) {
-			relocate(event = "userManagement/viewGroupList");
+			relocate(event="userManagement/viewGroupList");
 		}
 
-		rc.formatterService = formatterService;
+		prc.formatterService = formatterService;
 
 		prc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
 		prc.xeh.viewGroupUpdate = "userManagement/viewGroupUpdate";
@@ -457,7 +438,7 @@ component extends="coldbox.system.EventHandler" {
 
 	function viewGroupCreate (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		param name="rc.group" default=groupService.load(0);
@@ -495,8 +476,7 @@ component extends="coldbox.system.EventHandler" {
 			return false;
 		}
 
-		if( !structKeyExists(rc, "vcGroupAbbr") ||
-			!len(rc.vcGroupAbbr)) {
+		if( !structKeyExists(rc, "vcGroupAbbr") || !len(rc.vcGroupAbbr)) {
 
 			return false;
 		}
@@ -512,7 +492,7 @@ component extends="coldbox.system.EventHandler" {
 
 	function processGroupCreate (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		rc.intCreatedBy = session.user.getIntUserID();
@@ -529,25 +509,24 @@ component extends="coldbox.system.EventHandler" {
 
 		rc.group = groupService.save(rc.group);
 
-		rc.groupID = rc.group.getIntGroupID();
-		relocate(uri="/userManagement/viewGroupDetail/:groupID");
+		relocate(uri="/userManagement/viewGroupDetail/#rc.group.getIntGroupID()#");
 
 	}
 
 	function viewGroupUpdate (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
 		if (!structKeyExists(rc, "groupID") ||
 			!isNumeric(rc.groupID)) {
-			relocate(event = "userManagement/groupList");
+			relocate(event="userManagement/groupList");
 		}
 
 		param name="rc.group" default=groupService.load(rc.groupID);
 
 		if (!rc.group.getIntGroupID()) {
-			relocate(event = "userManagement/groupList");
+			relocate(event="userManagement/groupList");
 		}
 
 		prc.xeh.viewGroupDetail = "userManagement/viewGroupDetail";
@@ -558,17 +537,16 @@ component extends="coldbox.system.EventHandler" {
 
 	function processGroupUpdate (event,rc,prc) {
 		if ( !session.user.isUserInGroup("USERMANAGE") ) {
-			relocate("main/index");
+			relocate(event="main/index");
 		}
 
-		if (!structKeyExists(rc, "groupID") ||
-			!isNumeric(rc.groupID)) {
-			relocate(event = "userManagement/viewGroupList");
+		if (!structKeyExists(rc, "groupID") || !isNumeric(rc.groupID)) {
+			relocate(event="userManagement/viewGroupList");
 		}
 
 		rc.group = groupService.load(rc.groupID);
 		if (!rc.group.getIntGroupID()) {
-			relocate(event = "userManagement/viewGroupList");
+			relocate(event="userManagement/viewGroupList");
 		}
 
 		rc.intLastModifiedBy = session.user.getIntUserID();
@@ -579,14 +557,13 @@ component extends="coldbox.system.EventHandler" {
 		populateModel(rc.group);
 
 		if ( hasError ) {
-			session.flash.set("group", rc.group);
-			relocate(event='userManagement/viewGroupUpdate', append="groupID", preserve='group');
+			flash.put(name="group", value=rc.group, inflateToRC=true, inflateToPRC=false);
+			relocate(uri='userManagement/viewGroupUpdate/#rc.group.getIntGroupID()#');
 		}
 
 		rc.group = groupService.save(rc.group);
 
-		rc.groupID = rc.group.getIntGroupID();
-		relocate(uri="/userManagement/viewGroupDetail/:groupID");
+		relocate(uri="/userManagement/viewGroupDetail/#rc.group.getIntGroupID()#");
 	}
 
 }

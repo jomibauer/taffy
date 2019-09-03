@@ -30,7 +30,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<cfloop array="#rc.groups#" index="local.group">
+					<cfloop array="#prc.groups#" index="local.group">
 						<tr class="clickable" data-href="#event.buildLink(prc.xeh.viewGroupDetail & '/' & local.group.getIntGroupID())#">
 							<td>
 								#local.group.getVcGroupName()#
