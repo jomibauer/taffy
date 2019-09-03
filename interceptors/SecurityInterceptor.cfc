@@ -140,7 +140,6 @@ component extends="coldbox.system.Interceptor" cache="false" {
 			saveAttemptedURL(arguments.event);
 			relocate(event=variables.config.loginFormEvent);
 		}
-
 	}
 
 	public void function saveAttemptedURL(required any event) {
