@@ -15,7 +15,10 @@
 	}
 
 	function onRequestStart(event,rc,prc){
-
+		// exit handlers used in navbar
+		prc.xeh.processLogout = "main/processLogout";
+		prc.xeh.viewAccountDetail = "userManagement/viewAccountDetail";
+		prc.xeh.userManagementIndex = "userManagement/index";
 	}
 
 	function onRequestEnd(event,rc,prc){
@@ -45,9 +48,7 @@
 	/************************************ IMPLICIT ACTIONS *******************************************/
 
 	function preHandler(event,rc,prc){
-		prc.xeh.processLogout = "main/processLogout";
-		prc.xeh.viewAccountDetail = "userManagement/viewAccountDetail";
-		prc.xeh.userManagementIndex = "userManagement/index";
+
 	}
 
 	function postHandler(event,rc,prc){
