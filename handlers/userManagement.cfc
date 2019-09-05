@@ -13,8 +13,6 @@ component extends="coldbox.system.EventHandler" {
 		prc.xeh.viewUserList = "userManagement/viewUserList";
 		prc.xeh.viewGroupList = "userManagement/viewGroupList";
 		prc.xeh.viewAccountDetail = "userManagement/viewAccountDetail";
-		prc.xeh.userManagementIndex = "userManagement/index";
-		prc.xeh.processLogout = "main/processLogout";
 	}
 
 	function postHandler(event,rc,prc){
