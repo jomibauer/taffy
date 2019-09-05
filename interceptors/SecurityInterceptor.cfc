@@ -93,7 +93,7 @@ component extends="coldbox.system.Interceptor" cache="false" {
 		/* make sure the messenger exists */
 		if (!structKeyExists(session,"messenger") || event.getValue("clearSession",false) || event.valueExists("fwreinit") || event.getValue("appreinit",false)) {
 			lock scope="session" timeout="3" {
-				session.messenger = new domains.Messenger();
+				session.messenger = new model.domains.Messenger();
 			}
 		}
 
