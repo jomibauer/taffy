@@ -47,12 +47,7 @@ component accessors=true extends="baseService" singleton=true {
 	}
 
 	function getEmptyDomain() {
-		var emptyUser = new model.domains.User();
-		emptyUser.setDtPasswordLastSetOn(never);
-		emptyUser.setDtLastLoggedInOn(never);
-		emptyUser.setDtCreatedOn(never);
-		emptyUser.setDtLastModifiedOn(never);
-		return emptyUser;
+		return new model.domains.User();
 	}
 
 	public any function populate (required any user, required struct data ) {
