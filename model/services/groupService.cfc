@@ -45,10 +45,7 @@ component accessors=true extends="baseService" singleton=true {
 	}
 
 	function getEmptyDomain () {
-		var emptyGroup = new model.domains.Group();
-		emptyGroup.setDtCreatedOn(never);
-		emptyGroup.setDtLastModifiedOn(never);
-		return emptyGroup;
+		return new model.domains.Group();
 	}
 
 	public any function populate (required any group, required struct data ) {

@@ -23,9 +23,9 @@ component name="Group" accessors=true extends="BaseDomain" {
 		setVcGroupDesc("");
 		setBtIsProtected(false);
 		setBtIsRemoved(false);
-		//setDtCreatedOn(variables.instance.never);
+		setDtCreatedOn(variables.instance.never);
 		setIntCreatedBy(0);
-		//setDtLastModifiedOn(variables.instance.never);
+		setDtLastModifiedOn(variables.instance.never);
 		setIntLastModifiedBy(0);
 
 		return this;
