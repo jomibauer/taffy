@@ -50,10 +50,10 @@ component name="User" accessors=true extends="BaseDomain" {
 		setVcNameSuffix("");
 		setVcPassword("");
 		setBtIsPasswordExpired(false);
-		//setDtPasswordLastSetOn(variables.instance.never);
+		setDtPasswordLastSetOn(variables.instance.never);
 		setIntPasswordLastSetBy(0);
 		setVcPasswordLastSetByIP("");
-		//setDtLastLoggedInOn(variables.instance.never);
+		setDtLastLoggedInOn(variables.instance.never);
 		setVcAddress1("");
 		setVcAddress2("");
 		setVcAddress3("");
@@ -66,10 +66,10 @@ component name="User" accessors=true extends="BaseDomain" {
 		setBtIsActive(false);
 		setBtIsProtected(false);
 		setBtIsRemoved(false);
-		//setDtCreatedOn(variables.instance.never);
+		setDtCreatedOn(variables.instance.never);
 		setIntCreatedBy(0);
 		setVcCreatedByIP("");
-		//setDtLastModifiedOn(variables.instance.never);
+		setDtLastModifiedOn(variables.instance.never);
 		setIntLastModifiedBy(0);
 		setVcLastModifiedByIP("");
 

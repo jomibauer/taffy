@@ -13,8 +13,6 @@ component extends="coldbox.system.EventHandler" {
 		prc.xeh.viewUserList = "userManagement/viewUserList";
 		prc.xeh.viewGroupList = "userManagement/viewGroupList";
 		prc.xeh.viewAccountDetail = "userManagement/viewAccountDetail";
-		prc.xeh.userManagementIndex = "userManagement/index";
-		prc.xeh.processLogout = "main/processLogout";
 	}
 
 	function postHandler(event,rc,prc){
@@ -391,9 +389,9 @@ component extends="coldbox.system.EventHandler" {
 			flash.put(name="user", value=rc.user);
 
 			if (rc.referringAction == "userManagement/viewUserUpdate") {
-				relocate(uri="userManagement/viewUserUpdate/#rc.user.getIntUserID()#");
+				relocate(uri="/userManagement/viewUserUpdate/#rc.user.getIntUserID()#");
 			} else {
-				relocate(uri="userManagement/viewUpdateAccount/#rc.user.getIntUserID()#");
+				relocate(uri="/userManagement/viewUpdateAccount/#rc.user.getIntUserID()#");
 			}
 		} else {
 			rc.user = userService.save(rc.user);
@@ -678,7 +676,7 @@ component extends="coldbox.system.EventHandler" {
 
 		if ( hasError ) {
 			flash.put(name="group", value=rc.group);
-			relocate(uri="userManagement/viewGroupUpdate/#rc.group.getIntGroupID()#");
+			relocate(uri="/userManagement/viewGroupUpdate/#rc.group.getIntGroupID()#");
 		}
 
 		rc.group = groupService.save(rc.group);
