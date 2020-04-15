@@ -3,6 +3,7 @@
 	property name="userService" inject="userService";
 	property name="groupService" inject="groupService";
 	property name="formatterService" inject="formatterService";
+	property name="mailService" inject="mailService";
 
 /************************************ APPLICATION-WIDE IMPLICIT ACTIONS *******************************************/
 
@@ -36,11 +37,22 @@
 
 	function onException(event,rc,prc){
 		event.setHTTPHeader( statusCode = 500 );
+		request.layout = false;
+
 		//Grab Exception From private request collection, placed by ColdBox Exception Handling
 		var exception = prc.exception;
-		//Place exception handler below:
-		writeDump(exception.getExceptionStruct());
-		abort;
+		var environment = getSetting('environment');
+
+		if (environment == "PRODUCTION") {
+			var eventName = structKeyExists(event.getContext(), "event") ? event.getContext().event : "unknown";
+			mailService.sendError(eventName, exception, environment);
+		} else {
+			//Place exception handler below:
+			writeDump(exception.getExceptionStruct());
+			abort;
+		}
+
+		event.setView("main/error");
 	}
 
 	/************************************ END APPLICATION-WIDE IMPLICIT ACTIONS *******************************************/

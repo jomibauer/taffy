@@ -38,7 +38,7 @@
 			, invalidHTTPMethodHandler 	= ""
 			, exceptionHandler			= "main.onException"
 			, invalidEventHandler		= ""
-			, customErrorTemplate		= "/coldbox/system/includes/BugReport.cfm"
+			, customErrorTemplate		= "/views/main/error.cfm"
 
 			//Application Aspects
 			, handlerCaching 			= true
@@ -63,7 +63,14 @@
 			, security_loginSubmitItem 		= "main.processLogin"
 			, security_logoutSubmitItem 	= "main.processLogout"
 			, security_resetPasswordFormItem = "main.viewChangePassword"
-
+			// This is the default, make sure the settings are adjusted for particular environments.
+			, maintenanceConfig				= {
+				emailFrom					= "noreply@mind-over-data.com"
+				, emailTo					= "support@mind-over-data.com"
+				, server					= "modexchange.mod-llc.com"
+				, port						= 25
+				, endDate					= dateAdd("yyyy", 1, now())
+			}
 		};
 		// Module Directives
 		modules = {
@@ -131,6 +138,7 @@
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
 		environments = {
 			local = "coldboxbase.loc*"
+			, production = "mind-over-data\.com"
 		};
 	}
 
@@ -142,6 +150,11 @@
 		coldbox.handlerCaching = false;
 		coldbox.eventCaching = false;
 		coldbox.viewCaching = false;
+		coldbox.singletonReload = true;
+	}
+
+	function production() {
+		coldbox.reinitPassword = "2m0i2n0d"
 		coldbox.singletonReload = true;
 	}
 
