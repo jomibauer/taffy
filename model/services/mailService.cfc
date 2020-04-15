@@ -82,6 +82,10 @@
 								</table>
 							</td>
 						</tr>
+						<tr>
+							<td valign="top"><strong>Maintenance End Date</strong></td>
+							<td valign="top">#maintenanceConfig.endDate#</td>
+						</tr>
 					</table>
 				</cfprocessingdirective>
 			</cfmail>
