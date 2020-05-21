@@ -65,7 +65,7 @@
 			, security_resetPasswordFormItem = "main.viewChangePassword"
 			// This is the default, make sure the settings are adjusted for particular environments.
 			, maintenanceConfig				= {
-				emailFrom					= "noreply@mind-over-data.com"
+				emailFrom					= "noreply@xtsuite.com"
 				, emailTo					= "support@mind-over-data.com"
 				, server					= "modexchange.mod-llc.com"
 				, port						= 25
