@@ -6,7 +6,9 @@ WEB-INF
 
 # logs + tests
 logs/**
+testbox/system/stubs/**
 tests/results/**
+
 
 # npm
 **/node_modules/*
