@@ -150,7 +150,7 @@
 	// environment functions
 	function local() {
 		//coldbox.customErrorTemplate = "/coldbox/system/includes/BugReport.cfm";
-		coldbox.reinitPassword = "";
+		coldbox.reinitPassword = "true";
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching = false;
 		coldbox.eventCaching = false;

@@ -63,6 +63,7 @@ component extends="coldbox.system.Interceptor" cache="false" {
 		} elseif (currentEvent == config.logoutSubmitItem) {
 			session.user = userService.getEmptyDomain();
 			session.user.setIsLoggedIn(false);
+			relocate(event=config.loginFormItem);
 		} elseif (isSecuredEvent && !session.user.isLoggedIn()) {
 			saveAttemptedURL(arguments.event);
 			relocate(event=config.loginFormItem);
