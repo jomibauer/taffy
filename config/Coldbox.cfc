@@ -57,12 +57,7 @@
 			, passwordRotation 				= 0 //you cannot use any of your last 5 passwords
 			, loginInstructionsEmailFrom 	= "donotreply@mind-over-data.com"
 			, loginURL 						= "http://coldboxbase.loc:8079/main/viewLogin"
-			, security_nonSecuredHandlers 	= ""
-			, security_nonSecuredItems 		= "main.test,main.viewForgotPassword,main.processForgotPassword,main.robots" //the loginFormItem, loginSubmitItem and logoutSubmitItem will be automatically added to this list
-			, security_loginFormItem 		= "main.viewLogin"
-			, security_loginSubmitItem 		= "main.processLogin"
-			, security_logoutSubmitItem 	= "main.processLogout"
-			, security_resetPasswordFormItem = "main.viewChangePassword"
+			, security_loginFormItem = "main.viewLogin"
 			// This is the default, make sure the settings are adjusted for particular environments.
 			, maintenanceConfig				= {
 				emailFrom					= "noreply@xtsuite.com"
@@ -93,7 +88,17 @@
 
 		//Register interceptors as an array, we need order
 		interceptors = [
-			{class="interceptors.SecurityInterceptor"}
+			{
+				class = "interceptors.SecurityInterceptor",
+				properties = {
+					nonSecuredHandlers = ""
+					, nonSecuredItems = "main.test,main.viewForgotPassword,main.processForgotPassword,main.robots"
+					, loginFormItem = "main.viewLogin"
+					, loginSubmitItem = "main.processLogin"
+					, logoutSubmitItem = "main.processLogout"
+					, resetPasswordFormItem = "main.viewChangePassword"
+				}
+			}
 		];
 
 		/*

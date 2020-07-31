@@ -1,144 +1,71 @@
 component extends="coldbox.system.Interceptor" cache="false" {
 	property name="userService" inject="userService";
 
+	PROPERTY_NAMES = [
+		"nonSecuredHandlers",
+		"nonSecuredItems",
+		"loginFormItem",
+		"loginSubmitItem",
+		"logoutSubmitItem",
+		"resetPasswordFormItem"
+	];
+
 	public any function configure() {
-
-		variables.config = structNew();
-
-		setNonSecuredHandlers(getSetting('security_nonSecuredHandlers'));
-
-        /* any individual events that you do not want secured, add them to this list (handler.event) */
-        setNonSecuredEvents(getSetting('security_nonSecuredItems'));
-
-        /* login form event */
-        setLoginFormEvent(getSetting('security_loginFormItem'));
-
-        /* loginSubmit event */
-        setLoginSubmitEvent(getSetting('security_loginSubmitItem'));
-
-        /* logoutSubmit Event */
-        setLogoutSubmitEvent(getSetting('security_logoutSubmitItem'));
-
-        /* resetPasswordForm event */
-        setResetPasswordFormEvent(getSetting('security_resetPasswordFormItem'));
-
 		checkConfig();
-
-		return this;
 	}
 
 	public void function checkConfig() {
+		var missingProperties = PROPERTY_NAMES.filter(function(propertyName) {
+				return !propertyExists(propertyName);
+			})
+			.toList();
 
-		if (!structKeyExists(variables.config,"nonSecuredHandlers")) {
-			throw(message="SecurityInterceptor: Missing config setting for nonSecuredHandlers. Please call setNonSecuredHandlers() in the config.");
+		if (listLen(missingProperties) > 0) {
+			throw(message="SecurityInterceptor missing properties: #missingProperties#");
 		}
-
-		if (!structKeyExists(variables.config,"nonSecuredEvents")) {
-			throw(message="SecurityInterceptor: Missing config setting for nonSecuredEvents. Please call setNonSecuredEvents() in the config.");
-		}
-
-		if (!structKeyExists(variables.config,"loginFormEvent")) {
-			throw(message="SecurityInterceptor: Missing config setting for loginFormEvent. Please call setLoginFormEvent() in the config.");
-		}
-
-		if (!structKeyExists(variables.config,"loginSubmitEvent")) {
-			throw(message="SecurityInterceptor: Missing config setting for loginSubmitEvent. Please call setLoginSubmitEvent() in the config.");
-		}
-
-		if (!structKeyExists(variables.config,"logoutSubmitEvent")) {
-			throw(message="SecurityInterceptor: Missing config setting for logoutSubmitEvent. Please call setLogoutSubmitEvent() in the config.");
-		}
-
-		if (!structKeyExists(variables.config,"resetPasswordFormEvent")) {
-			throw(message="SecurityInterceptor: Missing config setting for resetPasswordFormEvent. Please call setResetPasswordFormEvent() in the config.");
-		}
-
-	}
-
-	private void function setNonSecuredHandlers(required string input) {
-		variables.config.nonSecuredHandlers = arguments.input;
-	}
-
-	private void function setNonSecuredEvents(required string input) {
-		variables.config.nonSecuredEvents = arguments.input;
-	}
-
-	private void function setLoginFormEvent(required string input) {
-		variables.config.loginFormEvent = arguments.input;
-	}
-
-	private void function setLoginSubmitEvent(required string input) {
-		variables.config.loginSubmitEvent = arguments.input;
-	}
-
-	private void function setLogoutSubmitEvent(required string input) {
-		variables.config.logoutSubmitEvent = arguments.input;
-	}
-
-	private void function setResetPasswordFormEvent(required string input) {
-		variables.config.resetPasswordFormEvent = arguments.input;
 	}
 
 	public void function preProcess(required any event, required struct interceptData) {
 		var rc = event.getCollection();
 		var prc = event.getCollection(private=true);
-
-		local.username = event.getValue("username","");
-		local.password = event.getValue("password","");
-		local.action = event.getValue("action","");
+		var action = event.getValue("action", "");
 
 		param name="session.user" default="#userService.getEmptyDomain()#";
 		param name="session.messenger" default="#new model.domains.Messenger()#";
 
 		/* make sure the messenger exists */
-		if (!structKeyExists(session,"messenger") || event.getValue("clearSession",false) || event.valueExists("fwreinit") || event.getValue("appreinit",false)) {
+		if (!structKeyExists(session, "messenger") || event.getValue("clearSession", false) || event.valueExists("fwreinit") || event.getValue("appreinit",false)) {
 			lock scope="session" timeout="3" {
 				session.messenger = new model.domains.Messenger();
 			}
 		}
 
-		local.isSecuredEvent = false;
+		var config = getProperties();
+		var currentEvent = event.getCurrentEvent();
+		var username = trim(event.getValue("username", ""));
+		var password = trim(event.getValue("password", ""));
+		var isSecuredEvent = !listFindNoCase(config.nonSecuredHandlers, event.getCurrentHandler())
+			&& !listFindNoCase(config.nonSecuredItems, event.getCurrentEvent())
+			&& !listFindNoCase(config.loginFormItem, event.getCurrentEvent());
 
-		if (!listFindNoCase(variables.config.nonSecuredHandlers,event.getCurrentHandler())
-			&& !listFindNoCase(variables.config.nonSecuredEvents,event.getCurrentEvent())
-			&& !listFindNoCase(variables.config.loginFormEvent,event.getCurrentEvent())
-		) {
-			local.isSecuredEvent = true;
-		}
-
-		/* logout */
-		if (event.getCurrentEvent() == variables.config.logoutSubmitEvent) {
+		if (currentEvent == config.loginSubmitItem) {
+			session.user = userService.authenticateUser(username, password, cgi.remote_addr);
+			session.user.setIsLoggedIn(session.user.getIntUserId() > 0);
+			if (session.user.getIsLoggedIn()) {
+				if (len(trim(config.resetPasswordFormItem)) && session.user.getBtIsPasswordExpired()) {
+					session.messenger.addAlert(messageType = "INFO", message = "You must change your password", messageDetail = "");
+					relocate(config.resetPasswordFormItem);
+				}
+			} else {
+				session.messenger.addAlert(messageType="ERROR",message="Invalid Username and/or Password",messageDetail="",field="username");
+				relocate(event=config.loginFormItem);
+			}
+		} elseif (currentEvent == config.logoutSubmitItem) {
 			session.user = userService.getEmptyDomain();
 			session.user.setIsLoggedIn(false);
-		}
-
-		/* trying to login */
-		if (event.getCurrentEvent() == variables.config.loginSubmitEvent) {
-			if (len(trim(local.username)) && len(trim(local.password))) {
-				local.user = userService.authenticateUser(local.username,local.password,cgi.remote_addr);
-
-				if (local.user.getIntUserID()) {
-					/* successfully authenticated */
-					session.user = local.user;
-					session.user.setIsLoggedIn(true);
-
-					if (len(trim(variables.config.resetPasswordFormEvent)) && local.user.getBtIsPasswordExpired()) {
-						session.messenger.addAlert(messageType="INFO",message="You must change your password",messageDetail="");
-						relocate(event=variables.config.resetPasswordFormEvent);
-					}
-				} else {
-					/* failed authentication */
-					session.user.setIsLoggedIn(false);
-					session.messenger.addAlert(messageType="ERROR",message="Invalid Username and/or Password",messageDetail="",field="username");
-
-					relocate(event=variables.config.loginFormEvent);
-				}
-			}
-		}
-
-		if (local.isSecuredEvent && !session.user.isLoggedIn()) {
+		} elseif (isSecuredEvent && !session.user.isLoggedIn()) {
 			saveAttemptedURL(arguments.event);
-			relocate(event=variables.config.loginFormEvent);
+			relocate(event=config.loginFormItem);
 		}
 	}
 
