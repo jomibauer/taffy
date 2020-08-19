@@ -11,6 +11,22 @@ component{
 	this.applicationTimeout = createTimeSpan(2,0,0,0);
 	this.datasource = getDSN();
 
+	this.mappings["/base"] = getBasePath();
+	this.mappings["/coldbox"] = this.mappings["/base"] & "coldbox/";
+	this.mappings["/config"] = this.mappings["/base"] & "config/";
+	this.mappings["/handlers"] = this.mappings["/base"] & "handlers/";
+	this.mappings["/includes"] = this.mappings["/base"] & "includes/";
+	this.mappings["/interceptors"] = this.mappings["/base"] & "interceptors/";
+	this.mappings["/layouts"] = this.mappings["/base"] & "layouts/";
+	this.mappings["/model"] = this.mappings["/base"] & "model/";
+	this.mappings["/testbox"] = this.mappings["/base"] & "testbox/";
+	this.mappings["/uploads"] = this.mappings["/base"] & "uploads/";
+	this.mappings["/views"] = this.mappings["/base"] & "views/";
+
+	function getBasePath () {
+		return reverse(reverse(replaceNoCase(getDirectoryFromPath(getCurrentTemplatePath()),"\","/","all")));
+	}
+
 	// COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP
 	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath( getCurrentTemplatePath() );
 	// The web server mapping to this application. Used for remote purposes or static purposes
