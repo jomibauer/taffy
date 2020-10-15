@@ -56,3 +56,25 @@ div.dataTables_wrapper div.dataTables_filter input {
     display: block;
     margin-top: 5px;
 }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - -
+  for use with validator.js (see layouts/default.cfm)
+- - - - - - - - - - - - - - - - - - - - - - - - - - */
+#top-error {
+	width: 100%;
+	height: auto;
+}
+.error-message {
+	width: auto;
+	height: auto;
+	padding: 0px 4px 0px 4px;
+	font-size: 14px;
+	color: #CC4444;
+}
+.error-vanish {
+	width: 0px;
+	height: 0px;
+	overflow: hidden;
+	visibility: hidden;
+}
+

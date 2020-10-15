@@ -3,6 +3,7 @@
 settings.xml
 WEB-INF
 .env
+tmp.*
 
 # logs + tests
 logs/**
