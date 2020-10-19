@@ -21,9 +21,9 @@
 		<script src="includes/js/bootstrap.min.js"></script>
 		<script src="includes/js/dataTables.min.js"></script>
 		<script src="includes/js/dataTables.bootstrap4.min.js"></script>
-		<script src="includes/js/validator.min.js"></script>
+		<script src="includes/js/validator.js"></script>
 		<script>
-			errorParams = {
+			validatorParams = {
 				"display": "onField",
 				"formName": "",
 				"submitButtonId:" "",

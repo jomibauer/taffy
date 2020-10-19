@@ -1,6 +1,6 @@
 
 
-	function validator(errorParams) {
+	function validator(validatorParams) {
 		errors = new Object();
 
 		errors.start = function() {
@@ -9,13 +9,13 @@
 			var memberIds;
 			var dtFormat;
 
-			if (!errors.testParams(errorParams)) {
+			if (!errors.testParams(validatorParams)) {
 				return false;
 			}
 
 			for (var i = 0; i < requiredFields.length; i++) {
 				errors.listen("#" + requiredFields[i].id, "change", function any(field) {
-					if (errorParams.display === "topDisplay") {
+					if (validatorParams.display === "topDisplay") {
 						if (field.dataset && field.dataset.group) {
 							memberIds = errors.getGroupMemberIds(field.dataset.group);
 							memberIds.forEach(function(id, idx) {
@@ -38,7 +38,7 @@
 						whichField = field.id;
 					}
 					if (!errorList.length) {
-						if (errorParams.display === "topDisplay" && document.getElementById("err-" + field.id)) {
+						if (validatorParams.display === "topDisplay" && document.getElementById("err-" + field.id)) {
 							document.getElementById("err-" + whichField).remove();
 						}
 						else {
@@ -46,7 +46,7 @@
 						}
 					}
 					else {
-						if (errorParams.display === "topDisplay") {
+						if (validatorParams.display === "topDisplay") {
 							errorList.forEach(function(error, idx) {
 								errors.addError(error);
 							});
@@ -57,7 +57,7 @@
 				if (requiredFields[i].dataset && requiredFields[i].dataset.type === "date" && document.getElementById(requiredFields[i].id).value === "") {
 					if (requiredFields[i].dataset.format && requiredFields[i].dataset.separator) {
 						errors.checkDateFormat(requiredFields[i].id, requiredFields[i].dataset.format, requiredFields[i].dataset.separator);
-						document[errorParams.formName][requiredFields[i].name].placeholder = errors.formatDatePlaceholder(
+						document[validatorParams.formName][requiredFields[i].name].placeholder = errors.formatDatePlaceholder(
 							requiredFields[i].dataset.format, 
 							requiredFields[i].dataset.separator
 						);
@@ -65,14 +65,14 @@
 				}
 			}
 
-			if (errorParams.autoSubmit && document.getElementById(errorParams.submitButtonId)) {
-				errors.listen("#" + errorParams.submitButtonId, "click", function any() {
+			if (validatorParams.autoSubmit && document.getElementById(validatorParams.submitButtonId)) {
+				errors.listen("#" + validatorParams.submitButtonId, "click", function any() {
 					errors.validateAll();
 				});
 			}
 		};
 
-		errors.testParams = function(errorParams) {
+		errors.testParams = function(validatorParams) {
 			var blanks = false;
 			var missing = [];
 			var params = [
@@ -88,19 +88,19 @@
 			];
 			var type;
 
-			if (typeof(errorParams) !== "object") {
-				errors.showInternalError("Your errorParams variable is not a valid object.");
+			if (typeof(validatorParams) !== "object") {
+				errors.showInternalError("Your validatorParams variable is not a valid object.");
 				return false;
 			}
 
 			params.forEach(function(param, idx) {
-				if (!errorParams.hasOwnProperty(param)) {
+				if (!validatorParams.hasOwnProperty(param)) {
 					missing.push(param);
 				}
 			});
 
 			if (missing.length) {
-				errors.showInternalError("You failed to pass the following values in your errorParams object: " + missing.join(", ") + ".");
+				errors.showInternalError("You failed to pass the following values in your validatorParams object: " + missing.join(", ") + ".");
 				return false;
 			}
 
@@ -108,7 +108,7 @@
 				var type = param === "padDates" || param === "autoSubmit" ? "boolean" : "string";
 				var ok = true;
 
-				if (typeof(errorParams[param]) !== type) {
+				if (typeof(validatorParams[param]) !== type) {
 					errors.showInternalError("The value of " + param + " must be of the type " + type + ".");
 					ok = false;
 				}
@@ -118,24 +118,24 @@
 				}
 			});
 
-			if (errorParams.autoSubmit && (!document.getElementById(errorParams.submitButtonId) || errorParams.submitButtonId.trim() == "")) {
+			if (validatorParams.autoSubmit && (!document.getElementById(validatorParams.submitButtonId) || validatorParams.submitButtonId.trim() == "")) {
 				errors.showInternalError("You can't use the autoSubmit feature because the submitButtonId you passed in was undefined or doesn't exist.");
 				return false;
 			}
 
-			if (!document.getElementById(errorParams.formName)) {
-				errors.showInternalError("The form \"" + errorParams.formName + "\" referenced in your errorParams object doesn't exist.");
+			if (!document.getElementById(validatorParams.formName)) {
+				errors.showInternalError("The form \"" + validatorParams.formName + "\" referenced in your validatorParams object doesn't exist.");
 				return false;
 			}
 
-			if (errorParams.display === "topDisplay" && !document.getElementById(errorParams.topErrorTargetId)) {
-				errors.showInternalError("The element \"" + errorParams.topErrorTargetId + "\" referenced in your errorParams object doesn't exist.");
+			if (validatorParams.display === "topDisplay" && !document.getElementById(validatorParams.topErrorTargetId)) {
+				errors.showInternalError("The element \"" + validatorParams.topErrorTargetId + "\" referenced in your validatorParams object doesn't exist.");
 				return false;
 			}
 
 			["display", "topErrorItemClass", "errorMessageClass", "errorHideClass"].forEach(function(item, idx) {
-				if (errorParams[item].trim() === "") {
-					errors.showInternalError("The errorParams \"" + item + "\" value cannot be an empty string.");
+				if (validatorParams[item].trim() === "") {
+					errors.showInternalError("The validatorParams \"" + item + "\" value cannot be an empty string.");
 					blanks = true;
 					return;					
 				}
@@ -176,7 +176,7 @@
 				return false;
 			}
 			document.getElementById(id).innerHTML = msg;
-			errors.removeClass(id, errorParams.errorHideClass);
+			errors.removeClass(id, validatorParams.errorHideClass);
 		};
 
 		errors.clearError = function(id) {
@@ -185,18 +185,18 @@
 				return false;
 			}
 			document.getElementById(id).innerHTML = "";
-			errors.addClass(id, errorParams.errorHideClass);
+			errors.addClass(id, validatorParams.errorHideClass);
 		};
 
 		errors.addError = function(msg) {
 			newElement = document.createElement("span");
 			newElement.innerHTML = msg;
-			document.getElementById(errorParams.topErrorTargetId).appendChild(newElement);
-			errors.removeClass(errorParams.topErrorTargetId, errorParams.errorHideClass);
+			document.getElementById(validatorParams.topErrorTargetId).appendChild(newElement);
+			errors.removeClass(validatorParams.topErrorTargetId, validatorParams.errorHideClass);
 		};
 
 		errors.clearErrors = function() {
-			if (errorParams.display === "onField") {
+			if (validatorParams.display === "onField") {
 				var requiredFields = errors.getRequiredFields();
 
 				for (var i = 0; i < requiredFields.length; i++) {
@@ -209,20 +209,20 @@
 				}
 			}
 			else {
-				document.getElementById(errorParams.topErrorTargetId).innerHTML = "";
-				errors.addClass(errorParams.topErrorTargetId, errorParams.errorHideClass);
+				document.getElementById(validatorParams.topErrorTargetId).innerHTML = "";
+				errors.addClass(validatorParams.topErrorTargetId, validatorParams.errorHideClass);
 			}
 		};
 
 		errors.output = function(errorList) {
 			var errorString = "";
 
-			errors.removeClass(errorParams.topErrorTargetId, errorParams.errorHideClass);
+			errors.removeClass(validatorParams.topErrorTargetId, validatorParams.errorHideClass);
 
 			errorList.forEach(function(error, idx) {
 				errorString += error;
 			});
-			document.getElementById(errorParams.topErrorTargetId).innerHTML = errorString;
+			document.getElementById(validatorParams.topErrorTargetId).innerHTML = errorString;
 		};
 
 		errors.getRequiredFields = function() {
@@ -261,7 +261,7 @@
 			if (!document.getElementById("clientValidated")) {
 				newElement = document.createElement("span");
 				newElement.innerHTML = flag;
-				document.getElementById(errorParams.formName).appendChild(newElement);
+				document.getElementById(validatorParams.formName).appendChild(newElement);
 			}
 		}
 
@@ -279,21 +279,21 @@
 			errorList = [];
 
 			for (var i = 0; i < requiredFields.length; i++) {
-				if (errorParams.display === "onField") {
+				if (validatorParams.display === "onField") {
 					errors.validate(requiredFields[i], errorList);
 				}
-				else if (errorParams.display === "topDisplay") {
+				else if (validatorParams.display === "topDisplay") {
 					errorList = errors.validate(requiredFields[i], errorList);
 				}
 			}
-			if (errorParams.display === "topDisplay" && errorList.length) {
+			if (validatorParams.display === "topDisplay" && errorList.length) {
 				errors.output(errorList);
 			}
 
 			if (!errorList.length) {
 				errors.placeValidatedFlag();
-				if (errorParams.autoSubmit) {
-					document[errorParams.formName].submit();
+				if (validatorParams.autoSubmit) {
+					document[validatorParams.formName].submit();
 				}
 			}
 
@@ -333,7 +333,7 @@
 								msg = "Please enter the " + d.label;
 							} 
 							else if (isNaN(field.value)) {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "This must be a numeric value";
 								}
 								else {
@@ -341,7 +341,7 @@
 								}
 							}
 							else if (d.numtype && d.numtype === "integer" && field.value.indexOf(".") > -1) {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "This must be a whole number";
 								} 
 								else {
@@ -368,7 +368,7 @@
 
 									if (d.required === "true") {
 										if (!errors.checkDate(fromDateObj) || !errors.checkDate(toDateObj)) {
-											if (errorParams.display === "onField") {
+											if (validatorParams.display === "onField") {
 												msg = "Please enter valid from/to dates in " + errors.showDateFormat(d) + " format";
 											}
 											else {
@@ -378,7 +378,7 @@
 									}
 									else if (field.value.length) {
 										if (!errors.checkDate(field) || !errors.checkDate(field)) {
-											if (errorParams.display === "onField") {
+											if (validatorParams.display === "onField") {
 												msg = "Please enter valid from/to dates";
 											}
 											else {
@@ -387,11 +387,11 @@
 										}
 									}
 									if (!msg.length) {
-										fromDate = document[errorParams.formName][dates.fromDateId].value.trim();
-										toDate = document[errorParams.formName][dates.toDateId].value.trim();
+										fromDate = document[validatorParams.formName][dates.fromDateId].value.trim();
+										toDate = document[validatorParams.formName][dates.toDateId].value.trim();
 
 										if (!errors.checkDateRange(fromDate, toDate)) {
-											if (errorParams.display === "onField") {
+											if (validatorParams.display === "onField") {
 												msg = "The To date can't come before the From date";
 											}
 											else {
@@ -409,7 +409,7 @@
 									msg = "Please enter the " + d.label;
 								} 
 								else if (field.value.trim().length && !errors.checkDate(field)) {
-									if (errorParams.display === "onField") {
+									if (validatorParams.display === "onField") {
 										msg = "Please enter a valid date in " + errors.showDateFormat(d) + " format";
 									}
 									else {
@@ -428,7 +428,7 @@
 							}
 							if (d.group && d.required === "true") {
 								if (checkedCount === 0) {
-									if (errorParams.display === "onField") {
+									if (validatorParams.display === "onField") {
 										msg = "Please check on at least one item";
 									}
 									else {
@@ -442,7 +442,7 @@
 								msg = errors.checkConditions(d, field, checkedCount);
 							}
 							else if (d.required === "true" && !document.getElementById(field.id).checked)  {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "Please check this on";
 								}
 								else {
@@ -453,7 +453,7 @@
 
 						case "radio":
 							if (!errors.checkRadio(field.name) && d.required === "true") {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "Please make a selection";
 								}
 								else {
@@ -464,7 +464,7 @@
 
 						case "select":
 							if (field.value.trim() === "" && d.required === "true") {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "Please make a selection";
 								}
 								else {
@@ -475,7 +475,7 @@
 
 						case "multiselect":
 							if (field.value.trim() === "" && d.required === "true") {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "Please make a selection";
 								}
 								else {
@@ -496,7 +496,7 @@
 							}
 							if (d.filetypes.length) {
 								if (field.value.trim() === "" && d.required === "true") {
-									if (errorParams.display === "onField") {
+									if (validatorParams.display === "onField") {
 										msg = "Please choose a file";
 									}
 									else {
@@ -506,7 +506,7 @@
 								if (msg === "" && field.value.trim().length) {
 
 									if (field.value.indexOf(".") < 0) {
-										if (errorParams.display === "onField") {
+										if (validatorParams.display === "onField") {
 											msg = "The filename extension is missing"
 										}
 										else {
@@ -525,7 +525,7 @@
 											}
 										}
 										if (!ok) {
-											if (errorParams.display === "onField") {
+											if (validatorParams.display === "onField") {
 												msg = "The file must be in one of these formats: " + okTypes.toUpperCase().trim();
 											}
 											else {
@@ -555,7 +555,7 @@
 									document.getElementById(field.id).value = phone.phone;
 								}
 								else {
-									if (errorParams.display === "onField") {
+									if (validatorParams.display === "onField") {
 										msg = "Please enter a 10-digit number";
 									}
 									else {
@@ -567,7 +567,7 @@
 
 						case "email":
 							if (field.value.trim() === "" && d.required === "true") {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "Please enter an email";
 								}
 								else  {
@@ -575,7 +575,7 @@
 								}
 							}
 							else if (field.value.length && !errors.checkEmail(field.value.trim())) {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "This email doesn't look valid";
 								}
 								else {
@@ -590,9 +590,9 @@
 			if (msg.length) {
 				msg += ".";
 
-				if (errorParams.display === "topDisplay") {
+				if (validatorParams.display === "topDisplay") {
 					oldMsg = msg;
-					msg = "<p id=\"err-" + field.id + "\" class=\"" + errorParams.topErrorItemClass + "\">" + msg + "</p>";
+					msg = "<p id=\"err-" + field.id + "\" class=\"" + validatorParams.topErrorItemClass + "\">" + msg + "</p>";
 					if (!errors.substrArray(errorList, oldMsg)) {
 						errorList.push(msg);
 					}
@@ -624,7 +624,7 @@
 					if (field.value.length) {
 
 						if (d.max && !d.min && field.value.trim().length > d.max) {
-							if (errorParams.display === "onField") {
+							if (validatorParams.display === "onField") {
 								msg = "This must be no more than " + d.max + " characters";
 							}
 							else {
@@ -632,7 +632,7 @@
 							}
 						}
 						else if (d.min && !d.max && field.value.trim().length < d.min) {
-							if (errorParams.display === "onField") {
+							if (validatorParams.display === "onField") {
 								msg = "This must contain at least " + d.min + " characters";
 							}
 							else {
@@ -641,7 +641,7 @@
 						}
 						else if (d.min && d.min) {
 							if (field.value.trim().length > d.max || field.value.trim().length < d.min) {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "This must be between " + d.min + " and " + d.max + " characters";
 								}
 								else {
@@ -658,7 +658,7 @@
 								}
 								if (charCheck === "ns") {
 									if (noNums) {
-										if (errorParams.display === "onField") {
+										if (validatorParams.display === "onField") {
 											msg = "This can contain only letters, no numbers or special characters";
 										}
 										else {
@@ -666,7 +666,7 @@
 										}
 									}
 									else {
-										if (errorParams.display === "onField") {
+										if (validatorParams.display === "onField") {
 											msg = "This can contain only letters or numbers, no special characters";
 										}
 										else {
@@ -675,7 +675,7 @@
 									}
 								}
 								else if (charCheck === "an") {
-									if (errorParams.display === "onField") {
+									if (validatorParams.display === "onField") {
 										msg = "This can contain only letters or numbers, no special characters";
 									}
 									else {
@@ -683,7 +683,7 @@
 									}
 								}
 								else if (charCheck === "ao") {
-									if (errorParams.display === "onField") {
+									if (validatorParams.display === "onField") {
 										msg = "This can contain only letters, no numbers or special characters";
 									}
 									else {
@@ -698,7 +698,7 @@
 				case "number":
 					if (field.value.length) {
 						if (d.max && !d.min && field.value > d.max) {
-							if (errorParams.display === "onField") {
+							if (validatorParams.display === "onField") {
 								msg = "This number can't be more than " + d.max;
 							}
 							else {
@@ -706,7 +706,7 @@
 							}
 						}
 						else if (d.min && !d.max && field.value < d.min) {
-							if (errorParams.display === "onField") {
+							if (validatorParams.display === "onField") {
 								msg = "This number can't be less than " + d.min;
 							}
 							else {
@@ -715,7 +715,7 @@
 						}
 						else if (d.min && d.min) {
 							if (field.value > d.max || field.value < d.min) {
-								if (errorParams.display === "onField") {
+								if (validatorParams.display === "onField") {
 									msg = "This number must be between " + d.min + " and " + d.max;
 								}
 								else {
@@ -728,7 +728,7 @@
 
 				case "check":
 					if (d.min && !d.max && checkedCount < d.min) {
-						if (errorParams.display === "onField") {
+						if (validatorParams.display === "onField") {
 							msg = "Please check at least " + d.min + " item" + errors.plural(d.min);
 						}
 						else {
@@ -736,7 +736,7 @@
 						}
 					}
 					else if (!d.min && d.max && checkedCount > d.max) {
-						if (errorParams.display === "onField") {
+						if (validatorParams.display === "onField") {
 							msg = "Please check no more than " + d.max + " item" + errors.plural(d.max);
 						}
 						else {
@@ -745,7 +745,7 @@
 					}
 					else if (d.min && d.min) {
 						if (checkedCount > d.max || checkedCount < d.min) {
-							if (errorParams.display === "onField") {
+							if (validatorParams.display === "onField") {
 								msg = "Please check between " + d.min + " and " + d.max + " items";
 							}
 							else {
@@ -764,7 +764,7 @@
 						}
 					}
 					if (d.min && !d.max && optionCount < d.min) {
-						if (errorParams.display === "onField") {
+						if (validatorParams.display === "onField") {
 							msg = "Please select at least " + d.min + " item" + errors.plural(d.min);
 						}
 						else {
@@ -772,7 +772,7 @@
 						}
 					}
 					else if (!d.min && d.max && optionCount > d.max) {
-						if (errorParams.display === "onField") {
+						if (validatorParams.display === "onField") {
 							msg = "Please select no more than " + d.max + " item" + errors.plural(d.max);
 						}
 						else {
@@ -781,7 +781,7 @@
 					}
 					else if (d.min && d.min) {
 						if (optionCount > d.max || optionCount < d.min) {
-							if (errorParams.display === "onField") {
+							if (validatorParams.display === "onField") {
 								msg = "Please select between " + d.min + " and " + d.max + " items";
 							}
 							else {
@@ -1009,7 +1009,7 @@
 		};
 
 		errors.padDate = function(field) {
-			if (errorParams.padDates && field.value.trim().length) {
+			if (validatorParams.padDates && field.value.trim().length) {
 				var yearPosition = 2;
 				var monthPosition = 0;
 				var dayPosition = 1;
@@ -1054,7 +1054,7 @@
 		};
 
 		errors.checkRadio = function(fieldName) {
-			var radio = document[errorParams.formName][fieldName];
+			var radio = document[validatorParams.formName][fieldName];
 			var radioChecked = false;
 
 			for (var i = 0; i < radio.length; i++) {
