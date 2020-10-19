@@ -26,7 +26,7 @@
 			validatorParams = {
 				"display": "onField",
 				"formName": "",
-				"submitButtonId:" "",
+				"submitButtonId": "",
 				"autoSubmit": false,
 				"padDates": true,
 				"topErrorTargetId": "top-error",
