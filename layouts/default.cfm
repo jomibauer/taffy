@@ -31,7 +31,6 @@
 				"padDates": true,
 				"topErrorTargetId": "top-error",
 				"topErrorItemClass": "alert alert-danger",
-				"errorMessageClass": "error-message",
 				"errorHideClass": "error-vanish"
 			}
 		</script>

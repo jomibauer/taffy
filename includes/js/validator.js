@@ -83,7 +83,6 @@
 				"padDates",
 				"topErrorTargetId",
 				"topErrorItemClass",
-				"errorMessageClass",
 				"errorHideClass"
 			];
 			var type;
@@ -133,7 +132,7 @@
 				return false;
 			}
 
-			["display", "topErrorItemClass", "errorMessageClass", "errorHideClass"].forEach(function(item, idx) {
+			["display", "topErrorItemClass", "errorHideClass"].forEach(function(item, idx) {
 				if (validatorParams[item].trim() === "") {
 					errors.showInternalError("The validatorParams \"" + item + "\" value cannot be an empty string.");
 					blanks = true;
