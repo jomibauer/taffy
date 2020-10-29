@@ -3,6 +3,9 @@
 	function validator(validatorParams) {
 		errors = new Object();
 
+		errors.tinyMCEs = [];
+		errors.ckeditors = [];
+
 		errors.start = function() {
 			var requiredFields = errors.getRequiredFields();
 			var whichField;
@@ -54,6 +57,14 @@
 					}
 				});
 
+				if (requiredFields[i].dataset && requiredFields[i].dataset.type === "tinymce") {
+					errors.tinyMCEs.push(requiredFields[i].id);
+				}
+
+				if (requiredFields[i].dataset && requiredFields[i].dataset.type === "ckeditor") {
+					errors.ckeditors.push(requiredFields[i].id);
+				}
+
 				if (requiredFields[i].dataset && requiredFields[i].dataset.type === "date" && document.getElementById(requiredFields[i].id).value === "") {
 					if (requiredFields[i].dataset.format && requiredFields[i].dataset.separator) {
 						errors.checkDateFormat(requiredFields[i].id, requiredFields[i].dataset.format, requiredFields[i].dataset.separator);
@@ -66,9 +77,15 @@
 			}
 
 			if (validatorParams.autoSubmit && document.getElementById(validatorParams.submitButtonId)) {
-				errors.listen("#" + validatorParams.submitButtonId, "click", function any() {
-					errors.validateAll();
-				});
+				errors.listen("#" + validatorParams.submitButtonId, "click", errors.validateAll);
+			}
+
+			if (errors.tinyMCEs.length) {
+				errors.listen("#" + validatorParams.formName, "click", errors.fixTinyMCEs);
+			}
+
+			if (errors.ckeditors.length) {
+				errors.listen("#" + validatorParams.formName, "click", errors.fixCKEditors);
 			}
 		};
 
@@ -78,6 +95,7 @@
 			var params = [
 				"display",
 				"formName",
+				"formList",
 				"submitButtonId",
 				"autoSubmit",
 				"padDates",
@@ -107,6 +125,10 @@
 				var type = param === "padDates" || param === "autoSubmit" ? "boolean" : "string";
 				var ok = true;
 
+				if (param === "formList") {
+					type = "object";
+				}
+
 				if (typeof(validatorParams[param]) !== type) {
 					errors.showInternalError("The value of " + param + " must be of the type " + type + ".");
 					ok = false;
@@ -116,6 +138,14 @@
 					return false;
 				}
 			});
+
+			if (validatorParams.formName === "" && validatorParams.formList.length) {
+				validatorParams.formName = errors.findCurrentForm(validatorParams.formList);
+				if (validatorParams.formName === "") {
+					errors.showInternalError("No form was found bearing the name of any forms in the formList you passed.");
+					return false;
+				}
+			}
 
 			if (validatorParams.autoSubmit && (!document.getElementById(validatorParams.submitButtonId) || validatorParams.submitButtonId.trim() == "")) {
 				errors.showInternalError("You can't use the autoSubmit feature because the submitButtonId you passed in was undefined or doesn't exist.");
@@ -145,7 +175,20 @@
 			}
 
 			return true;
-		}
+		};
+
+		errors.findCurrentForm = function(formList) {
+			var foundForm = "";
+
+			formList.forEach(function(formName, idx) {
+				if (document.getElementById(formName) && document.getElementById(formName).tagName.toLowerCase() === "form") {
+					foundForm = formName;
+					return;
+				}
+			});
+
+			return foundForm;
+		};
 
 		errors.formatDatePlaceholder = function(format, separator) {
 			if (format.substr(0, 1).toLowerCase() === "m" || format.substr(0, 1).toLowerCase() === "d") {
@@ -311,6 +354,7 @@
 			var ext;
 			var ok = false;
 			var dates;
+			var content;
 			var fromDate;
 			var toDate;
 			var phone;
@@ -318,6 +362,18 @@
 			if (d = field.dataset) {
 				if (d.label) {
 					switch(d.type) {
+						case "tinymce":
+							if (d.required === "true" && errors.stripTags(tinyMCE.get(field.id).getContent()) === "") {
+								msg = "Please enter the " + d.label;
+							}
+							break;
+
+						case "ckeditor":
+							if (d.required === "true" && errors.stripTags(CKEDITOR.instances[field.id].getData()) === "") {
+								msg = "Please enter the " + d.label;
+							}
+							break;
+
 						case "string":
 							if (field.value.trim() === "" && d.required === "true") {
 								msg = "Please enter the " + d.label;
@@ -453,7 +509,7 @@
 						case "radio":
 							if (!errors.checkRadio(field.name) && d.required === "true") {
 								if (validatorParams.display === "onField") {
-									msg = "Please make a selection";
+									msg = "Please make a selection here";
 								}
 								else {
 									msg = "Please make a selection at " + d.label;
@@ -464,7 +520,7 @@
 						case "select":
 							if (field.value.trim() === "" && d.required === "true") {
 								if (validatorParams.display === "onField") {
-									msg = "Please make a selection";
+									msg = "Please make a selection here";
 								}
 								else {
 									msg = "Please make a selection at " + d.label;
@@ -538,7 +594,12 @@
 
 						case "phone":
 							if (field.value.trim() === "" && d.required === "true") {
-								msg = "Please enter a 10-digit number at " + d.label;
+								if (validatorParams.display === "onField") {
+									msg = "Please enter a 10-digit number here";
+								}
+								else {
+									msg = "Please enter a 10-digit number at " + d.label;
+								}
 							}
 							else if (field.value.length) {
 								if (d.format) {
@@ -555,7 +616,7 @@
 								}
 								else {
 									if (validatorParams.display === "onField") {
-										msg = "Please enter a 10-digit number";
+										msg = "Please enter a 10-digit number here";
 									}
 									else {
 										msg = "Please enter a 10-digit number at " + d.label;
@@ -567,7 +628,7 @@
 						case "email":
 							if (field.value.trim() === "" && d.required === "true") {
 								if (validatorParams.display === "onField") {
-									msg = "Please enter an email";
+									msg = "Please enter the " + d.label;
 								}
 								else  {
 									msg = "Please enter an email at " + d.label;
@@ -929,7 +990,7 @@
 		};
 
 		errors.checkPhoneFormat = function(id, format) {
-			var formats = ["()-", "().", "-", "."];
+			var formats = ["()-", "().", "-", ".", "0"];
 			var msg;
 
 			if (formats.indexOf(format) < 0) {
@@ -1136,6 +1197,37 @@
 			return memberIds;
 		};
 
+		errors.validateEditor = function(field) {
+			var errorList = errors.validate(field, []);
+
+			if (!errorList.length) {
+				if (validatorParams.display === "topDisplay" && document.getElementById("err-" + field.id)) {
+					document.getElementById("err-" + field.id).remove();
+				}
+				else {
+					errors.clearError(field.id);
+				}
+			}
+		};
+
+		errors.fixTinyMCEs = function() {
+			var field = {};
+
+			for (var i = 0; i < errors.tinyMCEs.length; i++) {
+				field = errors.makeField(errors.tinyMCEs[i]);
+				errors.validateEditor(field);
+			}
+		};
+
+		errors.fixCKEditors = function() {
+			var field = {};
+
+			for (var i = 0; i < errors.ckeditors.length; i++) {
+				field = errors.makeField(errors.ckeditors[i]);
+				errors.validateEditor(field);
+			}
+		};
+
 		errors.addClass = function(id, classname) {
 			var classes = document.getElementById(id).classList;
 			classes.add(classname);
@@ -1176,6 +1268,25 @@
 					});
 				}
 			}
+		};
+
+		errors.stripTags = function(str) {
+			var newString = "";
+			var use = true;
+
+			str = str.replace(new RegExp("&nbsp;", "g"), "");
+			str.split("").forEach(function (char) {
+				if (char === "<") {
+					use = false;
+				}
+				if (use) {
+					newString += char;
+				}
+				if (char === ">") {
+					use = true;				
+				}
+			});
+			return newString.trim();
 		};
 
 		return errors;
