@@ -268,7 +268,6 @@ component extends="coldbox.system.web.services.BaseService" accessors="true"{
 				throwontimeout="true"
 				timeout="30"
 		{
-
 			// Did we send in a class to instantiate
 			if( !isNull( arguments.interceptorClass ) ){
 				// Create the Interceptor Class
