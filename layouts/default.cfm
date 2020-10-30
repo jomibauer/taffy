@@ -22,6 +22,7 @@
 		<script src="includes/js/dataTables.min.js"></script>
 		<script src="includes/js/dataTables.bootstrap4.min.js"></script>
 		<script src="includes/js/validator.js"></script>
+		<!--- see http://michaelycf10.mod-llc.com/validator/ for validator.js docs --->
 		<script>
 			validatorParams = {
 				"display": "onField",
