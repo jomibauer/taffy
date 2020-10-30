@@ -16,11 +16,26 @@
 		<link rel="stylesheet" type="text/css" href="includes/css/app.css" />
 		<link rel="stylesheet" type="text/css" href="includes/css/default.css" />
 
-		<script type="text/javascript" src="includes/js/jquery-2.1.3.min.js"></script>
-		<script type="text/javascript" src="includes/js/jquery-ui-1.11.2.min.js"></script>
-		<script type="text/javascript" src="includes/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="includes/js/dataTables.min.js"></script>
-		<script type="text/javascript" src="includes/js/dataTables.bootstrap4.min.js"></script>
+		<script src="includes/js/jquery-2.1.3.min.js"></script>
+		<script src="includes/js/jquery-ui-1.11.2.min.js"></script>
+		<script src="includes/js/bootstrap.min.js"></script>
+		<script src="includes/js/dataTables.min.js"></script>
+		<script src="includes/js/dataTables.bootstrap4.min.js"></script>
+		<script src="includes/js/validator.js"></script>
+		<!--- see http://michaelycf10.mod-llc.com/validator/ for validator.js docs --->
+		<script>
+			validatorParams = {
+				"display": "onField",
+				"formName": "",
+				"formList": [],
+				"submitButtonId": "",
+				"autoSubmit": false,
+				"padDates": true,
+				"topErrorTargetId": "top-error",
+				"topErrorItemClass": "alert alert-danger",
+				"errorHideClass": "error-vanish"
+			}
+		</script>
 
 	</head>
 	<body>
@@ -29,6 +44,7 @@
 		<br />
 		<div class="container">
 			<div id="primary">
+				<div id="top-error" class="error-vanish"></div>
 				<cfinclude template="./includes/messages.cfm" />
 				<cfoutput>#renderView()#</cfoutput>
 			</div>
