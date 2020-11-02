@@ -1,16 +1,17 @@
 component name="Group" accessors=true extends="BaseDomain" {
 
-	property Numeric intGroupID;
-	property String vcGroupName;
-	property String vcGroupAbbr;
-	property String vcGroupEmail;
-	property String vcGroupDesc;
-	property boolean btIsProtected;
-	property boolean btIsRemoved;
-	property date dtCreatedOn;
-	property Numeric intCreatedBy;
-	property date dtLastModifiedOn;
-	property Numeric intLastModifiedBy;
+	property type="Numeric" name="intGroupID" getter=true;
+	property type="Numeric" name="intGroupID" getter=true;
+	property type="String" name="vcGroupName" getter=true;
+	property type="String" name="vcGroupAbbr" getter=true;
+	property type="String" name="vcGroupEmail" getter=true;
+	property type="String" name="vcGroupDesc" getter=true;
+	property type="boolean" name="btIsProtected" getter=true;
+	property type="boolean" name="btIsRemoved" getter=true;
+	property type="date" name="dtCreatedOn" getter=true;
+	property type="Numeric" name="intCreatedBy" getter=true;
+	property type="date" name="dtLastModifiedOn" getter=true;
+	property type="Numeric" name="intLastModifiedBy" getter=true;
 
 	public any function init () {
 

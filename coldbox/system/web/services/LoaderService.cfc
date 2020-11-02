@@ -20,8 +20,6 @@ component extends="coldbox.system.web.services.BaseService" accessors="true"{
 	* @overrideAppMapping The direct location of the application in the web server
 	*/
 	LoaderService function loadApplication( overrideConfigFile="", overrideAppMapping="" ){
-
-
 		var coldBoxSettings = controller.getColdBoxSettings();
 		var services 		= controller.getServices();
 
@@ -49,7 +47,6 @@ component extends="coldbox.system.web.services.BaseService" accessors="true"{
 		createCacheBox();
 		// Create WireBox Container
 		createWireBox();
-
 		// Execute onConfigurationLoad for coldbox internal services()
 		for( var thisService in services ){
 			services[ thisService ].onConfigurationLoad();

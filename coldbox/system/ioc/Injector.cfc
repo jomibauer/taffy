@@ -126,7 +126,7 @@ component serializable="false" accessors="true" implements="coldbox.system.ioc.I
 		// Scope Storages
 		variables.scopeStorage = new coldbox.system.core.collections.ScopeStorage();
 		// Version
-		variables.version      = "5.6.1+999";
+		variables.version      = "5.6.2+1148";
 		// The Configuration Binder object
 		variables.binder       = "";
 		// ColdBox Application Link
@@ -306,7 +306,6 @@ component serializable="false" accessors="true" implements="coldbox.system.ioc.I
 	 **/
 	function getInstance( name, dsl, struct initArguments = structNew(), targetObject="" ){
 		// Get by DSL?
-
 		if( structKeyExists( arguments, "dsl" ) ){
 			return variables.builder.buildSimpleDSL(
 				dsl          = arguments.dsl,
@@ -375,6 +374,7 @@ component serializable="false" accessors="true" implements="coldbox.system.ioc.I
 			"afterInstanceCreation",
 			{ mapping=mapping, target=target, injector=this }
 		);
+
 		return target;
 	}
 
