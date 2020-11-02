@@ -1,7 +1,6 @@
 component name="Group" accessors=true extends="BaseDomain" {
 
 	property type="Numeric" name="intGroupID" getter=true;
-	property type="Numeric" name="intGroupID" getter=true;
 	property type="String" name="vcGroupName" getter=true;
 	property type="String" name="vcGroupAbbr" getter=true;
 	property type="String" name="vcGroupEmail" getter=true;
