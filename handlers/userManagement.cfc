@@ -115,7 +115,7 @@ component extends="coldbox.system.EventHandler" {
 			rc.password = cryptoService.genPassword(minLength=8, qtyNumbers=2, qtyLowerCaseAlpha=1, qtyOtherChars=1);
 			//rc.hashedPassword = cryptoService.hashPassword(rc.password);
 
-			userService.changePassword(userID=rc.user.getIntUserID()
+			userService.changePassword(intUserID=rc.user.getIntUserID()
 					, newPassword=rc.password
 					, isTempPassword=true
 					, requireNewPassword=false
