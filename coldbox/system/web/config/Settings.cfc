@@ -12,13 +12,13 @@ component{
 	this.authorEmail 	= "info@ortussolutions.com";
 	this.authorWebsite	= "https://www.ortussolutions.com";
 	this.suffix			= "Joshua 1:9";
-	this.version		= "5.6.1+999";
+	this.version		= "5.6.2+1148";
 	this.description	= "This is the ColdBox Platform for ColdFusion Powered Web Applications.";
 
 	// Operation Defaults
 	this.eventName 		= "event";
 	this.defaultEvent 	= "main.index";
-	this.defaultLayout 	= "main.cfm";
+	this.defaultLayout 	= "Main.cfm";
 
 	// flash scope defaults
 	this.flash = {

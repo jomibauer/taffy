@@ -68,7 +68,6 @@ component serializable="false" accessors="true"{
 	 * @throws InvalidColdBoxMapping
 	*/
 	function loadColdBox(){
-
 		var appKey = locateAppKey();
 
 		// Cleanup of old code, just in case
@@ -653,6 +652,9 @@ component serializable="false" accessors="true"{
 	* Process Stack trace for errors
 	*/
 	private function processStackTrace( str ){
+		// Not using encodeForHTML() as it is too destructive and ruins whitespace chars and other stuff
+		arguments.str = HTMLEditFormat( arguments.str );
+		
 		var aMatches = REMatchNoCase( "\(([^\)]+)\)", arguments.str );
 		for( var aString in aMatches ){
 			arguments.str = replacenocase( arguments.str, aString, "<span class='highlight'>#aString#</span>", "all" );
