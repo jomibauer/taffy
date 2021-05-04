@@ -26,10 +26,10 @@ component name="User" accessors=true extends="BaseDomain" {
 	property type="boolean" name="btIsProtected" getter=true;
 	property type="boolean" name="btIsRemoved" getter=true;
 	property type="date" name="dtCreatedOn" getter=true;
-	property type="Numeric" name="intCreatedBy" getter=true;
+	property type="Numeric" name="intCreatedById" getter=true;
 	property type="String" name="vcCreatedByIP" getter=true;
-	property type="date" name="dtLastModifiedOn" getter=true;
-	property type="Numeric" name="intLastModifiedBy" getter=true;
+	property type="date" name="dtModifiedOn" getter=true;
+	property type="Numeric" name="intModifiedById" getter=true;
 	property type="String" name="vcLastModifiedByIP" getter=true;
 	property ApiAccessKey AuthenticationKey;
 
@@ -67,10 +67,10 @@ component name="User" accessors=true extends="BaseDomain" {
 		setBtIsProtected(false);
 		setBtIsRemoved(false);
 		setDtCreatedOn(variables.instance.never);
-		setIntCreatedBy(0);
+		setIntCreatedById(0);
 		setVcCreatedByIP("");
-		setDtLastModifiedOn(variables.instance.never);
-		setIntLastModifiedBy(0);
+		setDtModifiedOn(variables.instance.never);
+		setIntModifiedById(0);
 		setVcLastModifiedByIP("");
 
 		variables.userGroups = [];
@@ -203,10 +203,10 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "btIsProtected":' & (getBtIsProtected() ? 'true' : 'false'));
 		sb.append(', "btIsRemoved":' & (getBtIsRemoved() ? 'true' : 'false'));
 		sb.append(', "dtCreatedOn":"' & serializeJSON(getDtCreatedOn()));
-		sb.append(', "intCreatedBy":' & getIntCreatedBy());
+		sb.append(', "intCreatedById":' & getIntCreatedById());
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));
-		sb.append(', "dtLastModifiedOn":"' & serializeJSON(getDtLastModifiedOn()));
-		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
+		sb.append(', "dtModifiedOn":"' & serializeJSON(getDtModifiedOn()));
+		sb.append(', "intModifiedById":' & getIntModifiedById());
 		sb.append(', "vcLastModifiedByIP":' & serializeJSON(getVcLastModifiedByIP()));
 		sb.append(', "groups":[');
 		var i = 0;
@@ -254,10 +254,10 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "btIsProtected":' & (getBtIsProtected() ? 'true' : 'false'));
 		sb.append(', "btIsRemoved":' & (getBtIsRemoved() ? 'true' : 'false'));
 		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
-		sb.append(', "intCreatedBy":' & getIntCreatedBy());
+		sb.append(', "intCreatedById":' & getIntCreatedById());
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));
-		sb.append(', "dtLastModifiedOn":' & serializeJSON(getDtLastModifiedOn()));
-		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
+		sb.append(', "dtModifiedOn":' & serializeJSON(getDtModifiedOn()));
+		sb.append(', "intModifiedById":' & getIntModifiedById());
 		sb.append(', "vcLastModifiedByIP":' & serializeJSON(getVcLastModifiedByIP()));
 		sb.append(', "groups":[');
 		var i = 0;

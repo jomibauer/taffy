@@ -13,9 +13,9 @@
 				, btIsProtected		/*  - bit*/
 				, btIsRemoved		/*  - bit*/
 				, dtCreatedOn		/*  - datetime*/
-				, intCreatedBy		/*  - int*/
-				, dtLastModifiedOn	/*  - datetime*/
-				, intLastModifiedBy	/*  - int*/
+				, intCreatedById		/*  - int*/
+				, dtModifiedOn	/*  - datetime*/
+				, intModifiedById	/*  - int*/
 			)
 			VALUES
 			(
@@ -26,9 +26,9 @@
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedBy()#"/>	/* intCreatedBy - int */
-				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntLastModifiedBy()#"/>	/* intLastModifiedBy - int */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedById()#"/>	/* intCreatedById - int */
+				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntModifiedById()#"/>	/* intModifiedById - int */
 			);
 		</cfquery>
 
@@ -48,9 +48,9 @@
 				, btIsProtected = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, dtCreatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, intCreatedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedBy()#"/>	/* intCreatedBy - int */
-				, dtLastModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
-				, intLastModifiedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntLastModifiedBy()#"/>	/* intLastModifiedBy - int */
+				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedById()#"/>	/* intCreatedById - int */
+				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
+				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntModifiedById()#"/>	/* intModifiedById - int */
 			WHERE intGroupID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntGroupID()#"/>
 		</cfquery>
 
@@ -69,9 +69,9 @@
 				, tblGroup.btIsProtected		/*  - bit*/
 				, tblGroup.btIsRemoved		/*  - bit*/
 				, tblGroup.dtCreatedOn		/*  - datetime*/
-				, tblGroup.intCreatedBy		/*  - int*/
-				, tblGroup.dtLastModifiedOn	/*  - datetime*/
-				, tblGroup.intLastModifiedBy	/*  - int*/
+				, tblGroup.intCreatedById		/*  - int*/
+				, tblGroup.dtModifiedOn	/*  - datetime*/
+				, tblGroup.intModifiedById	/*  - int*/
 			FROM dbo.tblGroup
 			WHERE tblGroup.intGroupID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.intGroupID#"/>
 		</cfquery>
@@ -91,9 +91,9 @@
 				, tblGroup.btIsProtected		/*  - bit*/
 				, tblGroup.btIsRemoved		/*  - bit*/
 				, tblGroup.dtCreatedOn		/*  - datetime*/
-				, tblGroup.intCreatedBy		/*  - int*/
-				, tblGroup.dtLastModifiedOn	/*  - datetime*/
-				, tblGroup.intLastModifiedBy	/*  - int*/
+				, tblGroup.intCreatedById		/*  - int*/
+				, tblGroup.dtModifiedOn	/*  - datetime*/
+				, tblGroup.intModifiedById	/*  - int*/
 			FROM dbo.tblGroup
 			WHERE tblGroup.btIsRemoved = 0
 			ORDER BY 1 ASC
@@ -114,9 +114,9 @@
 				, tblGroup.btIsProtected		/*  - bit*/
 				, tblGroup.btIsRemoved		/*  - bit*/
 				, tblGroup.dtCreatedOn		/*  - datetime*/
-				, tblGroup.intCreatedBy		/*  - int*/
-				, tblGroup.dtLastModifiedOn	/*  - datetime*/
-				, tblGroup.intLastModifiedBy	/*  - int*/
+				, tblGroup.intCreatedById		/*  - int*/
+				, tblGroup.dtModifiedOn	/*  - datetime*/
+				, tblGroup.intModifiedById	/*  - int*/
 			FROM dbo.tblGroup
 			WHERE tblGroup.btIsRemoved = 0
 			ORDER BY 1 ASC
