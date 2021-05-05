@@ -23,7 +23,7 @@ A reporting template about exceptions in your ColdBox Apps
 <!--- Param Form Scope --->
 <cfparam name="form" default="#structnew()#">
 <!--- StyleSheets --->
-<style type="text/css"><cfinclude template="/coldbox/system/includes/css/cbox-debugger.css.cfm"></style>
+<style type="text/css"><cfinclude template="/coldbox/system/exceptions/css/cbox-debugger.css.cfm"></style>
 <div class="cb-container">
 	<h1>
 		<cfif oException.geterrorCode() neq "" AND oException.getErrorCode() neq 0>
@@ -32,11 +32,11 @@ A reporting template about exceptions in your ColdBox Apps
 		Oopsy! Something went wrong!</h1>
 
 	<div class="extended">
-		
+
 		<cfif oException.getExtraMessage() neq "">
 		<h3>#encodeForHTML( oException.getExtramessage() )#</h3>
 		</cfif>
-		
+
 		<table class="table" align="center">
 			 <tr >
 				<th colspan="2" >Error Details:</th>
@@ -58,17 +58,17 @@ A reporting template about exceptions in your ColdBox Apps
 					<td>#encodeForHTML( oException.getExtendedInfo() )#</td>
 				</tr>
 		 	</cfif>
-	
-		 	<cfif len( oException.getDetail() ) neq 0>	 		
+
+		 	<cfif len( oException.getDetail() ) neq 0>
 				<tr>
 					<td align="right" class="info"><strong>Detail:</strong></td>
 					<!--- Using HTMLEditFormat() on purpose so my line breaks aren't encoded! --->
 					<td>#HTMLEditFormat( oException.getDetail() ).listChangeDelims( '<br>', chr(13)&chr(10) )#</td>
-				</tr>			
+				</tr>
 			 </cfif>
 			<tr>
 				<td align="right" class="info"><strong>Timestamp: </strong></td>
-				<td>#dateformat(now(), "MM/DD/YYYY")# #timeformat(now(),"hh:MM:SS TT")#</td>
+				<td>#dateformat(now(), "mm/dd/yyyy")# #timeformat(now(),"hh:mm:ss tt")#</td>
 			</tr>
 			 <tr >
 				<th colspan="2" >Event Details:</th>
@@ -101,7 +101,7 @@ A reporting template about exceptions in your ColdBox Apps
 			<tr>
 				<td align="right" class="info"><strong>Layout: </strong></td>
 				<td><cfif Event.getCurrentLayout() neq "">#encodeForHTML( Event.getCurrentLayout() )#<cfelse>N/A</cfif> (Module: #encodeForHTML( event.getCurrentLayoutModule() )#)</td>
-			</tr>		
+			</tr>
 			<tr>
 				<td align="right" class="info"><strong>View: </strong></td>
 				<td><cfif Event.getCurrentView() neq "">#encodeForHTML( Event.getCurrentView() )#<cfelse>N/A</cfif></td>
@@ -148,14 +148,14 @@ A reporting template about exceptions in your ColdBox Apps
 		</table>
 
 		<h2>Stack Trace:</h2>
-		<div class="stacktrace">#processStackTrace( oException.getstackTrace() )#</div>
+		<div class="stacktrace">#oException.processStackTrace( oException.getstackTrace() )#</div>
 
 		<!--- FRAMEWORK SNAPSHOT --->
 		<h2>FRAMEWORK SNAPSHOT:</h2>
 		<table class="table" align="center">
 			<tr>
 			   <td align="right" class="info">Bug Date:</td>
-			   <td >#dateformat(now(), "MM/DD/YYYY")# #timeformat(now(),"hh:MM:SS TT")#</td>
+			   <td >#dateformat(now(), "mm/dd/yyyy")# #timeformat(now(),"hh:mm:ss tt")#</td>
 			 </tr>
 
 			 <tr>
