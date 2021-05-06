@@ -90,13 +90,13 @@
 							#rc.createdBy.getVcFirstName()# #rc.createdBy.getVcLastName()# &##64; #prc.formatterService.formatDateTime(rc.user.getDtCreatedOn())#
 						</td>
 					</tr>
-					<cfif dateCompare(rc.user.getDtLastModifiedOn(), getSetting("never")) != 0>
+					<cfif dateCompare(rc.user.getDtModifiedOn(), getSetting("never")) != 0>
 						<tr>
 							<th>
 								Last Modified:
 							</th>
 							<td>
-								#rc.lastModifiedBy.getVcFirstName()# #rc.lastModifiedBy.getVcLastName()# &##64; #prc.formatterService.formatDateTime(rc.user.getDtLastModifiedOn())#
+								#rc.lastModifiedBy.getVcFirstName()# #rc.lastModifiedBy.getVcLastName()# &##64; #prc.formatterService.formatDateTime(rc.user.getDtModifiedOn())#
 							</td>
 						</tr>
 					</cfif>

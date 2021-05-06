@@ -3,11 +3,11 @@
 Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
 www.ortussolutions.com
 ********************************************************************************
-A public error template that just shows that an exception ocurred.
+A public error template that just shows that an exception occurred.
 ----------------------------------------------------------------------->
 <cfoutput>
 <!--- StyleSheets --->
-<style type="text/css"><cfinclude template="/coldbox/system/includes/css/cbox-debugger.css.cfm"></style>
+<style type="text/css"><cfinclude template="/coldbox/system/exceptions/css/cbox-debugger.css.cfm"></style>
 <div class="cb-container">
 	<h1>
 		<cfif oException.geterrorCode() neq "" AND oException.getErrorCode() neq 0>
@@ -34,7 +34,8 @@ A public error template that just shows that an exception ocurred.
 	</div>
 
 	<div style="margin:10px; color:gray">
-		<em>* The full robust errors can be seen by switching the <strong>coldbox.customErrorTemplate</strong> in your configuration file (/config/ColdBox.cfc) to "/coldbox/system/includes/BugReport.cfm" and reloading the application.</em>
+		<em>* The full robust errors can be seen by switching the <strong>coldbox.customErrorTemplate</strong> in your configuration file (/config/ColdBox.cfc) to
+			"/coldbox/system/exceptions/BugReport.cfm" or "/coldbox/system/exceptions/Whoops.cfm" and reloading the application.</em>
 	</div>
 </div>
 </cfoutput>

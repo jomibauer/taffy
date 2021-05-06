@@ -1,11 +1,11 @@
 ﻿/**
-* Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-* www.ortussolutions.com
-* ---
-* @author Luis Majano <lmajano@ortussolutions.com>
-* Loads the framwork into memory and provides a ColdBox application.
-*/
-component serializable="false" accessors="true"{
+ * Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
+ * www.ortussolutions.com
+ * ---
+ * @author Luis Majano <lmajano@ortussolutions.com>
+ * Loads the framwork into memory and provides a ColdBox application.
+ */
+component serializable="false" accessors="true" {
 
 	/************************************** CONSTRUCTOR *********************************************/
 
@@ -25,13 +25,13 @@ component serializable="false" accessors="true"{
 	property name="COLDBOX_FAIL_FAST";
 
 	// param the properties with defaults
-	param name="COLDBOX_CONFIG_FILE" 	default="";
-	param name="COLDBOX_APP_ROOT_PATH" 	default="#getDirectoryFromPath( getbaseTemplatePath() )#";
-	param name="COLDBOX_APP_KEY" 		default="cbController";
-	param name="COLDBOX_APP_MAPPING" 	default="";
-	param name="appHash"				default="#hash( getBaseTemplatePath() )#";
-	param name="lockTimeout"			default="30" type="numeric";
-	param name="COLDBOX_FAIL_FAST"		default="true";
+	param name="COLDBOX_CONFIG_FILE"   default="";
+	param name="COLDBOX_APP_ROOT_PATH" default="#getDirectoryFromPath( getBaseTemplatePath() )#";
+	param name="COLDBOX_APP_KEY"       default="cbController";
+	param name="COLDBOX_APP_MAPPING"   default="";
+	param name="appHash"               default="#hash( getBaseTemplatePath() )#";
+	param name="lockTimeout" default="30" type="numeric";
+	param name="COLDBOX_FAIL_FAST" default="true";
 
 	/**
 	 * Constructor, called by your Application CFC
@@ -45,8 +45,8 @@ component serializable="false" accessors="true"{
 		required string COLDBOX_CONFIG_FILE,
 		required string COLDBOX_APP_ROOT_PATH,
 		string COLDBOX_APP_KEY,
-		string COLDBOX_APP_MAPPING="",
-		any COLDBOX_FAIL_FAST=true
+		string COLDBOX_APP_MAPPING = "",
+		any COLDBOX_FAIL_FAST      = true
 	){
 		// Set vars for two main locations
 		setCOLDBOX_CONFIG_FILE( arguments.COLDBOX_CONFIG_FILE );
@@ -55,7 +55,7 @@ component serializable="false" accessors="true"{
 		setCOLDBOX_FAIL_FAST( arguments.COLDBOX_FAIL_FAST );
 
 		// App Key Check
-		if( structKeyExists( arguments, "COLDBOX_APP_KEY" ) AND len( trim( arguments.COLDBOX_APP_KEY ) ) ){
+		if ( structKeyExists( arguments, "COLDBOX_APP_KEY" ) AND len( trim( arguments.COLDBOX_APP_KEY ) ) ) {
 			setCOLDBOX_APP_KEY( arguments.COLDBOX_APP_KEY );
 		}
 
@@ -66,17 +66,17 @@ component serializable="false" accessors="true"{
 	 * Loads the framework into application scope and executes app start procedures
 	 *
 	 * @throws InvalidColdBoxMapping
-	*/
+	 */
 	function loadColdBox(){
 		var appKey = locateAppKey();
 
 		// Cleanup of old code, just in case
-		if( structkeyExists( application, appKey ) ){
+		if ( structKeyExists( application, appKey ) ) {
 			structDelete( application, appKey );
 		}
 
 		// Verify Mapping
-		if( !fileExists( expandPath( "/coldbox/system/web/Controller.cfc" ) ) ){
+		if ( !fileExists( expandPath( "/coldbox/system/web/Controller.cfc" ) ) ) {
 			var coldboxDirectory = reReplaceNoCase(
 				getDirectoryFromPath( getCurrentTemplatePath() ),
 				"[\\/]system",
@@ -84,11 +84,11 @@ component serializable="false" accessors="true"{
 			);
 			throw(
 				message = "Cannot find the '/'coldbox' mapping",
-				detail 	= "It seems that you do not have a '/coldbox' mapping in your application and we cannot continue to process the request.
+				detail  = "It seems that you do not have a '/coldbox' mapping in your application and we cannot continue to process the request.
 				The good news is that you can easily resolve this by either creating a mapping in your Admnistrator or in this application's
 				Application.cfc that points to this directory: '#coldboxDirectory#'.  You can also copy the code snippet
 				below to add to your Application.cfc's pseudo constructor: this.mappings[ '/coldbox' ] = '#coldboxDirectory#'",
-				type	= "InvalidColdBoxMapping"
+				type = "InvalidColdBoxMapping"
 			);
 		}
 
@@ -96,48 +96,57 @@ component serializable="false" accessors="true"{
 		application[ appKey ] = new coldbox.system.web.Controller( COLDBOX_APP_ROOT_PATH, appKey );
 		// Setup the Framework And Application
 		application[ appKey ].getLoaderService().loadApplication( COLDBOX_CONFIG_FILE, COLDBOX_APP_MAPPING );
+		// Get the reinit key
 		// Application Start Handler
 		try {
-			if ( len( application[ appKey ].getSetting( "ApplicationStartHandler" ) ) ){
-				application[ appKey ].runEvent( event=application[ appKey ].getSetting( "ApplicationStartHandler" ) );
+			if ( len( application[ appKey ].getSetting( "ApplicationStartHandler" ) ) ) {
+				application[ appKey ].runEvent(
+					event = application[ appKey ].getSetting( "ApplicationStartHandler" )
+				);
 			}
-		}
-		catch ( any e ) {
+		} catch ( any e ) {
 			// process the exception
 			writeOutput( processException( application[ appKey ], e ) );
 			// abort it, something went really wrong.
 			abort;
 		}
+
 		// Check if fwreinit is sent, if sent, ignore it, we are loading the framework
-		if( structKeyExists( url, "fwreinit" ) ){
-			structDelete( url, "fwreinit" );
+		var reinitKey = application[ appKey ].getSetting( "reinitKey", "fwreinit" );
+		if ( structKeyExists( url, reinitKey ) ) {
+			structDelete( url, reinitKey );
 		}
 
 		return this;
 	}
 
 	/**
-	* Request Reload procedures
-	*/
+	 * Request Reload procedures
+	 */
 	function reloadChecks(){
-		var appKey 			= locateAppKey();
-		var cbController 	= "";
-		var needReinit 		= isfwReinit();
+		var appKey     = locateAppKey();
+		var needReinit = isfwReinit();
 
 		// Initialize the Controller If Needed, double locked
-		if( NOT structkeyExists( application, appkey ) OR NOT application[ appKey ].getColdboxInitiated() OR needReinit ){
-			lock type="exclusive" name="#appHash#" timeout="#lockTimeout#" throwontimeout="true"{
+		if (
+			NOT structKeyExists( application, appkey ) OR NOT application[ appKey ].getColdboxInitiated() OR needReinit
+		) {
+			lock type="exclusive" name="#appHash#" timeout="#lockTimeout#" throwontimeout="true" {
 				// double lock
-				if( NOT structkeyExists( application, appkey ) OR NOT application[ appKey ].getColdboxInitiated() OR needReinit ){
-					try{
+				if (
+					NOT structKeyExists( application, appkey ) OR NOT application[ appKey ].getColdboxInitiated() OR needReinit
+				) {
+					try {
 						// Tell the word we are reiniting
 						application.fwReinit = true;
 						// Verify if we are Reiniting?
-						if( structkeyExists( application, appKey ) AND application[ appKey ].getColdboxInitiated() AND needReinit ){
+						if (
+							structKeyExists( application, appKey ) AND application[ appKey ].getColdboxInitiated() AND needReinit
+						) {
 							// Load Module CF Mappings so modules can unload properly
 							application[ appKey ].getModuleService().loadMappings();
 							// process preReinit interceptors
-							application[ appKey ].getInterceptorService().processState( "preReinit" );
+							application[ appKey ].getInterceptorService().announce( "preReinit" );
 							// Shutdown the application services
 							application[ appKey ].getLoaderService().processShutdown();
 						}
@@ -145,34 +154,32 @@ component serializable="false" accessors="true"{
 						loadColdBox();
 						// Remove any context stragglers
 						structDelete( request, "cb_requestContext" );
-					} catch ( any e ){
+					} catch ( any e ) {
 						rethrow;
 					} finally {
 						application.fwReinit = false;
 					}
 				}
-			} // end lock
+			}
+			// end lock
 		}
 
-		try{
+		try {
 			// Get Controller Reference
-			lock type="readonly" name="#appHash#" timeout="#lockTimeout#" throwontimeout="true"{
-				cbController = application[ appKey ];
-			}
+			var cbController = application[ appKey ];
 			// WireBox Singleton AutoReload
-			if( cbController.getSetting( "Wirebox" ).singletonReload ){
-				lock type="exclusive" name="#appHash#" timeout="#lockTimeout#" throwontimeout="true"{
+			if ( cbController.getSetting( "Wirebox" ).singletonReload ) {
+				lock type="exclusive" name="#appHash#" timeout="#lockTimeout#" throwontimeout="true" {
 					cbController.getWireBox().clearSingletons();
 				}
 			}
 			// Handler's Index Auto Reload
-			if( cbController.getSetting( "HandlersIndexAutoReload" ) ){
-				lock type="exclusive" name="#appHash#" timeout="#lockTimeout#" throwontimeout="true"{
+			if ( cbController.getSetting( "HandlersIndexAutoReload" ) ) {
+				lock type="exclusive" name="#appHash#" timeout="#lockTimeout#" throwontimeout="true" {
 					cbController.getHandlerService().registerHandlers();
 				}
 			}
-		}
-		catch(Any e){
+		} catch ( Any e ) {
 			// process the exception
 			writeOutput( processException( cbController, e ) );
 			// abort it, something went really wrong.
@@ -183,18 +190,18 @@ component serializable="false" accessors="true"{
 	}
 
 	/**
-	* Process a ColdBox Request
-	*/
+	 * Process a ColdBox Request
+	 */
 	function processColdBoxRequest() output="true"{
 		// Get Controller Reference
-		lock type="readonly" name="#variables.appHash#" timeout="#variables.lockTimeout#" throwontimeout="true"{
+		lock type="readonly" name="#variables.appHash#" timeout="#variables.lockTimeout#" throwontimeout="true" {
 			var cbController = application[ locateAppKey() ];
 		}
 		// Local references
-		var interceptorService 	= cbController.getInterceptorService();
-		var cacheBox 			= cbController.getCacheBox();
+		var interceptorService = cbController.getInterceptorService();
+		var cacheBox           = cbController.getCacheBox();
 
-		try{
+		try {
 			// set request time, for info purposes
 			request.fwExecTime = getTickCount();
 			// Load Module CF Mappings
@@ -202,76 +209,84 @@ component serializable="false" accessors="true"{
 			// Create Request Context & Capture Request
 			var event = cbController.getRequestService().requestCapture();
 
-			//****** PRE PROCESS *******/
-			interceptorService.processState( "preProcess" );
-			if( len( cbController.getSetting( "RequestStartHandler" ) ) ){
-				cbController.runEvent( cbController.getSetting( "RequestStartHandler" ), true );
+			// ****** PRE PROCESS *******/
+			interceptorService.announce( "preProcess" );
+			if ( len( cbController.getSetting( "RequestStartHandler" ) ) ) {
+				cbController.runEvent(
+					event        : cbController.getSetting( "RequestStartHandler" ),
+					prePostExempt: true
+				);
 			}
 
-			//****** EVENT CACHING CONTENT DELIVERY *******/
-			var refResults	 = {};
-			var eCacheEntry	 = event.getEventCacheableEntry();
+			// ****** EVENT CACHING CONTENT DELIVERY *******/
+			var refResults  = {};
+			var eCacheEntry = event.getEventCacheableEntry();
 
 			// Verify if event caching item is in selected cache
-			if( eCacheEntry.keyExists( "cachekey" ) ){
+			if ( eCacheEntry.keyExists( "cachekey" ) ) {
 				// Get cache element.
-				refResults.eventCaching = cacheBox
-					.getCache( eCacheEntry.provider )
-					.get( eCacheEntry.cacheKey );
+				refResults.eventCaching = cacheBox.getCache( eCacheEntry.provider ).get( eCacheEntry.cacheKey );
 			}
 
 			// Verify if cached content existed.
-			if ( !isNull( refresults.eventCaching ) ){
+			if ( !isNull( refresults.eventCaching ) ) {
 				// check renderdata
-				if( refResults.eventCaching.renderData ){
+				if ( refResults.eventCaching.renderData ) {
 					refResults.eventCaching.controller = cbController;
-					renderDataSetup( argumentCollection=refResults.eventCaching );
+					renderDataSetup( argumentCollection = refResults.eventCaching );
 				}
 
 				// Caching Header Identifier
 				getPageContextResponse().setHeader( "x-coldbox-cache-response", "true" );
 
 				// Stop Gap for upgrades, remove by 4.2
-				if( isNull( refResults.eventCaching.responseHeaders ) ){
+				if ( isNull( refResults.eventCaching.responseHeaders ) ) {
 					refResults.eventCaching.responseHeaders = {};
 				}
 				// Response Headers that were cached
 				refResults.eventCaching.responseHeaders.each( function( key, value ){
-					event.setHTTPHeader( name=key, value=value );
+					event.setHTTPHeader( name = key, value = value );
 				} );
 
 				// Render Content as binary or just output
-				if( refResults.eventCaching.isBinary ){
-					cbController.getDataMarshaller().renderContent( type="#refResults.eventCaching.contentType#", variable="#refResults.eventCaching.renderedContent#" );
+				if ( refResults.eventCaching.isBinary ) {
+					cbController
+						.getDataMarshaller()
+						.renderContent(
+							type     = "#refResults.eventCaching.contentType#",
+							variable = "#refResults.eventCaching.renderedContent#"
+						);
 				} else {
-					cbController.getDataMarshaller().renderContent( type="#refResults.eventCaching.contentType#", reset=true );
+					cbController
+						.getDataMarshaller()
+						.renderContent( type = "#refResults.eventCaching.contentType#", reset = true );
 					writeOutput( refResults.eventCaching.renderedContent );
 				}
 			} else {
-				//****** EXECUTE MAIN EVENT *******/
-				if( NOT event.getIsNoExecution() ){
-					refResults.results = cbController.runEvent( defaultEvent=true );
+				// ****** EXECUTE MAIN EVENT *******/
+				if ( NOT event.getIsNoExecution() ) {
+					refResults.results = cbController.runEvent( defaultEvent = true );
 				}
-				//****** RENDERING PROCEDURES *******/
-				if( not event.isNoRender() ){
+				// ****** RENDERING PROCEDURES *******/
+				if ( not event.isNoRender() ) {
 					var renderedContent = "";
 
 					// pre layout
-					interceptorService.processState( "preLayout" );
+					interceptorService.announce( "preLayout" );
 
 					// Check for Marshalling and data render
 					var renderData = event.getRenderData();
 
 					// Rendering/Marshalling of content
-					if( !structisEmpty( renderData ) ){
-						renderedContent = cbController.getDataMarshaller().marshallData( argumentCollection=renderData );
+					if ( !structIsEmpty( renderData ) ) {
+						renderedContent = cbController
+							.getDataMarshaller()
+							.marshallData( argumentCollection = renderData );
 					}
 					// Check if handler returned results
-					else if(
-						!isNull( refResults.results )
-					){
+					else if ( !isNull( refResults.results ) ) {
 						// If simple, just return it back, evaluates to HTML
-						if( isSimpleValue( refResults.results ) ){
+						if ( isSimpleValue( refResults.results ) ) {
 							renderedContent = refResults.results;
 						}
 						// ColdBox does native JSON if you return a complex object.
@@ -282,21 +297,23 @@ component serializable="false" accessors="true"{
 					}
 					// Render Layout/View pair via set variable to eliminate whitespace
 					else {
-						renderedContent = cbcontroller.getRenderer()
-							.renderLayout( module=event.getCurrentLayoutModule(), viewModule=event.getCurrentViewModule() );
+						renderedContent = cbcontroller
+							.getRenderer()
+							.renderLayout(
+								module     = event.getCurrentLayoutModule(),
+								viewModule = event.getCurrentViewModule()
+							);
 					}
 
-					//****** PRE-RENDER EVENTS *******/
-					var interceptorData = {
-						renderedContent = renderedContent
-					};
-					interceptorService.processState( "preRender", interceptorData );
+					// ****** PRE-RENDER EVENTS *******/
+					var interceptorData = { renderedContent : renderedContent };
+					interceptorService.announce( "preRender", interceptorData );
 					// replace back content in case of modification, strings passed by value
 					renderedContent = interceptorData.renderedContent;
 
-					//****** EVENT CACHING *******/
+					// ****** EVENT CACHING *******/
 					var eCacheEntry = event.getEventCacheableEntry();
-					if(
+					if (
 						eCacheEntry.keyExists( "cacheKey" ) AND
 						getPageContextResponse().getStatus() neq 500 AND
 						(
@@ -307,14 +324,17 @@ component serializable="false" accessors="true"{
 								renderdata.statusCode neq 500
 							)
 						)
-					){
-						lock type="exclusive" name="#variables.appHash#.caching.#eCacheEntry.cacheKey#" timeout="#variables.lockTimeout#" throwontimeout="true"{
-
+					) {
+						lock
+							type                  ="exclusive"
+							name                  ="#variables.appHash#.caching.#eCacheEntry.cacheKey#"
+							timeout               ="#variables.lockTimeout#"
+							throwontimeout        ="true" {
 							// Try to discover the content type
-							var defaultContentType = "text/html";
+							var defaultContentType= "text/html";
 							// Discover from event caching first.
-							if( !structisEmpty( renderData ) ){
-								defaultContentType 	= renderData.contentType;
+							if ( !structIsEmpty( renderData ) ) {
+								defaultContentType = renderData.contentType;
 							} else {
 								// Else, ask the engine
 								defaultContentType = getPageContextResponse().getContentType();
@@ -322,19 +342,19 @@ component serializable="false" accessors="true"{
 
 							// prepare storage entry
 							var cacheEntry = {
-								renderedContent = renderedContent,
-								renderData		= false,
-								contentType 	= defaultContentType,
-								encoding		= "",
-								statusCode		= "",
-								statusText		= "",
-								isBinary		= false,
-								responseHeaders = event.getResponseHeaders()
+								renderedContent : renderedContent,
+								renderData      : false,
+								contentType     : defaultContentType,
+								encoding        : "",
+								statusCode      : "",
+								statusText      : "",
+								isBinary        : false,
+								responseHeaders : event.getResponseHeaders()
 							};
 
 							// is this a render data entry? If So, append data
-							if( !structisEmpty( renderData ) ){
-								cacheEntry.renderData 	= true;
+							if ( !structIsEmpty( renderData ) ) {
+								cacheEntry.renderData = true;
 								structAppend( cacheEntry, renderData, true );
 							}
 
@@ -348,38 +368,51 @@ component serializable="false" accessors="true"{
 									eCacheEntry.lastAccessTimeout
 								);
 						}
-
-					} // end event caching
+					}
+					// end event caching
 
 					// Render Data? With stupid CF whitespace stuff.
-					if( !structisEmpty( renderData ) ){/*
-						*/renderData.controller = cbController;renderDataSetup( argumentCollection=renderData );/*
+					if ( !structIsEmpty( renderData ) ) {
+						renderData.controller = cbController;
+						renderDataSetup( argumentCollection = renderData );
 						// Binary
-						*/if( renderData.isBinary ){ cbController.getDataMarshaller().renderContent( type="#renderData.contentType#", variable="#renderedContent#" ); }/*
+						if ( renderData.isBinary ) {
+							cbController
+								.getDataMarshaller()
+								.renderContent( type = "#renderData.contentType#", variable = "#renderedContent#" );
+						}
 						// Non Binary
-						*/else{ writeOutput( renderedContent ); }
+						else {
+							writeOutput( renderedContent );
+						}
 					} else {
 						writeOutput( renderedContent );
 					}
 
 					// Post rendering event
-					interceptorService.processState( "postRender" );
-				} // end no render
-
-			} // end normal rendering procedures
-
-			//****** POST PROCESS *******/
-			if( len( cbController.getSetting( "RequestEndHandler" ) ) ){
-				cbController.runEvent( event=cbController.getSetting("RequestEndHandler"), prePostExempt=true );
+					interceptorService.announce( "postRender" );
+				}
+				// end no render
 			}
-			interceptorService.processState( "postProcess" );
+			// end normal rendering procedures
 
-			//****** FLASH AUTO-SAVE *******/
-			if( cbController.getSetting( "flash" ).autoSave ){
-				cbController.getRequestService().getFlashScope().saveFlash();
+			// ****** POST PROCESS *******/
+			if ( len( cbController.getSetting( "RequestEndHandler" ) ) ) {
+				cbController.runEvent(
+					event         = cbController.getSetting( "RequestEndHandler" ),
+					prePostExempt = true
+				);
 			}
+			interceptorService.announce( "postProcess" );
 
-		} catch( Any e ) {
+			// ****** FLASH AUTO-SAVE *******/
+			if ( cbController.getSetting( "flash" ).autoSave ) {
+				cbController
+					.getRequestService()
+					.getFlashScope()
+					.saveFlash();
+			}
+		} catch ( Any e ) {
 			// process the exception and render its report
 			writeOutput( processException( cbController, e ) );
 		}
@@ -389,49 +422,48 @@ component serializable="false" accessors="true"{
 	}
 
 
-
 	/**
-	* Verify if a reinit is sent
-	*/
+	 * Verify if a reinit is sent
+	 */
 	boolean function isFWReinit(){
-		var appKey 	= locateAppKey();
+		var appKey = locateAppKey();
 
 		// CF Parm Structures just in case
-		param name="FORM" 	default="#structNew()#";
-		param name="URL"	default="#structNew()#";
+		param name="FORM" default="#structNew()#";
+		param name="URL"  default="#structNew()#";
 
 		// Check if app exists already in scope
-		if( not structKeyExists( application, appKey ) ){
+		if ( not structKeyExists( application, appKey ) ) {
 			return true;
 		}
 
 		// Verify the reinit key is passed
-		if ( structKeyExists( url, "fwreinit" ) or structKeyExists( form, "fwreinit" ) ){
-
+		var reinitKey = application[ appKey ].getSetting( "reinitKey", "fwreinit" );
+		if ( structKeyExists( url, reinitKey ) or structKeyExists( form, reinitKey ) ) {
 			// Check if we have a reinit password at hand.
-			var reinitPass = application[ appKey ].getSetting( name="ReinitPassword", defaultValue="" );
+			var reinitPass = application[ appKey ].getSetting( name = "reinitPassword", defaultValue = "" );
 
 			// pass Checks
-			if ( NOT len( reinitPass ) ){
+			if ( NOT len( reinitPass ) ) {
 				return true;
 			}
 
 			// Get the incoming pass from form or url
-			var incomingPass 	= "";
-			if( structKeyExists( form, "fwreinit" ) ){
-				incomingPass = form.fwreinit;
+			var incomingPass = "";
+			if ( structKeyExists( form, reinitKey ) ) {
+				incomingPass = form[ reinitKey ];
 			} else {
-				incomingPass = url.fwreinit;
+				incomingPass = url[ reinitKey ];
 			}
 
 			// Compare the passwords
-			if( compare( reinitPass, hash( incomingPass ) ) eq 0 ){
+			if ( compare( reinitPass, hash( incomingPass ) ) eq 0 ) {
 				return true;
 			} else {
 				application[ appKey ].getLog().warn( "The incoming reinit password is not valid." );
 			}
-
-		}//else if reinit found.
+		}
+		// else if reinit found.
 
 		return false;
 	}
@@ -439,56 +471,58 @@ component serializable="false" accessors="true"{
 	/************************************** APP.CFC FACADES *********************************************/
 
 	/**
-	* On request start
-	*/
+	 * On request start
+	 */
 	boolean function onRequestStart( required targetPage ) output=true{
 		// Global flag to denote if we are in mid reinit or not.
-		cfparam( name="application.fwReinit", default =false );
+		cfparam( name = "application.fwReinit", default = false );
 
 		// Fail fast so users coming in during a reinit just get a please try again message.
-		if( application.fwReinit ){
-
+		if ( application.fwReinit ) {
 			// Closure or UDF
-			if( isClosure( variables.COLDBOX_FAIL_FAST ) || isCustomFunction( variables.COLDBOX_FAIL_FAST ) ){
+			if ( isClosure( variables.COLDBOX_FAIL_FAST ) || isCustomFunction( variables.COLDBOX_FAIL_FAST ) ) {
 				variables.COLDBOX_FAIL_FAST();
 				return false;
 			}
 			// Core Fail Fast Option
-			else if( isBoolean( variables.COLDBOX_FAIL_FAST ) && variables.COLDBOX_FAIL_FAST ){
-				writeOutput( 'Oops! Seems ColdBox is still not ready to serve requests, please try again.' );
+			else if ( isBoolean( variables.COLDBOX_FAIL_FAST ) && variables.COLDBOX_FAIL_FAST ) {
+				writeOutput( "Oops! Seems ColdBox is still not ready to serve requests, please try again." );
 				// You don't have to return a 500, I just did this so JMeter would report it differently than a 200
-				cfheader( statusCode="503", statustext="ColdBox Not Available Yet!" );
+				cfheader( statusCode = "503", statustext = "ColdBox Not Available Yet!" );
 				// Break up!
 				return false;
 			}
-
 		}
 
 		// Verify Reloading
 		reloadChecks();
 
 		// Process A ColdBox Request Only
-		if( findNoCase( 'index.cfm', listLast( arguments.targetPage, '/' ) ) ){
+		if ( findNoCase( "index.cfm", listLast( arguments.targetPage, "/" ) ) ) {
 			processColdBoxRequest();
 		}
 		return true;
 	}
 
 	/**
-	* ON missing template
-	*/
+	 * ON missing template
+	 */
 	boolean function onMissingTemplate( required template ){
 		// get reference
-		lock type="readonly" name="#variables.appHash#" timeout="#variables.lockTimeout#" throwontimeout="true"{
+		lock type="readonly" name="#variables.appHash#" timeout="#variables.lockTimeout#" throwontimeout="true" {
 			var cbController = application[ locateAppKey() ];
 		}
-		//Execute Missing Template Handler if it exists
-		if ( len( cbController.getSetting( "MissingTemplateHandler" ) ) ){
+		// Execute Missing Template Handler if it exists
+		if ( len( cbController.getSetting( "MissingTemplateHandler" ) ) ) {
 			// Save missing template in RC and right handler for this call.
 			var event = cbController.getRequestService().getContext();
-			event.setValue( "missingTemplate", arguments.template )
-				.setValue( cbController.getSetting( "EventName" ), cbController.getSetting( "MissingTemplateHandler" ) );
-			//Process it
+			event
+				.setValue( "missingTemplate", arguments.template )
+				.setValue(
+					cbController.getSetting( "EventName" ),
+					cbController.getSetting( "MissingTemplateHandler" )
+				);
+			// Process it
 			onRequestStart( "index.cfm" );
 			// Return processed
 			return true;
@@ -498,77 +532,84 @@ component serializable="false" accessors="true"{
 	}
 
 	/**
-	* ON session start
-	*/
+	 * ON session start
+	 */
 	function onSessionStart(){
 		// get reference
-		lock type="readonly" name="#variables.appHash#" timeout="#variables.lockTimeout#" throwontimeout="true"{
+		lock type="readonly" name="#variables.appHash#" timeout="#variables.lockTimeout#" throwontimeout="true" {
 			var cbController = application[ locateAppKey() ];
 		}
 		// Session start interceptors
-		cbController.getInterceptorService().processState( "sessionStart", session );
-		//Execute Session Start Handler
-		if( len( cbController.getSetting( "SessionStartHandler" ) ) ){
-			cbController.runEvent( event=cbController.getSetting( "SessionStartHandler" ), prePostExempt=true );
+		cbController.getInterceptorService().announce( "sessionStart", session );
+		// Execute Session Start Handler
+		if ( len( cbController.getSetting( "SessionStartHandler" ) ) ) {
+			cbController.runEvent( event = cbController.getSetting( "SessionStartHandler" ), prePostExempt = true );
 		}
 	}
 
 	/**
-	* ON session end
-	*/
+	 * ON session end
+	 */
 	function onSessionEnd( required struct sessionScope, struct appScope ){
 		var cbController = "";
 
 		// Get reference
-		lock type="readonly" name="#variables.appHash#" timeout="#variables.lockTimeout#" throwontimeout="true"{
-			//Check for cb Controller
-			if ( structKeyExists( arguments.appScope, locateAppKey() ) ){
+		lock type="readonly" name="#variables.appHash#" timeout="#variables.lockTimeout#" throwontimeout="true" {
+			// Check for cb Controller
+			if ( structKeyExists( arguments.appScope, locateAppKey() ) ) {
 				cbController = arguments.appScope.cbController;
 			}
 		}
 
-		if( not isSimpleValue( cbController ) ){
+		if ( not isSimpleValue( cbController ) ) {
 			// Get Context
 			var event = cbController.getRequestService().getContext();
 
 			// Execute interceptors
 			var iData = {
-				sessionReference = arguments.sessionScope,
-				applicationReference = arguments.appScope
+				sessionReference     : arguments.sessionScope,
+				applicationReference : arguments.appScope
 			};
-			cbController.getInterceptorService().processState( "sessionEnd", iData );
+			cbController.getInterceptorService().announce( "sessionEnd", iData );
 
 			// Execute Session End Handler
-			if ( len( cbController.getSetting( "SessionEndHandler" ) ) ){
-				//Place session reference on event object
-				event.setValue( "sessionReference", arguments.sessionScope )
+			if ( len( cbController.getSetting( "SessionEndHandler" ) ) ) {
+				// Place session reference on event object
+				event
+					.setValue( "sessionReference", arguments.sessionScope )
 					.setValue( "applicationReference", arguments.appScope );
-				//Execute the Handler
-				cbController.runEvent( event=cbController.getSetting( "SessionEndHandler" ), prepostExempt=true );
+				// Execute the Handler
+				cbController.runEvent(
+					event         = cbController.getSetting( "SessionEndHandler" ),
+					prepostExempt = true
+				);
 			}
 		}
 	}
 
 	/**
-	* ON application start
-	*/
+	 * ON application start
+	 */
 	boolean function onApplicationStart(){
-		//Load ColdBox
+		// Load ColdBox
 		loadColdBox();
 		return true;
 	}
 
 	/**
-	* ON applicaiton end
-	*/
+	 * ON application end
+	 */
 	function onApplicationEnd( struct appScope ){
 		var cbController = arguments.appScope[ locateAppKey() ];
 
 		// Execute Application End interceptors
-		cbController.getInterceptorService().processState( "applicationEnd" );
+		cbController.getInterceptorService().announce( "applicationEnd" );
 		// Execute Application End Handler
-		if( len( cbController.getSetting( "applicationEndHandler" ) ) ){
-			cbController.runEvent( event=cbController.getSetting( "applicationEndHandler" ) ,prePostExempt=true );
+		if ( len( cbController.getSetting( "applicationEndHandler" ) ) ) {
+			cbController.runEvent(
+				event         = cbController.getSetting( "applicationEndHandler" ),
+				prePostExempt = true
+			);
 		}
 
 		// Controlled service shutdown operations
@@ -578,21 +619,20 @@ component serializable="false" accessors="true"{
 	/************************************** PRIVATE HELPERS *********************************************/
 
 	/**
-	* Process an exception and returns a rendered bug report
-	* @controller The ColdBox Controller
-	* @exception The ColdFusion exception
-	*/
+	 * Process an exception and returns a rendered bug report
+	 * @controller The ColdBox Controller
+	 * @exception The ColdFusion exception
+	 */
 	private string function processException( required controller, required exception ){
 		// prepare exception facade object + app logger
-		var oException	= new coldbox.system.web.context.ExceptionBean( arguments.exception );
-		var appLogger  	= arguments.controller.getLogBox().getLogger( this );
-		var event		= arguments.controller.getRequestService().getContext();
-		var rc 			= event.getCollection();
-		var prc 		= event.getPrivateCollection();
+		var oException = new coldbox.system.web.context.ExceptionBean( arguments.exception );
+		var appLogger  = arguments.controller.getLogBox().getLogger( this );
+		var event      = arguments.controller.getRequestService().getContext();
+		var rc         = event.getCollection();
+		var prc        = event.getPrivateCollection();
 
 		// Announce interception
-		arguments.controller.getInterceptorService()
-			.processState( "onException", { exception = arguments.exception } );
+		arguments.controller.getInterceptorService().announce( "onException", { exception : arguments.exception } );
 
 		// Store exception in private context
 		event.setPrivateValue( "exception", oException );
@@ -601,47 +641,55 @@ component serializable="false" accessors="true"{
 		getPageContextResponse().setStatus( 500, "Internal Server Error" );
 
 		// Run custom Exception handler if Found, else run default exception routines
-		if ( len( arguments.controller.getSetting( "ExceptionHandler" ) ) ){
-			try{
+		if ( len( arguments.controller.getSetting( "ExceptionHandler" ) ) ) {
+			try {
 				arguments.controller.runEvent( arguments.controller.getSetting( "Exceptionhandler" ) );
-			} catch( Any e ) {
+			} catch ( Any e ) {
 				// Log Original Error First
-				appLogger.error( "Original Error: #arguments.exception.message# #arguments.exception.detail# ", arguments.exception );
+				appLogger.error(
+					"Original Error: #arguments.exception.message# #arguments.exception.detail# ",
+					arguments.exception
+				);
 				// Log Exception Handler Error
-				appLogger.error( "Error running exception handler: #arguments.controller.getSetting( "ExceptionHandler" )# #e.message# #e.detail#", e );
+				appLogger.error(
+					"Error running exception handler: #arguments.controller.getSetting( "ExceptionHandler" )# #e.message# #e.detail#",
+					e
+				);
 				// rethrow error
 				rethrow;
 			}
 		} else {
 			// Log Error
-			appLogger.error( "Error: #arguments.exception.message# #arguments.exception.detail# ", arguments.exception );
+			appLogger.error(
+				"Error: #arguments.exception.message# #arguments.exception.detail# ",
+				arguments.exception
+			);
 		}
 
 		// Render out error via CustomErrorTemplate or Core
 		var customErrorTemplate = arguments.controller.getSetting( "CustomErrorTemplate" );
-		if( len( customErrorTemplate ) ){
+		if ( len( customErrorTemplate ) ) {
 			// Get app location path
-			var appLocation 			= "/";
-			if( len( arguments.controller.getSetting( "AppMapping" ) ) ){
+			var appLocation = "/";
+			if ( len( arguments.controller.getSetting( "AppMapping" ) ) ) {
 				appLocation = appLocation & arguments.controller.getSetting( "AppMapping" ) & "/";
 			}
-			var bugReportRelativePath 	= appLocation & reReplace( customErrorTemplate, "^/", "" );
-			var bugReportAbsolutePath 	= customErrorTemplate;
+			var bugReportRelativePath = appLocation & reReplace( customErrorTemplate, "^/", "" );
+			var bugReportAbsolutePath = customErrorTemplate;
 
 			// Show Bug Report
-			savecontent variable="local.exceptionReport"{
+			savecontent variable="local.exceptionReport" {
 				// Do we have right path already, test by expanding
-				if( fileExists( expandPath( bugReportRelativePath ) ) ){
+				if ( fileExists( expandPath( bugReportRelativePath ) ) ) {
 					include "#bugReportRelativePath#";
 				} else {
 					include "#bugReportAbsolutePath#";
 				}
 			}
-
 		} else {
 			// Default ColdBox Error Template
-			savecontent variable="local.exceptionReport"{
-				include "/coldbox/system/includes/BugReport-Public.cfm";
+			savecontent variable="local.exceptionReport" {
+				include "/coldbox/system/exceptions/BugReport-Public.cfm";
 			}
 		}
 
@@ -649,39 +697,13 @@ component serializable="false" accessors="true"{
 	}
 
 	/**
-	* Process Stack trace for errors
-	*/
-	private function processStackTrace( str ){
-		// Not using encodeForHTML() as it is too destructive and ruins whitespace chars and other stuff
-		arguments.str = HTMLEditFormat( arguments.str );
-		
-		var aMatches = REMatchNoCase( "\(([^\)]+)\)", arguments.str );
-		for( var aString in aMatches ){
-			arguments.str = replacenocase( arguments.str, aString, "<span class='highlight'>#aString#</span>", "all" );
-		}
-		var aMatches = REMatchNoCase( "\[([^\]]+)\]", arguments.str );
-		for( var aString in aMatches ){
-			arguments.str = replacenocase( arguments.str, aString, "<span class='highlight'>#aString#</span>", "all" );
-		}
-		var aMatches = REMatchNoCase( "\$([^(\(|\:)]+)(\:|\()", arguments.str );
-		for( var aString in aMatches ){
-			arguments.str = replacenocase( arguments.str, aString, "<span class='method'>#aString#</span>", "all" );
-		}
-		arguments.str = replace( arguments.str, chr( 13 ) & chr( 10 ), chr( 13 ) , 'all' );
-		arguments.str = replace( arguments.str, chr( 10 ), chr( 13 ) , 'all' );
-		arguments.str = replace( arguments.str, chr( 13 ), '<br>' , 'all' );
-		arguments.str = replaceNoCase( arguments.str, chr(9), repeatString( "&nbsp;", 4 ), "all" );
-		return arguments.str;
-	}
-
-	/**
-	* Process render data setup
-	* @controller The ColdBox controller
-	* @statusCode The status code to send
-	* @statusText The status text to send
-	* @contentType The content type to send
-	* @encoding The content encoding
-	*/
+	 * Process render data setup
+	 * @controller The ColdBox controller
+	 * @statusCode The status code to send
+	 * @statusText The status text to send
+	 * @contentType The content type to send
+	 * @encoding The content encoding
+	 */
 	private Bootstrap function renderDataSetup(
 		required controller,
 		required statusCode,
@@ -689,32 +711,38 @@ component serializable="false" accessors="true"{
 		required contentType,
 		required encoding
 	){
-    	// Status Codes
+		// Status Codes
 		getPageContextResponse().setStatus( arguments.statusCode, arguments.statusText );
 		// Render the Data Content Type
-		controller.getDataMarshaller().renderContent( type=arguments.contentType, encoding=arguments.encoding, reset=true );
+		controller
+			.getDataMarshaller()
+			.renderContent(
+				type     = arguments.contentType,
+				encoding = arguments.encoding,
+				reset    = true
+			);
 		return this;
 	}
 
 	/**
-	* Locate the application key
-	*/
+	 * Locate the application key
+	 */
 	private function locateAppKey(){
-		if( len( trim( COLDBOX_APP_KEY ) ) ){
+		if ( len( trim( COLDBOX_APP_KEY ) ) ) {
 			return COLDBOX_APP_KEY;
 		}
 		return "cbController";
 	}
 
 	/**
-	* Helper method to deal with ACF2016's overload of the page context response, come on Adobe, get your act together!
-	**/
+	 * Helper method to deal with ACF2016's overload of the page context response, come on Adobe, get your act together!
+	 **/
 	private function getPageContextResponse(){
 		var response = getPageContext().getResponse();
-		try{
+		try {
 			response.getStatus();
 			return response;
-		}catch( any e ){
+		} catch ( any e ) {
 			return response.getResponse();
 		}
 	}

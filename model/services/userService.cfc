@@ -79,10 +79,10 @@ component accessors=true extends="baseService" singleton=true {
 		user.setBtIsProtected(data.btIsProtected);
 		user.setBtIsRemoved(data.btIsRemoved);
 		user.setDtCreatedOn(data.dtCreatedOn);
-		user.setIntCreatedBy(data.intCreatedBy);
+		user.setIntCreatedById(data.intCreatedById);
 		user.setVcCreatedByIP(data.vcCreatedByIP);
-		user.setDtLastModifiedOn(data.dtLastModifiedOn);
-		user.setIntLastModifiedBy(data.intLastModifiedBy);
+		user.setDtModifiedOn(data.dtModifiedOn);
+		user.setIntModifiedById(data.intModifiedById);
 		user.setVcLastModifiedByIP(data.vcLastModifiedByIP);
 
 		return user;
@@ -314,16 +314,16 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "vcPostalCode");
 		assertExists(rc, "vcPhone1");
 		assertExists(rc, "vcPhone2");
-		assertExists(rc, "intCreatedBy");
+		assertExists(rc, "intCreatedById");
 		assertExists(rc, "generatePassword");
 
-		var createdBy = load(rc.intCreatedBy);
+		var createdBy = load(rc.intCreatedById);
 
 		if (!createdBy.getIntUserID()) {
 			messenger.addAlert(messageType="ERROR",
 								message="Created By is not valid",
 								messageDetail="",
-								field="intCreatedBy");
+								field="intCreatedById");
 		}
 
 		validateEmail(rc = rc
@@ -458,9 +458,9 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "vcPostalCode");
 		assertExists(rc, "vcPhone1");
 		assertExists(rc, "vcPhone2");
-		assertExists(rc, "intLastModifiedBy");
+		assertExists(rc, "intModifiedById");
 
-		var lastModifiedBy = load(rc.intLastModifiedBy);
+		var lastModifiedBy = load(rc.intModifiedById);
 
 		if (!lastModifiedBy.getIntUserID()) {
 			messenger.addAlert(messageType="ERROR",
