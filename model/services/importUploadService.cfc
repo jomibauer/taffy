@@ -1,4 +1,4 @@
-component singleton=true {
+component name="importUploadService" accessors="true" extends="baseService" singleton="true" {
 
 	public any function getImportValidatorList () {
         /*
@@ -55,24 +55,25 @@ component singleton=true {
                 varchar";
     }
 
-    public any function updateFriendlyToFieldName (required any parsedInputRow) {
-        var fieldNameStruct = {
-            'companyId' : parsedInputRow['Company ID'],
-            'companyUUID' : parsedInputRow['Company UUID'],
-            'contactName' : parsedInputRow['Contact Name'],
-            'contactEmail' : parsedInputRow['Contact Email'],
-            'contactPhone' : parsedInputRow['Contact Phone'],
-            'createdById' : parsedInputRow['Created By Id'],
-            'createdOn' : parsedInputRow['Date Created On'],
-            'modifiedOn' : parsedInputRow['Date Modified On'],
-            'defaultHourlyRate' : parsedInputRow['Default Hourly Rate'],
-            'defaultPaymentTerms' : parsedInputRow['Default Payment Terms'],
-            'isActive' : parsedInputRow['Is Active'],
-            'isRemoved' : parsedInputRow['Is Removed'],
-            'modifiedById' : parsedInputRow['Modified By Id'],
-            'companyName' : parsedInputRow['Company Name']
+    public any function getParsedInputObject (required any parsedInputRow, required any companyId) {
+        var company = getEmptyDomain();
+
+        if (len(companyId)) {
+            company.setIntCompanyId(toNumeric(parsedInputRow['Company ID']));
+            company.setVcCompanyUUID(parsedInputRow['Company UUID']);
         }
-        return fieldNameStruct;
+
+        company.setVcContactEmail(parsedInputRow['Contact Email']);
+        company.setVcContactName(parsedInputRow['Contact Name']);
+        company.setVcContactEmail(parsedInputRow['Contact Email']);
+        company.setVcContactPhone(parsedInputRow['Contact Phone']);
+        company.setFlDefaultHourlyRate(parsedInputRow['Default Hourly Rate']);
+        company.setVcDefaultPaymentTerms(parsedInputRow['Default Payment Terms']);
+        company.setBtIsActive(parsedInputRow['Is Active']);
+        company.setBtIsRemoved(parsedInputRow['Is Removed']);
+        company.setVcName(parsedInputRow['Company Name']);
+
+        return company;
     }
 
     public any function validateRequired (required string name, required string data) {
@@ -90,4 +91,10 @@ component singleton=true {
     public any function validatePhone (required string name, required string data) {
         return isValid('telephone', data) AND !len(data) == 0 ? '' : 'Invalid ' & name & '; ';
     }
+
+    public any function getEmptyDomain () {
+
+		return new model.domains.Company();
+	}
+
 }

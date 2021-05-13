@@ -128,13 +128,9 @@ component name="companyService" accessors="true" extends="baseService" singleton
 		var output = [];
 		parsedInput.map(function(parsedInputRow){
 			var companyId = parsedInputRow['Company ID'];
-			var parsedInputRowFieldName = importUploadService.updateFriendlyToFieldName(parsedInputRow);
+			var company = importUploadService.getParsedInputObject(parsedInputRow, companyId);
 			//NOTE : check if ID exists, if true -> udpate, if false -> create
-			if (len(companyId)) {
-				companyGateway.updateParsedInput(parsedInputRowFieldName);
-			} else {
-				companyGateway.createParsedInput(parsedInputRowFieldName);
-			}
+			var company = save(company);
 		});
 
 		var qLoadAll = companyGateway.loadAll();

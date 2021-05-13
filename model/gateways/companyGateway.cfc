@@ -168,29 +168,6 @@
 	<cfreturn local.qLoadAll />
 	</cffunction>
 
-	<cffunction name="updateParsedInput" access="public" returntype="void" output="false">
-		<cfargument name="parsedInput" type="any" required="true" />
-
-		<cfquery name="local.qUpdate">
-			UPDATE dbo.tblCompany
-			SET
-				  btIsActive = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.parsedInput.isActive#"/>	/* btIsActive - bit */
-				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.parsedInput.isRemoved#"/>	/* btIsRemoved - bit */
-				, vcName = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.companyName#"/>	/* vcName - varchar (128) */
-				, vcContactName = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.contactName#"/>	/* vcContactName - varchar (128) */
-				, vcContactEmail = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.contactEmail#"/>	/* vcContactEmail - varchar (128) */
-				, vcContactPhone = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.contactPhone#"/>	/* vcContactPhone - varchar (128) */
-				, vcDefaultPaymentTerms = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.defaultPaymentTerms#"/>	/* vcDefaultPaymentTerms - varchar (128) */
-				, flDefaultHourlyRate = <cfqueryparam cfsqltype="cf_sql_float" value="#arguments.parsedInput.defaultHourlyRate#"/>	/* flDefaultHourlyRate - float (53) */
-				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#session.user.getIntUserID()#"/>	/* intModifiedById - int */
-				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#"/>	/* dtModifiedOn - datetime */
-				, vcCompanyUUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.companyUUID#"/>	/* vcCompanyUUID - varchar (128) */
-			WHERE
-				intCompanyId = <cfqueryparam cfsqltype="cf_sql_bigint" value="#arguments.parsedInput.companyId#"/>
-		</cfquery>
-
-	</cffunction>
-
 	<cffunction name="updateAllParsedInputWithIsRemoved" access="public" returntype="void" output="false">
 		<cfargument name="companyId" type="numeric" required="true" />
 
@@ -204,47 +181,6 @@
 				intCompanyId = <cfqueryparam cfsqltype="cf_sql_bigint" value="#arguments.companyId#"/>
 		</cfquery>
 
-	</cffunction>
-
-	<cffunction name="createParsedInput" access="public" returntype="numeric" output="false">
-		<cfargument name="parsedInput" type="any" required="true" />
-
-		<cfquery name="local.qCreate" result="local.qCreateResult">
-			INSERT INTO dbo.tblCompany
-			(
-				  btIsActive
-				, btIsRemoved		/*  - bit*/
-				, vcContactName		/*  - varchar(128)*/
-				, vcContactEmail	/*  - varchar(128)*/
-				, vcContactPhone	/*  - varchar(128)*/
-				, vcName
-				, vcDefaultPaymentTerms	/*  - varchar(128)*/
-				, flDefaultHourlyRate	/*  - fl(53)*/
-				, intModifiedById	/*  - int*/
-				, dtModifiedOn		/*  - datetime*/
-				, intCreatedById	/*  - int*/
-				, dtCreatedOn		/*  - datetime*/
-				, vcCompanyUUID
-			)
-			VALUES
-			(
-				<cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.parsedInput.isActive#"/>	/* btIsActive - bit */
-				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.parsedInput.isRemoved#"/>	/* btIsRemoved - bit */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.contactName#"/>	/* vcContactName - varchar (128) */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.contactEmail#"/>	/* vcContactEmail - varchar (128) */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.contactPhone#"/>	/* vcContactPhone - varchar (128) */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.companyName#"/>	/* vcName - varchar (128) */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parsedInput.defaultPaymentTerms#"/>	/* vcContactPhone - varchar (128) */
-				, <cfqueryparam cfsqltype="float" value="#arguments.parsedInput.defaultHourlyRate#"/>	/* intCreatedById - int */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="0"/>	/* intCreatedById - int */
-				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="1970-01-01 00:00:00.000"/>	/* dtCreatedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#session.user.getIntUserID()#"/>	/* intCreatedById - int */
-				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#"/>	/* dtCreatedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#createUUID()#"/>
-			);
-		</cfquery>
-
-	<cfreturn local.qCreateResult.generatedKey />
 	</cffunction>
 
 </cfcomponent>
