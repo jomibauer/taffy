@@ -1,12 +1,8 @@
 component extends="coldbox.system.EventHandler" {
 
-	property name="userService" inject="userService";
-	property name="groupService" inject="groupService";
-	property name="formatterService" inject="formatterService";
-	property name="mailService" inject="mailService";
-	property name="spreadSheetService" inject="spreadSheetService";
-	property name="companyService" inject="companyService";
+	property name="acceptedMimeTypes" inject="coldbox:setting:acceptedMimeTypes";
 	property name="importUploadService" inject="importUploadService";
+	property name="spreadSheetService" inject="spreadSheetService";
 
 /************************************ APPLICATION-WIDE IMPLICIT ACTIONS *******************************************/
 
@@ -76,7 +72,7 @@ component extends="coldbox.system.EventHandler" {
 	function import (rc) {
         setting requestTimeout = 300;
 
-		if (isNull(rc.fileUpload) || !len(trim(rc.fileUpload))) {
+		if (!structKeyExists(rc, 'fileUpload') || !len(trim(rc.fileUpload))) {
 			session.messenger.addAlert(
 				messageType="ERROR"
 				, message="No import file uploaded."
@@ -86,7 +82,6 @@ component extends="coldbox.system.EventHandler" {
 		}
 
 		session.excelFileName = "";
-		var acceptedMimeTypes = "image/jpeg,text/plain,image/tiff,application/msword,application/vnd.ms-excel,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/x-tika-ooxml,application/octet-stream";
 		var fileUploadMimeType = fileGetMimeType(rc.fileUpload);
 
 		if (!listContains(acceptedMimeTypes, fileUploadMimeType)) {
@@ -144,7 +139,7 @@ component extends="coldbox.system.EventHandler" {
 
 		// currently parse excel file only
 		if (fileUploadMimeType == 'application/x-tika-ooxml') {
-			var result = spreadSheetService.uploadStudentImportExcelFile(rc.fileUpload, importValidatorList);
+			var result = spreadSheetService.uploadImportExcelFile(rc.fileUpload, importValidatorList);
 			var parsedInput = result.data;
 			var hasError = result.hasError;
 
@@ -218,7 +213,4 @@ component extends="coldbox.system.EventHandler" {
 			, field="");
 	}
 
-	function robots (event,rc,prc) {
-
-	}
 }

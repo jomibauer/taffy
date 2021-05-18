@@ -19,42 +19,6 @@ component name="importUploadService" accessors="true" extends="baseService" sing
 		return importValidatorList;
 	}
 
-    public any function getQueryHeader () {
-        return "Company ID,
-                Company UUID,
-                Contact Email,
-                Contact Name,
-                Contact Phone,
-                Created By Id,
-                Date Created On,
-                Modified By Id,
-                Date Modified On,
-                Is Active,
-                Is Removed,
-                Company Name,
-                Default Payment Terms,
-                Default Hourly Rate,
-                System Note";
-    }
-
-    public any function getQueryHeaderType () {
-        return "varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar,
-                varchar";
-    }
-
     public any function getParsedInputObject (required any parsedInputRow, required any companyId) {
         var company = getEmptyDomain();
 
@@ -93,7 +57,6 @@ component name="importUploadService" accessors="true" extends="baseService" sing
     }
 
     public any function getEmptyDomain () {
-
 		return new model.domains.Company();
 	}
 

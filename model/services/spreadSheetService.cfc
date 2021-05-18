@@ -2,7 +2,7 @@
 
 	<cfproperty name="importUploadService" inject="importUploadService"/>
 
-	<cffunction name="uploadStudentImportExcelFile" access="public" returntype="any" output="False">
+	<cffunction name="uploadImportExcelFile" access="public" returntype="any" output="False">
 		<cfargument name="filePath" type="any" required="true" />
 		<cfargument name="importValidator" type="any" required="true" />
 
@@ -73,8 +73,15 @@
 			<cfset directoryCreate(replace(CGI.cf_template_path, "index.cfm", "") & '/temp/importUpload/')>
 		</cfif>
 
-		<cfset queryHeader = importUploadService.getQueryHeader()>
-		<cfset queryHeaderType = importUploadService.getQueryHeaderType()>
+		<cfset queryHeader = "">
+		<cfset queryHeaderType = "">
+		<cfloop index="rowDataIndex" item="rowData" array="#importUpload#">
+			<cfloop key="rowDataKey" collection="#rowData#">
+				<cfset queryHeader = queryHeader & "#trim(rowDataKey)#,">
+				<cfset queryHeaderType = queryHeaderType & "varchar,">
+			</cfloop>
+			<cfbreak>
+		</cfloop>
 
 		<cfset importUploadQuery = queryNew(queryHeader, queryHeaderType)>
 		<Cfset arr = []>
