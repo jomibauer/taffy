@@ -3,55 +3,7 @@ component extends="coldbox.system.EventHandler" {
 	property name="acceptedMimeTypes" inject="coldbox:setting:acceptedMimeTypes";
 	property name="importUploadService" inject="importUploadService";
 	property name="spreadSheetService" inject="spreadSheetService";
-
-/************************************ APPLICATION-WIDE IMPLICIT ACTIONS *******************************************/
-
-	function onAppStart(event,rc,prc){
-
-	}
-
-	function onAppEnd(event,rc,prc){
-
-	}
-
-	function onRequestStart(event,rc,prc){
-		// exit handlers used in navbar
-	}
-
-	function onRequestEnd(event,rc,prc){
-
-	}
-
-	function onSessionStart(event,rc,prc){
-
-	}
-
-	function onSessionEnd(event,rc,prc){
-		var sessionScope = event.getValue("sessionReference");
-		var applicationScope = event.getValue("applicationReference");
-	}
-
-	function onException(event,rc,prc){
-		event.setHTTPHeader( statusCode = 500 );
-		request.layout = false;
-
-		//Grab Exception From private request collection, placed by ColdBox Exception Handling
-		var exception = prc.exception;
-		var environment = getSetting('environment');
-
-		if (environment == "PRODUCTION") {
-			var eventName = structKeyExists(event.getContext(), "event") ? event.getContext().event : "unknown";
-			mailService.sendError(eventName, exception, environment);
-		} else {
-			//Place exception handler below:
-			writeDump(exception.getExceptionStruct());
-			abort;
-		}
-
-		event.setView("main/error");
-	}
-
-	/************************************ END APPLICATION-WIDE IMPLICIT ACTIONS *******************************************/
+	property name="companyService" inject="companyService";
 
 	/************************************ IMPLICIT ACTIONS *******************************************/
 
