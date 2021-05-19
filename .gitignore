@@ -22,4 +22,4 @@ yarn-error.log
 # import upload files
 temp/
 templates/
-attachments/
+archives/

@@ -93,7 +93,7 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="importUpload/index");
 		}
 
-		var uploadFilePath = 'attachments/#dateFormat(now(), "yyyymmdd")#';
+		var uploadFilePath = 'archives/#dateFormat(now(), "yyyymmdd")#';
 		if (!directoryExists(expandPath(uploadFilePath))) { directoryCreate(expandPath(uploadFilePath)); }
 
 		try {
@@ -113,9 +113,9 @@ component extends="coldbox.system.EventHandler" {
 
 		// remove old import and temp files after 7 days
 		var queryOfFiles = directoryList(expandPath('/temp/importUpload/'), false, "query", "", "DateLastModified DESC" );
-		var queryOfAttachmentFiles = directoryList(expandPath('/attachment/'), false, "query", "", "DateLastModified DESC" );
+		var queryOfArchiveFiles = directoryList(expandPath('/archives/'), false, "query", "", "DateLastModified DESC" );
 		var tempFilePath = expandPath('/temp/importUpload/');
-		var tempAttachmentFilePath = expandPath('/attachment/');
+		var tempArchiveFilePath = expandPath('/archives/');
 
 		for (file in queryOfFiles) {
 			var outdatedFilePath = '';
@@ -125,11 +125,11 @@ component extends="coldbox.system.EventHandler" {
 				fileDelete(outdatedFilePath);
 			}
 		}
-		for (file in queryOfAttachmentFiles) {
+		for (file in queryOfArchiveFiles) {
 			var outdatedFilePath = '';
 
 			if (dateAdd("d", 7, dateTimeFormat(file.dateLastModified)) < now()) {
-				outdatedFilePath = tempAttachmentFilePath & file.name;
+				outdatedFilePath = tempArchiveFilePath & file.name;
 				fileDelete(outdatedFilePath);
 			}
 		}
