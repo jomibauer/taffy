@@ -49,11 +49,11 @@ component name="importUploadService" accessors="true" extends="baseService" sing
     }
 
     public any function validateEmail (required string name, required string data) {
-        return isValid('email', data) AND !len(data) == 0 ? '' : 'Invalid ' & name & '; ';
+        return isValid('email', data) ? '' : 'Invalid ' & name & '; ';
     }
 
     public any function validatePhone (required string name, required string data) {
-        return isValid('telephone', data) AND !len(data) == 0 ? '' : 'Invalid ' & name & '; ';
+        return isValid('telephone', data) ? '' : 'Invalid ' & name & '; ';
     }
 
     public any function getEmptyDomain () {
