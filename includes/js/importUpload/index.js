@@ -1,9 +1,9 @@
 $(function () {
   const templateFile = 'companyDummyTemplate.xlsx';
-  const templateFilPath = 'templates/companyDummyTemplate.xlsx';
+  const templateFilePath = 'templates/companyDummyTemplate.xlsx';
 
   $('#downloadImportUploadTemplate').on('click')
-  .attr('href', templateFilPath)
+  .attr('href', templateFilePath)
   .attr('download', templateFile);
 
   $('#importBtn').show();
