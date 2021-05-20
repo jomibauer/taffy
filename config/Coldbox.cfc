@@ -66,6 +66,7 @@
 				, port						= 25
 				, endDate					= dateAdd("yyyy", 1, now())
 			}
+			, acceptedMimeTypes				= "image/jpeg,text/plain,image/tiff,application/msword,application/vnd.ms-excel,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/x-tika-ooxml,application/octet-stream"
 		};
 		// Module Directives
 		modules = {
