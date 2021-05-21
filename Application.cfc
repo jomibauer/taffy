@@ -36,8 +36,9 @@ component{
 	// COLDBOX APPLICATION KEY OVERRIDE
 	COLDBOX_APP_KEY 		= "";
 
+	// temp COMS datasource
 	private string function getDSN() {
-		return "coldboxbase";
+		return "COMS";
 	}
 
 	// application start
