@@ -51,7 +51,7 @@
 
 				<div class="row">
 					<div class="offset-3 col-4">
-						<input type="hidden" name="lastModifiedBy" value="#session.user.getVcEmail()#" />
+						<input type="hidden" name="modifiedById" value="#session.user.getVcEmail()#" />
 						<input type="hidden" name="groupID" value="#rc.group.getIntGroupID()#" />
 						<input type="submit" value="Update Group" class="btn btn-primary float-right" />
 					</div>

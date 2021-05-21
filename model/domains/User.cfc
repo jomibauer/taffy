@@ -10,7 +10,7 @@ component name="User" accessors=true extends="BaseDomain" {
 	property type="String" name="vcPassword" getter=true;
 	property type="boolean" name="btIsPasswordExpired" getter=true;
 	property type="date" name="dtPasswordLastSetOn" getter=true;
-	property type="Numeric" name="intPasswordLastSetBy" getter=true;
+	property type="Numeric" name="intPasswordLastSetById" getter=true;
 	property type="String" name="vcPasswordLastSetByIP" getter=true;
 	property type="date" name="dtLastLoggedInOn" getter=true;
 	property type="String" name="vcAddress1" getter=true;
@@ -26,11 +26,11 @@ component name="User" accessors=true extends="BaseDomain" {
 	property type="boolean" name="btIsProtected" getter=true;
 	property type="boolean" name="btIsRemoved" getter=true;
 	property type="date" name="dtCreatedOn" getter=true;
-	property type="Numeric" name="intCreatedBy" getter=true;
+	property type="Numeric" name="intCreatedById" getter=true;
 	property type="String" name="vcCreatedByIP" getter=true;
-	property type="date" name="dtLastModifiedOn" getter=true;
-	property type="Numeric" name="intLastModifiedBy" getter=true;
-	property type="String" name="vcLastModifiedByIP" getter=true;
+	property type="date" name="dtModifiedOn" getter=true;
+	property type="Numeric" name="intModifiedById" getter=true;
+	property type="String" name="vcModifiedByIP" getter=true;
 	property ApiAccessKey AuthenticationKey;
 
 	property boolean isLoggedIn;
@@ -51,7 +51,7 @@ component name="User" accessors=true extends="BaseDomain" {
 		setVcPassword("");
 		setBtIsPasswordExpired(false);
 		setDtPasswordLastSetOn(variables.instance.never);
-		setIntPasswordLastSetBy(0);
+		setIntPasswordLastSetById(0);
 		setVcPasswordLastSetByIP("");
 		setDtLastLoggedInOn(variables.instance.never);
 		setVcAddress1("");
@@ -67,11 +67,11 @@ component name="User" accessors=true extends="BaseDomain" {
 		setBtIsProtected(false);
 		setBtIsRemoved(false);
 		setDtCreatedOn(variables.instance.never);
-		setIntCreatedBy(0);
+		setIntCreatedById(0);
 		setVcCreatedByIP("");
-		setDtLastModifiedOn(variables.instance.never);
-		setIntLastModifiedBy(0);
-		setVcLastModifiedByIP("");
+		setDtModifiedOn(variables.instance.never);
+		setIntModifiedById(0);
+		setVcModifiedByIP("");
 
 		variables.userGroups = [];
 		setIsLoggedIn(false);
@@ -187,7 +187,7 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "vcPassword":' & serializeJSON(getVcPassword()));
 		sb.append(', "btIsPasswordExpired":' & (getBtIsPasswordExpired() ? 'true' : 'false'));
 		sb.append(', "dtPasswordLastSetOn":"' & serializeJSON(getDtPasswordLastSetOn()));
-		sb.append(', "intPasswordLastSetBy":' & getIntPasswordLastSetBy());
+		sb.append(', "intPasswordLastSetById":' & getIntPasswordLastSetById());
 		sb.append(', "vcPasswordLastSetByIP":' & serializeJSON(getVcPasswordLastSetByIP()));
 		sb.append(', "dtLastLoggedInOn":"' & serializeJSON(getDtLastLoggedInOn()));
 		sb.append(', "vcAddress1":' & serializeJSON(getVcAddress1()));
@@ -203,11 +203,11 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "btIsProtected":' & (getBtIsProtected() ? 'true' : 'false'));
 		sb.append(', "btIsRemoved":' & (getBtIsRemoved() ? 'true' : 'false'));
 		sb.append(', "dtCreatedOn":"' & serializeJSON(getDtCreatedOn()));
-		sb.append(', "intCreatedBy":' & getIntCreatedBy());
+		sb.append(', "intCreatedById":' & getIntCreatedById());
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));
-		sb.append(', "dtLastModifiedOn":"' & serializeJSON(getDtLastModifiedOn()));
-		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
-		sb.append(', "vcLastModifiedByIP":' & serializeJSON(getVcLastModifiedByIP()));
+		sb.append(', "dtModifiedOn":"' & serializeJSON(getDtModifiedOn()));
+		sb.append(', "intModifiedById":' & getIntModifiedById());
+		sb.append(', "vcModifiedByIP":' & serializeJSON(getVcModifiedByIP()));
 		sb.append(', "groups":[');
 		var i = 0;
 		for (var group in variables.userGroups) {
@@ -238,7 +238,7 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "vcPassword":' & serializeJSON(getVcPassword()));
 		sb.append(', "btIsPasswordExpired":' & (getBtIsPasswordExpired() ? 'true' : 'false'));
 		sb.append(', "dtPasswordLastSetOn":' & serializeJSON(getDtPasswordLastSetOn()));
-		sb.append(', "intPasswordLastSetBy":' & getIntPasswordLastSetBy());
+		sb.append(', "intPasswordLastSetById":' & getIntPasswordLastSetById());
 		sb.append(', "vcPasswordLastSetByIP":' & serializeJSON(getVcPasswordLastSetByIP()));
 		sb.append(', "dtLastLoggedInOn":' & serializeJSON(getDtLastLoggedInOn()));
 		sb.append(', "vcAddress1":' & serializeJSON(getVcAddress1()));
@@ -254,11 +254,11 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "btIsProtected":' & (getBtIsProtected() ? 'true' : 'false'));
 		sb.append(', "btIsRemoved":' & (getBtIsRemoved() ? 'true' : 'false'));
 		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
-		sb.append(', "intCreatedBy":' & getIntCreatedBy());
+		sb.append(', "intCreatedById":' & getIntCreatedById());
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));
-		sb.append(', "dtLastModifiedOn":' & serializeJSON(getDtLastModifiedOn()));
-		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
-		sb.append(', "vcLastModifiedByIP":' & serializeJSON(getVcLastModifiedByIP()));
+		sb.append(', "dtModifiedOn":' & serializeJSON(getDtModifiedOn()));
+		sb.append(', "intModifiedById":' & getIntModifiedById());
+		sb.append(', "vcModifiedByIP":' & serializeJSON(getVcModifiedByIP()));
 		sb.append(', "groups":[');
 		var i = 0;
 		for (var group in variables.userGroups) {

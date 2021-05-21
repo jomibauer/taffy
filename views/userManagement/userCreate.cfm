@@ -211,7 +211,7 @@
 
 				<div class="row mb-3">
 					<div class="col-5 offset-3">
-						<input type="hidden" name="lastModifiedBy" value="#session.user.getVcEmail()#" />
+						<input type="hidden" name="modifiedById" value="#session.user.getVcEmail()#" />
 						<input type="hidden" name="userID" value="#rc.user.getIntUserID()#" />
 						<input type="submit" value="Create Account" class="float-right btn btn-primary" id="createAccountSubmitButton" />
 					</div>

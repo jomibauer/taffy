@@ -81,17 +81,17 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="main/index");
 		}
 
-		rc.intCreatedBy = session.user.getIntUserID();
+		rc.intCreatedById = session.user.getIntUserID();
 		rc.user = userService.getEmptyDomain();
 
 		param name="rc.requireUserToChangePassword" default=false;
 		param name="rc.sendLoginInstructions" default=false;
 
 		rc.dtCreatedOn = now();
-		rc.dtLastModifiedOn = rc.dtCreatedOn;
-		rc.intLastModifiedBy = rc.intCreatedBy;
+		rc.dtModifiedOn = rc.dtCreatedOn;
+		rc.intModifiedById = rc.intCreatedById;
 		rc.vcCreatedByIP = cgi.remote_addr;
-		rc.vcLastModifiedByIP = cgi.remote_addr;
+		rc.vcModifiedByIP = cgi.remote_addr;
 		rc.btIsActive = true;
 		rc.btIsProtected = false;
 		rc.btIsRemoved = false;
@@ -149,9 +149,9 @@ component extends="coldbox.system.EventHandler" {
 		rc.user = session.user;
 		rc.userID = session.user.getIntUserID();
 
-		rc.createdBy = userService.load(rc.user.getIntCreatedBy());
-		rc.lastModifiedBy = userService.load(rc.user.getIntLastModifiedBy());
-		rc.passwordLastSetBy = userService.load(rc.user.getIntPasswordLastSetBy());
+		rc.createdById = userService.load(rc.user.getIntCreatedById());
+		rc.modifiedById = userService.load(rc.user.getIntModifiedById());
+		rc.passwordLastSetById = userService.load(rc.user.getIntPasswordLastSetById());
 		prc.formatterService = formatterService;
 		prc.groups = groupService.getAllGroups();
 		prc.groupsJSON = groupService.getAllGroupsJSON();
@@ -187,9 +187,9 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="main/index");
 		}
 
-		rc.createdBy = userService.load(rc.user.getIntCreatedBy());
-		rc.lastModifiedBy = userService.load(rc.user.getIntLastModifiedBy());
-		rc.passwordLastSetBy = userService.load(rc.user.getIntPasswordLastSetBy());
+		rc.createdById = userService.load(rc.user.getIntCreatedById());
+		rc.modifiedById = userService.load(rc.user.getIntModifiedById());
+		rc.passwordLastSetById = userService.load(rc.user.getIntPasswordLastSetById());
 		prc.formatterService = formatterService;
 		prc.groups = groupService.getAllGroups();
 		prc.groupsJSON = groupService.getAllGroupsJSON();
@@ -231,8 +231,8 @@ component extends="coldbox.system.EventHandler" {
 		}
 
 		rc.user.setBtIsRemoved(true);
-		rc.user.setIntLastModifiedBy(session.user.getIntUserID());
-		rc.user.setDtLastModifiedOn(now());
+		rc.user.setIntModifiedById(session.user.getIntUserID());
+		rc.user.setDtModifiedOn(now());
 
 		rc.user = userService.save(rc.user);
 
@@ -359,7 +359,7 @@ component extends="coldbox.system.EventHandler" {
 	}
 
 	function processUserUpdate (event,rc,prc) {
-		rc.intLastModifiedBy = session.user.getIntUserID();
+		rc.intModifiedById = session.user.getIntUserID();
 
 		if (!structKeyExists(rc, "userID") || !isNumeric(rc.userID)) {
 			relocate(event="main/index");
@@ -375,8 +375,8 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="main/index");
 		}
 
-		rc.dtLastModifiedOn = now();
-		rc.vcLastModifiedByIP = cgi.remote_addr;
+		rc.dtModifiedOn = now();
+		rc.vcModifiedByIP = cgi.remote_addr;
 
 		var hasError = userService.validateUpdate(rc, session.messenger);
 
@@ -434,7 +434,7 @@ component extends="coldbox.system.EventHandler" {
 
 	function ajaxIsEmailAvailable (event,rc,prc) output=false renderdata="json"{
 		// IWB - 2015/02/11
-		// I'm not going to limit this to only users in USERMANAGE because 
+		// I'm not going to limit this to only users in USERMANAGE because
 		// we need this for the updateAccount() event which can be used by any user.
 
 		if( !structKeyExists(rc, "userID") || !isNumeric(rc.userID) ||
@@ -505,8 +505,8 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="userManagement/viewGroupList");
 		}
 
-		rc.createdBy = userService.load(rc.group.getIntCreatedBy());
-		rc.lastModifiedBy = userService.load(rc.group.getIntLastModifiedBy());
+		rc.createdById = userService.load(rc.group.getIntCreatedById());
+		rc.modifiedById = userService.load(rc.group.getIntModifiedById());
 
 		if (rc.group.getIntGroupID() != rc.groupID) {
 			relocate(event="userManagement/viewGroupList");
@@ -545,8 +545,8 @@ component extends="coldbox.system.EventHandler" {
         }
 
         rc.group.setBtIsRemoved(true);
-        rc.group.setIntLastModifiedBy(session.user.getIntUserID());
-        rc.group.setDtLastModifiedOn(now());
+        rc.group.setIntModifiedById(session.user.getIntUserID());
+        rc.group.setDtModifiedOn(now());
 
         rc.group = groupService.save(rc.group);
 
@@ -612,7 +612,7 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="main/index");
 		}
 
-		rc.intCreatedBy = session.user.getIntUserID();
+		rc.intCreatedById = session.user.getIntUserID();
 		rc.dtCreatedOn = now();
 
 		var hasError = groupService.validateCreate(rc, session.messenger);
@@ -667,8 +667,8 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="userManagement/viewGroupList");
 		}
 
-		rc.intLastModifiedBy = session.user.getIntUserID();
-		rc.dtLastModifiedOn = now();
+		rc.intModifiedById = session.user.getIntUserID();
+		rc.dtModifiedOn = now();
 
 		var hasError = groupService.validateUpdate(rc, session.messenger);
 

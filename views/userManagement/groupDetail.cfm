@@ -30,12 +30,12 @@
 				</tr>
 				<tr>
 					<th>Created:</th>
-					<td><cfif len(rc.createdBy.getVcEmail())>#rc.createdBy.getVcEmail()# /</cfif> #prc.formatterService.formatDate(rc.group.getDtCreatedOn())#</td>
+					<td><cfif len(rc.createdById.getVcEmail())>#rc.createdById.getVcEmail()# /</cfif> #prc.formatterService.formatDate(rc.group.getDtCreatedOn())#</td>
 				</tr>
-				<cfif rc.group.getIntLastModifiedBy()>
+				<cfif rc.group.getIntModifiedById()>
 					<tr>
 						<th>Last Modified:</th>
-						<td><cfif len(rc.lastModifiedBy.getVcEmail())>#rc.lastModifiedBy.getVcEmail()# /</cfif> #prc.formatterService.formatDate(rc.group.getDtLastModifiedOn())#</td>
+						<td><cfif len(rc.modifiedBy.getVcEmail())>#rc.modifiedBy.getVcEmail()# /</cfif> #prc.formatterService.formatDate(rc.group.getDtModifiedOn())#</td>
 					</tr>
 				</cfif>
 			</table>
