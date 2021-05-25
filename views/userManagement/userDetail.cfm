@@ -96,11 +96,7 @@
 								Last Modified:
 							</th>
 							<td>
-<<<<<<< HEAD
 								#rc.modifiedById.getVcFirstName()# #rc.modifiedById.getVcLastName()# &##64; #prc.formatterService.formatDateTime(rc.user.getDtModifiedOn())#
-=======
-								#rc.lastModifiedBy.getVcFirstName()# #rc.lastModifiedBy.getVcLastName()# &##64; #prc.formatterService.formatDateTime(rc.user.getDtModifiedOn())#
->>>>>>> develop
 							</td>
 						</tr>
 					</cfif>

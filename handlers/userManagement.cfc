@@ -149,15 +149,9 @@ component extends="coldbox.system.EventHandler" {
 		rc.user = session.user;
 		rc.userID = session.user.getIntUserID();
 
-<<<<<<< HEAD
 		rc.createdById = userService.load(rc.user.getIntCreatedById());
 		rc.modifiedById = userService.load(rc.user.getIntModifiedById());
 		rc.passwordLastSetById = userService.load(rc.user.getIntPasswordLastSetById());
-=======
-		rc.createdBy = userService.load(rc.user.getIntCreatedById());
-		rc.lastModifiedBy = userService.load(rc.user.getIntModifiedById());
-		rc.passwordLastSetBy = userService.load(rc.user.getIntPasswordLastSetBy());
->>>>>>> develop
 		prc.formatterService = formatterService;
 		prc.groups = groupService.getAllGroups();
 		prc.groupsJSON = groupService.getAllGroupsJSON();
@@ -193,15 +187,9 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="main/index");
 		}
 
-<<<<<<< HEAD
 		rc.createdById = userService.load(rc.user.getIntCreatedById());
 		rc.modifiedById = userService.load(rc.user.getIntModifiedById());
 		rc.passwordLastSetById = userService.load(rc.user.getIntPasswordLastSetById());
-=======
-		rc.createdBy = userService.load(rc.user.getIntCreatedById());
-		rc.lastModifiedBy = userService.load(rc.user.getIntModifiedById());
-		rc.passwordLastSetBy = userService.load(rc.user.getIntPasswordLastSetBy());
->>>>>>> develop
 		prc.formatterService = formatterService;
 		prc.groups = groupService.getAllGroups();
 		prc.groupsJSON = groupService.getAllGroupsJSON();
@@ -388,11 +376,7 @@ component extends="coldbox.system.EventHandler" {
 		}
 
 		rc.dtModifiedOn = now();
-<<<<<<< HEAD
 		rc.vcModifiedByIP = cgi.remote_addr;
-=======
-		rc.vcLastModifiedByIP = cgi.remote_addr;
->>>>>>> develop
 
 		var hasError = userService.validateUpdate(rc, session.messenger);
 
@@ -521,13 +505,8 @@ component extends="coldbox.system.EventHandler" {
 			relocate(event="userManagement/viewGroupList");
 		}
 
-<<<<<<< HEAD
 		rc.createdById = userService.load(rc.group.getIntCreatedById());
 		rc.modifiedById = userService.load(rc.group.getIntModifiedById());
-=======
-		rc.createdBy = userService.load(rc.group.getIntCreatedById());
-		rc.lastModifiedBy = userService.load(rc.group.getIntModifiedById());
->>>>>>> develop
 
 		if (rc.group.getIntGroupID() != rc.groupID) {
 			relocate(event="userManagement/viewGroupList");

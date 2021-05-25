@@ -36,11 +36,7 @@
 				, vcCreatedByIP		/*  - varchar(50)*/
 				, dtModifiedOn	/*  - datetime*/
 				, intModifiedById	/*  - int*/
-<<<<<<< HEAD
 				, vcModifiedByIP	/*  - varchar(50)*/
-=======
-				, vcLastModifiedByIP	/*  - varchar(50)*/
->>>>>>> develop
 			)
 			VALUES
 			(
@@ -70,19 +66,11 @@
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-<<<<<<< HEAD
 				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* IntCreatedById - int */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
 				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcModifiedByIP()#"/>	/* vcModifiedByIP - varchar (50) */
-=======
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* intCreatedBy - int */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
-				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcLastModifiedByIP()#"/>	/* vcLastModifiedByIP - varchar (50) */
->>>>>>> develop
 			);
 		</cfquery>
 
@@ -121,19 +109,11 @@
 				, btIsProtected = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, dtCreatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-<<<<<<< HEAD
 				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* IntCreatedById - int */
 				, vcCreatedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
 				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
 				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */
 				, vcModifiedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcModifiedByIP()#"/>	/* vcModifiedByIP - varchar (50) */
-=======
-				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* intCreatedBy - int */
-				, vcCreatedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
-				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
-				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */
-				, vcLastModifiedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcLastModifiedByIP()#"/>	/* vcLastModifiedByIP - varchar (50) */
->>>>>>> develop
 			WHERE intUserID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntUserID()#"/>
 		</cfquery>
 
@@ -175,11 +155,7 @@
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
 				, tblUser.dtModifiedOn	/*  - datetime*/
 				, tblUser.intModifiedById	/*  - int*/
-<<<<<<< HEAD
 				, tblUser.vcModifiedByIP	/*  - varchar(50)*/
-=======
-				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
->>>>>>> develop
 			FROM dbo.tblUser
 			WHERE tblUser.intUserID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.intUserID#"/>
 		</cfquery>
@@ -222,11 +198,7 @@
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
 				, tblUser.dtModifiedOn	/*  - datetime*/
 				, tblUser.intModifiedById	/*  - int*/
-<<<<<<< HEAD
 				, tblUser.vcModifiedByIP	/*  - varchar(50)*/
-=======
-				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
->>>>>>> develop
 			FROM dbo.tblUser
 			WHERE tblUser.btIsRemoved = 0
 			ORDER BY 1 ASC
@@ -323,11 +295,7 @@
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
 				, tblUser.dtModifiedOn	/*  - datetime*/
 				, tblUser.intModifiedById	/*  - int*/
-<<<<<<< HEAD
 				, tblUser.vcModifiedByIP	/*  - varchar(50)*/
-=======
-				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
->>>>>>> develop
 			FROM dbo.tblUser
             WHERE tblUser.btIsRemoved = 0
 			ORDER BY tblUser.vcUsername ASC
@@ -371,11 +339,7 @@
 				--, tblUser.vcCreatedByIP
 				--, tblUser.dtModifiedOn
 				--, tblUser.intModifiedById
-<<<<<<< HEAD
 				--, tblUser.vcModifiedByIP
-=======
-				--, tblUser.vcLastModifiedByIP
->>>>>>> develop
 			FROM dbo.tblUser
 			WHERE
 				(
@@ -431,11 +395,7 @@
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
 				, tblUser.dtModifiedOn	/*  - datetime*/
 				, tblUser.intModifiedById	/*  - int*/
-<<<<<<< HEAD
 				, tblUser.vcModifiedByIP	/*  - varchar(50)*/
-=======
-				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
->>>>>>> develop
 			FROM dbo.tblUser
 			WHERE
 				1 = 1

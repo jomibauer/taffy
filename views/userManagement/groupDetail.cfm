@@ -35,11 +35,7 @@
 				<cfif rc.group.getIntModifiedById()>
 					<tr>
 						<th>Last Modified:</th>
-<<<<<<< HEAD
 						<td><cfif len(rc.modifiedBy.getVcEmail())>#rc.modifiedBy.getVcEmail()# /</cfif> #prc.formatterService.formatDate(rc.group.getDtModifiedOn())#</td>
-=======
-						<td><cfif len(rc.lastModifiedBy.getVcEmail())>#rc.lastModifiedBy.getVcEmail()# /</cfif> #prc.formatterService.formatDate(rc.group.getDtModifiedOn())#</td>
->>>>>>> develop
 					</tr>
 				</cfif>
 			</table>
