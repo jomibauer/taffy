@@ -83,7 +83,11 @@ component accessors=true extends="baseService" singleton=true {
 		user.setVcCreatedByIP(data.vcCreatedByIP);
 		user.setDtModifiedOn(data.dtModifiedOn);
 		user.setIntModifiedById(data.intModifiedById);
+<<<<<<< HEAD
 		user.setVcModifiedByIP(data.vcModifiedByIP);
+=======
+		user.setVcLastModifiedByIP(data.vcLastModifiedByIP);
+>>>>>>> develop
 
 		return user;
 	}
@@ -317,7 +321,11 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "intCreatedById");
 		assertExists(rc, "generatePassword");
 
+<<<<<<< HEAD
 		var createdById = load(rc.intCreatedById);
+=======
+		var createdBy = load(rc.intCreatedById);
+>>>>>>> develop
 
 		if (!createdById.getIntUserID()) {
 			messenger.addAlert(messageType="ERROR",
@@ -460,7 +468,11 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "vcPhone2");
 		assertExists(rc, "intModifiedById");
 
+<<<<<<< HEAD
 		var modifiedById = load(rc.intModifiedById);
+=======
+		var lastModifiedBy = load(rc.intModifiedById);
+>>>>>>> develop
 
 		if (!modifiedById.getIntUserID()) {
 			messenger.addAlert(messageType="ERROR",

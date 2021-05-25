@@ -26,7 +26,11 @@
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
+<<<<<<< HEAD
 				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedById()#"/>	/* IntCreatedById - int */
+=======
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedById()#"/>	/* intCreatedById - int */
+>>>>>>> develop
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
 				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntModifiedById()#"/>	/* intModifiedById - int */
 			);
@@ -48,7 +52,11 @@
 				, btIsProtected = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.group.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, dtCreatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
+<<<<<<< HEAD
 				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedById()#"/>	/* IntCreatedById - int */
+=======
+				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntCreatedById()#"/>	/* intCreatedById - int */
+>>>>>>> develop
 				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.group.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
 				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntModifiedById()#"/>	/* intModifiedById - int */
 			WHERE intGroupID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.group.getIntGroupID()#"/>

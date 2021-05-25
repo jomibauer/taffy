@@ -30,7 +30,11 @@ component name="User" accessors=true extends="BaseDomain" {
 	property type="String" name="vcCreatedByIP" getter=true;
 	property type="date" name="dtModifiedOn" getter=true;
 	property type="Numeric" name="intModifiedById" getter=true;
+<<<<<<< HEAD
 	property type="String" name="vcModifiedByIP" getter=true;
+=======
+	property type="String" name="vcLastModifiedByIP" getter=true;
+>>>>>>> develop
 	property ApiAccessKey AuthenticationKey;
 
 	property boolean isLoggedIn;
@@ -71,7 +75,11 @@ component name="User" accessors=true extends="BaseDomain" {
 		setVcCreatedByIP("");
 		setDtModifiedOn(variables.instance.never);
 		setIntModifiedById(0);
+<<<<<<< HEAD
 		setVcModifiedByIP("");
+=======
+		setVcLastModifiedByIP("");
+>>>>>>> develop
 
 		variables.userGroups = [];
 		setIsLoggedIn(false);
@@ -207,7 +215,11 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));
 		sb.append(', "dtModifiedOn":"' & serializeJSON(getDtModifiedOn()));
 		sb.append(', "intModifiedById":' & getIntModifiedById());
+<<<<<<< HEAD
 		sb.append(', "vcModifiedByIP":' & serializeJSON(getVcModifiedByIP()));
+=======
+		sb.append(', "vcLastModifiedByIP":' & serializeJSON(getVcLastModifiedByIP()));
+>>>>>>> develop
 		sb.append(', "groups":[');
 		var i = 0;
 		for (var group in variables.userGroups) {
@@ -258,7 +270,11 @@ component name="User" accessors=true extends="BaseDomain" {
 		sb.append(', "vcCreatedByIP":' & serializeJSON(getVcCreatedByIP()));
 		sb.append(', "dtModifiedOn":' & serializeJSON(getDtModifiedOn()));
 		sb.append(', "intModifiedById":' & getIntModifiedById());
+<<<<<<< HEAD
 		sb.append(', "vcModifiedByIP":' & serializeJSON(getVcModifiedByIP()));
+=======
+		sb.append(', "vcLastModifiedByIP":' & serializeJSON(getVcLastModifiedByIP()));
+>>>>>>> develop
 		sb.append(', "groups":[');
 		var i = 0;
 		for (var group in variables.userGroups) {

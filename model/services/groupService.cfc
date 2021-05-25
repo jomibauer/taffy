@@ -121,9 +121,15 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "intCreatedById");
 		assertExists(rc, "dtCreatedOn");
 
+<<<<<<< HEAD
 		/*var createdById = userService.load(rc.intCreatedById);
 
 		if (!createdById.getIntUserID()) {
+=======
+		/*var CreatedById = userService.load(rc.intCreatedById);
+
+		if (!CreatedById.getIntUserID()) {
+>>>>>>> develop
 			messenger.addAlert(messageType="ERROR",
 								message="Created By is not valid",
 								messageDetail="",
@@ -182,6 +188,7 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "dtModifiedOn");
 		assertExists(rc, "intModifiedById");
 
+<<<<<<< HEAD
 		/*var modifiedById = userService.load(rc.intModifiedById);
 
 		if (!modifiedById.getIntUserID()) {
@@ -189,6 +196,15 @@ component accessors=true extends="baseService" singleton=true {
 								message="Last Modified By is not valid",
 								messageDetail="",
 								field="intModifiedById");
+=======
+		/*var ModifiedById = userService.load(rc.intModifiedById);
+
+		if (!ModifiedById.getIntUserID()) {
+			messenger.addAlert(messageType="ERROR",
+								message="Last Modified By is not valid",
+								messageDetail="",
+								field="ModifiedById");
+>>>>>>> develop
 		}*/
 
 		validateLength(rc=rc
