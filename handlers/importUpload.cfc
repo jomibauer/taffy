@@ -18,6 +18,9 @@ component extends="coldbox.system.EventHandler" {
 	/************************************ END IMPLICIT ACTIONS *******************************************/
 
 	function index (event,rc,prc) {
+		//TODO: Remove for production
+		rc.companies = companyService.getAllNonRemovedCompanies();
+
 		prc.xeh.import = "importUpload.import";
     }
 
@@ -80,7 +83,7 @@ component extends="coldbox.system.EventHandler" {
 		for (file in queryOfArchiveFiles) {
 			var outdatedFilePath = '';
 
-			if (dateAdd("d", 7, dateTimeFormat(file.dateLastModified)) < now()) {
+			if ((dateAdd("d", 7, dateTimeFormat(file.dateLastModified)) < now()) && file.size > 0) {
 				outdatedFilePath = tempArchiveFilePath & file.name;
 				fileDelete(outdatedFilePath);
 			}
@@ -117,8 +120,9 @@ component extends="coldbox.system.EventHandler" {
 
 				try {
 					// update all records with isRemoved=true
-					var isRemoved = structKeyExists(rc, "removeExistingRecordCheckbox") ? true : false;
-					if (isRemoved) { companyService.updateAllParsedInputWithIsRemoved(); }
+					if (structKeyExists(rc, "removeExistingRecordCheckbox")) {
+						companyService.updateAllParsedInputWithIsRemoved();
+					}
 
 					// create & update records
 					companyService.saveParsedInput(parsedInput);

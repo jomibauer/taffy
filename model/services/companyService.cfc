@@ -118,28 +118,19 @@ component name="companyService" accessors="true" extends="baseService" singleton
 		var qLoadAll = companyGateway.loadAll();
 		for (var row in qLoadAll) {
 			var companyId = row.intCompanyId;
-			var company = companyGateway.updateAllParsedInputWithIsRemoved(companyId)
+			companyGateway.updateAllParsedInputWithIsRemoved(companyId)
 		}
 
 		return output;
 	}
 
 	public any function saveParsedInput (required any parsedInput) {
-		var output = [];
 		parsedInput.map(function(parsedInputRow){
 			var companyId = parsedInputRow['Company ID'];
 			var company = importUploadService.getParsedInputObject(parsedInputRow, companyId);
 			//NOTE : check if ID exists, if true -> udpate, if false -> create
 			var company = save(company);
 		});
-
-		var qLoadAll = companyGateway.loadAll();
-
-		for (var row in qLoadAll) {
-			arrayAppend(output, populate(getEmptyDomain(), row));
-		}
-
-		return output;
 	}
 
 	public boolean function validateCreate (required struct rc, required Messenger messenger) {

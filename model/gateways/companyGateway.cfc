@@ -148,17 +148,19 @@
 
 		<cfquery name="local.qLoadAll">
 			SELECT
-				  tblCompany.intCompanyId		/*  - bigint*/
-				, tblCompany.btIsActive		/*  - bit*/
-				, tblCompany.btIsRemoved		/*  - bit*/
-				, tblCompany.vcName		/*  - varchar(128)*/
-				, tblCompany.vcContactName		/*  - varchar(128)*/
-				, tblCompany.vcContactEmail	/*  - varchar(128)*/
-				, tblCompany.vcContactPhone	/*  - varchar(128)*/
-				, tblCompany.vcDefaultPaymentTerms	/*  - varchar(128)*/
-				, tblCompany.flDefaultHourlyRate	/*  - fl(53)*/
-				, tblCompany.intModifiedById	/*  - int*/
-				, tblCompany.dtModifiedOn		/*  - datetime*/
+				  tblCompany.intCompanyId
+				, tblCompany.btIsActive
+				, tblCompany.btIsRemoved
+				, tblCompany.vcName
+				, tblCompany.vcContactName
+				, tblCompany.vcContactEmail
+				, tblCompany.vcContactPhone
+				, tblCompany.vcDefaultPaymentTerms
+				, tblCompany.flDefaultHourlyRate
+				, tblCompany.intCreatedById
+				, tblCompany.dtCreatedOn
+				, tblCompany.intModifiedById
+				, tblCompany.dtModifiedOn
 				, tblCompany.vcCompanyUUID
 			FROM dbo.tblCompany
 			WHERE tblCompany.btIsRemoved = 0
@@ -174,7 +176,7 @@
 		<cfquery name="local.qUpdate">
 			UPDATE dbo.tblCompany
 			SET
-				btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="true"/>
+				btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="1"/>
 				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#session.user.getIntUserID()#"/>
 				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#"/>
 			WHERE

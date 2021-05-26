@@ -145,6 +145,7 @@
 		environments = {
 			local = "coldboxbase.loc*"
 			, production = "mind-over-data\.com"
+			, development = "mod-llc\.com"
 		};
 	}
 

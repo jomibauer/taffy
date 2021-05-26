@@ -25,7 +25,7 @@ component {
 		"proxyReturnCollection"    : false,
 		"jsonPayloadToRC"          : true,
 		"autoMapModels"            : true,
-		"environment"              : "production",
+		"environment"              : "development",
 		// Caching
 		"handlersIndexAutoReload"  : false,
 		"handlerCaching"           : true,

@@ -25,6 +25,14 @@ component name="importUploadService" accessors="true" extends="baseService" sing
         if (len(companyId)) {
             company.setIntCompanyId(toNumeric(parsedInputRow['Company ID']));
             company.setVcCompanyUUID(parsedInputRow['Company UUID']);
+            company.setDtModifiedOn(now());
+            company.setIntModifiedById(session.user.getIntUserID());
+        } else {
+            company.setVcCompanyUUID(createUUID());
+            company.setBtIsActive(1);
+            company.setBtIsRemoved(0);
+            company.setDtCreatedOn(now());
+            company.setIntCreatedById(session.user.getIntUserID());
         }
 
         company.setVcContactEmail(parsedInputRow['Contact Email']);
@@ -33,8 +41,6 @@ component name="importUploadService" accessors="true" extends="baseService" sing
         company.setVcContactPhone(parsedInputRow['Contact Phone']);
         company.setFlDefaultHourlyRate(parsedInputRow['Default Hourly Rate']);
         company.setVcDefaultPaymentTerms(parsedInputRow['Default Payment Terms']);
-        company.setBtIsActive(parsedInputRow['Is Active']);
-        company.setBtIsRemoved(parsedInputRow['Is Removed']);
         company.setVcName(parsedInputRow['Company Name']);
 
         return company;

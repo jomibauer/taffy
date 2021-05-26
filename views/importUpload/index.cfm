@@ -32,6 +32,39 @@
 			</form>
 		</div>
 	</div>
+	<!--- TODO: Remove for production START --->
+		<div style="width: auto;text-align: center;margin: auto;padding: 50px;">
+			<h2>Company List</h2>
+			<table class="table table-sm table-hover table-bordered table-striped">
+				<tr>
+					<th>Company ID</th>
+					<th>Company Name</th>
+					<th>Contact Name</th>
+					<th>Contact Email</th>
+					<th>Contact Phone</th>
+					<th>Company UUID</th>
+					<th>Default Payment Terms</th>
+					<th>Default Hourly Rate</th>
+					<th>Date Modified</th>
+					<th>Date Created</th>
+				</tr>
+				<cfloop array="#rc.companies#" item="company">
+				<tr>
+					<td>#company.getIntCompanyID()#</td>
+					<td>#company.getVcName()#</td>
+					<td>#company.getVcContactName()#</td>
+					<td>#company.getVcContactEmail()#</td>
+					<td>#company.getVcContactPhone()#</td>
+					<td>#company.getVcCompanyUUID()#</td>
+					<td>#company.getVcDefaultPaymentTerms()#</td>
+					<td>#company.getFlDefaultHourlyRate()#</td>
+					<td>#dateFormat(company.getDtModifiedOn(), "yyyy-mm-dd")#</td>
+					<td>#dateFormat(company.getDtCreatedOn(), "yyyy-mm-dd")#</td>
+				</tr>
+			</cfloop>
+			</table>
+		</div>
+	<!--- TODO: Remove for production END --->
 
 	<script src="includes/js/importUpload/index.js"></script>
 </cfoutput>
