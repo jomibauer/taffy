@@ -3,7 +3,7 @@ component extends="coldbox.system.EventHandler" {
 	property name="acceptedMimeTypes" inject="coldbox:setting:acceptedMimeTypes";
 	property name="importUploadService" inject="importUploadService";
 	property name="spreadSheetService" inject="spreadSheetService";
-	property name="companyService" inject="companyService";
+	property name="sampleService" inject="sampleService";
 
 	/************************************ IMPLICIT ACTIONS *******************************************/
 
@@ -18,8 +18,8 @@ component extends="coldbox.system.EventHandler" {
 	/************************************ END IMPLICIT ACTIONS *******************************************/
 
 	function index (event,rc,prc) {
-		//TODO: Remove for production
-		rc.companies = companyService.getAllNonRemovedCompanies();
+		//TODO: Remove for production - display list of sample for qa purpose
+		rc.samples = sampleService.getAllNonRemovedSamples();
 
 		prc.xeh.import = "importUpload.import";
     }
@@ -121,11 +121,11 @@ component extends="coldbox.system.EventHandler" {
 				try {
 					// update all records with isRemoved=true
 					if (structKeyExists(rc, "removeExistingRecordCheckbox")) {
-						companyService.updateAllParsedInputWithIsRemoved();
+						sampleService.updateAllParsedInputWithIsRemoved();
 					}
 
-					// create & update records
-					companyService.saveParsedInput(parsedInput);
+					// create & update parsed records
+					sampleService.saveParsedInput(parsedInput);
 
 					session.messenger.addAlert(
 						messageType="SUCCESS"

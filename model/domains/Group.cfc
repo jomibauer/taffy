@@ -8,9 +8,9 @@ component name="Group" accessors=true extends="BaseDomain" {
 	property type="boolean" name="btIsProtected" getter=true;
 	property type="boolean" name="btIsRemoved" getter=true;
 	property type="date" name="dtCreatedOn" getter=true;
-	property type="Numeric" name="intCreatedById" getter=true;
-	property type="date" name="dtModifiedOn" getter=true;
-	property type="Numeric" name="intModifiedById" getter=true;
+	property type="Numeric" name="intCreatedBy" getter=true;
+	property type="date" name="dtLastModifiedOn" getter=true;
+	property type="Numeric" name="intLastModifiedBy" getter=true;
 
 	public any function init () {
 
@@ -24,9 +24,9 @@ component name="Group" accessors=true extends="BaseDomain" {
 		setBtIsProtected(false);
 		setBtIsRemoved(false);
 		setDtCreatedOn(variables.instance.never);
-		setIntCreatedById(0);
-		setDtModifiedOn(variables.instance.never);
-		setIntModifiedById(0);
+		setIntCreatedBy(0);
+		setDtLastModifiedOn(variables.instance.never);
+		setIntLastModifiedBy(0);
 
 		return this;
 	}
@@ -49,9 +49,9 @@ component name="Group" accessors=true extends="BaseDomain" {
 		sb.append(', "btIsProtected":' & serializeJSON(getBtIsProtected()));
 		sb.append(', "btIsRemoved":' & serializeJSON(getBtIsRemoved()));
 		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
-		sb.append(', "intCreatedById":' & getIntCreatedById());
-		sb.append(', "dtModifiedOn":' & serializeJSON(getDtModifiedOn()));
-		sb.append(', "intModifiedById":' & getIntModifiedById());
+		sb.append(', "intCreatedBy":' & getIntCreatedBy());
+		sb.append(', "dtLastModifiedOn":' & serializeJSON(getDtLastModifiedOn()));
+		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
 		sb.append("}");
 		return sb.toString();
 	}
@@ -66,9 +66,9 @@ component name="Group" accessors=true extends="BaseDomain" {
 		sb.append(', "btIsProtected":' & serializeJSON(getBtIsProtected()));
 		sb.append(', "btIsRemoved":' & serializeJSON(getBtIsRemoved()));
 		sb.append(', "dtCreatedOn":' & serializeJSON(getDtCreatedOn()));
-		sb.append(', "intCreatedById":' & getIntCreatedById());
-		sb.append(', "dtModifiedOn":' & serializeJSON(getDtModifiedOn()));
-		sb.append(', "intModifiedById":' & getIntModifiedById());
+		sb.append(', "intCreatedBy":' & getIntCreatedBy());
+		sb.append(', "dtLastModifiedOn":' & serializeJSON(getDtLastModifiedOn()));
+		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
 		sb.append("}");
 		return sb.toString();
 	}

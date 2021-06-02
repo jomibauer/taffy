@@ -5,7 +5,7 @@
 */
 component{
 	// Application properties
-	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "2021-05-23-v0";
+	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "2021-06-02-v0";
 	this.sessionManagement = true;
 	this.sessionTimeout = createTimeSpan(0,6,0,0);
 	this.applicationTimeout = createTimeSpan(2,0,0,0);
@@ -36,9 +36,8 @@ component{
 	// COLDBOX APPLICATION KEY OVERRIDE
 	COLDBOX_APP_KEY 		= "";
 
-	// temp COMS datasource
 	private string function getDSN() {
-		return "COMS";
+		return "coldboxbase";
 	}
 
 	// application start

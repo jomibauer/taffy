@@ -16,7 +16,7 @@
 				, vcPassword		/*  - varchar(512)*/
 				, btIsPasswordExpired	/*  - bit*/
 				, dtPasswordLastSetOn	/*  - datetime*/
-				, intPasswordLastSetById	/*  - int*/
+				, intPasswordLastSetBy	/*  - int*/
 				, vcPasswordLastSetByIP	/*  - varchar(50)*/
 				, dtLastLoggedInOn	/*  - datetime*/
 				, vcAddress1		/*  - varchar(200)*/
@@ -32,11 +32,11 @@
 				, btIsProtected		/*  - bit*/
 				, btIsRemoved		/*  - bit*/
 				, dtCreatedOn		/*  - datetime*/
-				, intCreatedById		/*  - int*/
+				, intCreatedBy		/*  - int*/
 				, vcCreatedByIP		/*  - varchar(50)*/
-				, dtModifiedOn	/*  - datetime*/
-				, intModifiedById	/*  - int*/
-				, vcModifiedByIP	/*  - varchar(50)*/
+				, dtLastModifiedOn	/*  - datetime*/
+				, intLastModifiedBy	/*  - int*/
+				, vcLastModifiedByIP	/*  - varchar(50)*/
 			)
 			VALUES
 			(
@@ -50,7 +50,7 @@
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcPassword()#"/>	/* vcPassword - varchar (512) */
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsPasswordExpired()#"/>	/* btIsPasswordExpired - bit */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtPasswordLastSetOn()#"/>	/* dtPasswordLastSetOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntPasswordLastSetById()#"/>	/* intPasswordLastSetById - int */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntPasswordLastSetBy()#"/>	/* intPasswordLastSetBy - int */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcPasswordLastSetByIP()#"/>	/* vcPasswordLastSetByIP - varchar (50) */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtLastLoggedInOn()#"/>	/* dtLastLoggedInOn - datetime */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcAddress1()#"/>	/* vcAddress1 - varchar (200) */
@@ -66,11 +66,11 @@
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* IntCreatedById - int */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedBy()#"/>	/* intCreatedBy - int */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
-				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */
-				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcModifiedByIP()#"/>	/* vcModifiedByIP - varchar (50) */
+				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntLastModifiedBy()#"/>	/* intLastModifiedBy - int */
+				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcLastModifiedByIP()#"/>	/* vcLastModifiedByIP - varchar (50) */
 			);
 		</cfquery>
 
@@ -93,7 +93,7 @@
 				, vcPassword = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcPassword()#"/>	/* vcPassword - varchar (512) */
 				, btIsPasswordExpired = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsPasswordExpired()#"/>	/* btIsPasswordExpired - bit */
 				, dtPasswordLastSetOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtPasswordLastSetOn()#"/>	/* dtPasswordLastSetOn - datetime */
-				, intPasswordLastSetById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntPasswordLastSetById()#"/>	/* intPasswordLastSetById - int */
+				, intPasswordLastSetBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntPasswordLastSetBy()#"/>	/* intPasswordLastSetBy - int */
 				, vcPasswordLastSetByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcPasswordLastSetByIP()#"/>	/* vcPasswordLastSetByIP - varchar (50) */
 				, dtLastLoggedInOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtLastLoggedInOn()#"/>	/* dtLastLoggedInOn - datetime */
 				, vcAddress1 = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcAddress1()#"/>	/* vcAddress1 - varchar (200) */
@@ -109,11 +109,11 @@
 				, btIsProtected = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, dtCreatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* IntCreatedById - int */
+				, intCreatedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedBy()#"/>	/* intCreatedBy - int */
 				, vcCreatedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
-				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
-				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */
-				, vcModifiedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcModifiedByIP()#"/>	/* vcModifiedByIP - varchar (50) */
+				, dtLastModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
+				, intLastModifiedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntLastModifiedBy()#"/>	/* intLastModifiedBy - int */
+				, vcLastModifiedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcLastModifiedByIP()#"/>	/* vcLastModifiedByIP - varchar (50) */
 			WHERE intUserID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntUserID()#"/>
 		</cfquery>
 
@@ -135,7 +135,7 @@
 				, tblUser.vcPassword		/*  - varchar(512)*/
 				, tblUser.btIsPasswordExpired	/*  - bit*/
 				, tblUser.dtPasswordLastSetOn	/*  - datetime*/
-				, tblUser.intPasswordLastSetById	/*  - int*/
+				, tblUser.intPasswordLastSetBy	/*  - int*/
 				, tblUser.vcPasswordLastSetByIP	/*  - varchar(50)*/
 				, tblUser.dtLastLoggedInOn	/*  - datetime*/
 				, tblUser.vcAddress1		/*  - varchar(200)*/
@@ -151,11 +151,11 @@
 				, tblUser.btIsProtected		/*  - bit*/
 				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
-				, tblUser.intCreatedById		/*  - int*/
+				, tblUser.intCreatedBy		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
-				, tblUser.dtModifiedOn	/*  - datetime*/
-				, tblUser.intModifiedById	/*  - int*/
-				, tblUser.vcModifiedByIP	/*  - varchar(50)*/
+				, tblUser.dtLastModifiedOn	/*  - datetime*/
+				, tblUser.intLastModifiedBy	/*  - int*/
+				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
 			WHERE tblUser.intUserID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.intUserID#"/>
 		</cfquery>
@@ -178,7 +178,7 @@
 				, tblUser.vcPassword		/*  - varchar(512)*/
 				, tblUser.btIsPasswordExpired	/*  - bit*/
 				, tblUser.dtPasswordLastSetOn	/*  - datetime*/
-				, tblUser.intPasswordLastSetById	/*  - int*/
+				, tblUser.intPasswordLastSetBy	/*  - int*/
 				, tblUser.vcPasswordLastSetByIP	/*  - varchar(50)*/
 				, tblUser.dtLastLoggedInOn	/*  - datetime*/
 				, tblUser.vcAddress1		/*  - varchar(200)*/
@@ -194,11 +194,11 @@
 				, tblUser.btIsProtected		/*  - bit*/
 				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
-				, tblUser.intCreatedById		/*  - int*/
+				, tblUser.intCreatedBy		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
-				, tblUser.dtModifiedOn	/*  - datetime*/
-				, tblUser.intModifiedById	/*  - int*/
-				, tblUser.vcModifiedByIP	/*  - varchar(50)*/
+				, tblUser.dtLastModifiedOn	/*  - datetime*/
+				, tblUser.intLastModifiedBy	/*  - int*/
+				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
 			WHERE tblUser.btIsRemoved = 0
 			ORDER BY 1 ASC
@@ -220,7 +220,7 @@
 				  tblUser.vcPassword = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.newPassword#" />
 				, tblUser.btIsPasswordExpired = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.isTempPassword#" />
 				, tblUser.dtPasswordLastSetOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />
-				, tblUser.intPasswordLastSetById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.setBy#" />
+				, tblUser.intPasswordLastSetBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.setBy#" />
 				, tblUser.vcPasswordLastSetByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.setByIP#" />
 			WHERE tblUser.intUserID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.intUserID#" />
 		</cfquery>
@@ -233,7 +233,7 @@
 				, tblUserPreviousPassword.vcPassword
 				, tblUserPreviousPassword.btIsTempPassword
 				, tblUserPreviousPassword.dtPasswordLastSetOn
-				, tblUserPreviousPassword.intPasswordLastSetById
+				, tblUserPreviousPassword.intPasswordLastSetBy
 				, tblUserPreviousPassword.vcPasswordLastSetByIP
 			)
 			VALUES
@@ -275,7 +275,7 @@
 				, tblUser.vcPassword		/*  - varchar(512)*/
 				, tblUser.btIsPasswordExpired	/*  - bit*/
 				, tblUser.dtPasswordLastSetOn	/*  - datetime*/
-				, tblUser.intPasswordLastSetById	/*  - int*/
+				, tblUser.intPasswordLastSetBy	/*  - int*/
 				, tblUser.vcPasswordLastSetByIP	/*  - varchar(50)*/
 				, tblUser.dtLastLoggedInOn	/*  - datetime*/
 				, tblUser.vcAddress1		/*  - varchar(200)*/
@@ -291,11 +291,11 @@
 				, tblUser.btIsProtected		/*  - bit*/
 				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
-				, tblUser.intCreatedById		/*  - int*/
+				, tblUser.intCreatedBy		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
-				, tblUser.dtModifiedOn	/*  - datetime*/
-				, tblUser.intModifiedById	/*  - int*/
-				, tblUser.vcModifiedByIP	/*  - varchar(50)*/
+				, tblUser.dtLastModifiedOn	/*  - datetime*/
+				, tblUser.intLastModifiedBy	/*  - int*/
+				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
             WHERE tblUser.btIsRemoved = 0
 			ORDER BY tblUser.vcUsername ASC
@@ -319,7 +319,7 @@
 				--, tblUser.vcNameSuffix
 				, tblUser.btIsPasswordExpired
 				, tblUser.dtPasswordLastSetOn
-				--, tblUser.intPasswordLastSetById
+				--, tblUser.intPasswordLastSetBy
 				--, tblUser.vcPasswordLastSetByIP
 				, tblUser.dtLastLoggedInOn
 				--, tblUser.vcAddress1
@@ -335,11 +335,11 @@
 				, tblUser.btIsProtected
 				, tblUser.btIsRemoved
 				--, tblUser.dtCreatedOn
-				--, tblUser.intCreatedById
+				--, tblUser.intCreatedBy
 				--, tblUser.vcCreatedByIP
-				--, tblUser.dtModifiedOn
-				--, tblUser.intModifiedById
-				--, tblUser.vcModifiedByIP
+				--, tblUser.dtLastModifiedOn
+				--, tblUser.intLastModifiedBy
+				--, tblUser.vcLastModifiedByIP
 			FROM dbo.tblUser
 			WHERE
 				(
@@ -375,7 +375,7 @@
 				, tblUser.vcPassword		/*  - varchar(512)*/
 				, tblUser.btIsPasswordExpired	/*  - bit*/
 				, tblUser.dtPasswordLastSetOn	/*  - datetime*/
-				, tblUser.intPasswordLastSetById	/*  - int*/
+				, tblUser.intPasswordLastSetBy	/*  - int*/
 				, tblUser.vcPasswordLastSetByIP	/*  - varchar(50)*/
 				, tblUser.dtLastLoggedInOn	/*  - datetime*/
 				, tblUser.vcAddress1		/*  - varchar(200)*/
@@ -391,11 +391,11 @@
 				, tblUser.btIsProtected		/*  - bit*/
 				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
-				, tblUser.intCreatedById		/*  - int*/
+				, tblUser.intCreatedBy		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
-				, tblUser.dtModifiedOn	/*  - datetime*/
-				, tblUser.intModifiedById	/*  - int*/
-				, tblUser.vcModifiedByIP	/*  - varchar(50)*/
+				, tblUser.dtLastModifiedOn	/*  - datetime*/
+				, tblUser.intLastModifiedBy	/*  - int*/
+				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
 			WHERE
 				1 = 1
@@ -478,7 +478,7 @@
 				  tblUser.vcPassword
 				, tblUser.btIsPasswordExpired
 				, tblUser.dtPasswordLastSetOn
-				, tblUser.intPasswordLastSetById
+				, tblUser.intPasswordLastSetBy
 				, tblUser.vcPasswordLastSetByIP
 				, tblUser.dtLastLoggedInOn
 			FROM dbo.tblUser
@@ -501,7 +501,7 @@
 			    , tblUserPreviousPassword.vcPassword
 			    , tblUserPreviousPassword.btIsTempPassword
 			    , tblUserPreviousPassword.dtPasswordLastSetOn
-			    , tblUserPreviousPassword.intPasswordLastSetById
+			    , tblUserPreviousPassword.intPasswordLastSetBy
 			    , tblUserPreviousPassword.vcPasswordLastSetByIP
 			    , rank() over (PARTITION BY tblUserPreviousPassword.btIsTempPassword ORDER BY tblUserPreviousPassword.dtPasswordLastSetOn DESC) rnkByTemp
 			    , rank() over (ORDER BY tblUserPreviousPassword.dtPasswordLastSetOn DESC) rnkOverall

@@ -58,9 +58,9 @@ component accessors=true extends="baseService" singleton=true {
 		group.setBtIsProtected(data.btIsProtected);
 		group.setBtIsRemoved(data.btIsRemoved);
 		group.setDtCreatedOn(data.dtCreatedOn);
-		group.setIntCreatedById(data.intCreatedById);
-		group.setDtModifiedOn(data.dtModifiedOn);
-		group.setIntModifiedById(data.intModifiedById);
+		group.setIntCreatedBy(data.intCreatedBy);
+		group.setDtLastModifiedOn(data.dtLastModifiedOn);
+		group.setIntLastModifiedBy(data.intLastModifiedBy);
 
 		return group;
 	}
@@ -118,16 +118,16 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "vcGroupAbbr");
 		assertExists(rc, "vcGroupDesc");
 		assertExists(rc, "vcGroupEmail");
-		assertExists(rc, "intCreatedById");
+		assertExists(rc, "intCreatedBy");
 		assertExists(rc, "dtCreatedOn");
 
-		/*var createdById = userService.load(rc.intCreatedById);
+		/*var createdById = userService.load(rc.intCreatedBy);
 
 		if (!createdById.getIntUserID()) {
 			messenger.addAlert(messageType="ERROR",
 								message="Created By is not valid",
 								messageDetail="",
-								field="intCreatedById");
+								field="intCreatedBy");
 		}
 */
 		if (groupGateway.getGroupIDByGroupName(rc.vcGroupName)) {
@@ -179,16 +179,16 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "groupID");
 		assertExists(rc, "vcGroupDesc");
 		assertExists(rc, "vcGroupEmail");
-		assertExists(rc, "dtModifiedOn");
-		assertExists(rc, "intModifiedById");
+		assertExists(rc, "dtLastModifiedOn");
+		assertExists(rc, "intLastModifiedBy");
 
-		/*var modifiedById = userService.load(rc.intModifiedById);
+		/*var modifiedById = userService.load(rc.intLastModifiedBy);
 
 		if (!modifiedById.getIntUserID()) {
 			messenger.addAlert(messageType="ERROR",
 								message="Last Modified By is not valid",
 								messageDetail="",
-								field="intModifiedById");
+								field="intLastModifiedBy");
 		}*/
 
 		validateLength(rc=rc

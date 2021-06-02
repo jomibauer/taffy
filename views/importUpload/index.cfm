@@ -32,34 +32,28 @@
 			</form>
 		</div>
 	</div>
-	<!--- TODO: Remove for production START --->
+	<!--- TODO: Remove for production - display list of sample for qa purpose START --->
 		<div style="width: auto;text-align: center;margin: auto;padding: 50px;">
-			<h2>Company List</h2>
+			<h2>Sample List</h2>
 			<table class="table table-sm table-hover table-bordered table-striped">
 				<tr>
-					<th>Company ID</th>
-					<th>Company Name</th>
-					<th>Contact Name</th>
-					<th>Contact Email</th>
-					<th>Contact Phone</th>
-					<th>Company UUID</th>
-					<th>Default Payment Terms</th>
-					<th>Default Hourly Rate</th>
+					<th>Sample ID</th>
+					<th>Sample Name</th>
+					<th>Sample Email</th>
+					<th>Sample Phone</th>
+					<th>Sample UUID</th>
 					<th>Date Modified</th>
 					<th>Date Created</th>
 				</tr>
-				<cfloop array="#rc.companies#" item="company">
+				<cfloop array="#rc.samples#" item="sample">
 				<tr>
-					<td>#company.getIntCompanyID()#</td>
-					<td>#company.getVcName()#</td>
-					<td>#company.getVcContactName()#</td>
-					<td>#company.getVcContactEmail()#</td>
-					<td>#company.getVcContactPhone()#</td>
-					<td>#company.getVcCompanyUUID()#</td>
-					<td>#company.getVcDefaultPaymentTerms()#</td>
-					<td>#company.getFlDefaultHourlyRate()#</td>
-					<td>#dateFormat(company.getDtModifiedOn(), "yyyy-mm-dd")#</td>
-					<td>#dateFormat(company.getDtCreatedOn(), "yyyy-mm-dd")#</td>
+					<td>#sample.getIntSampleID()#</td>
+					<td>#sample.getVcSampleName()#</td>
+					<td>#sample.getVcSampleEmail()#</td>
+					<td>#sample.getVcSamplePhone()#</td>
+					<td>#sample.getVcSampleUUID()#</td>
+					<td><cfif dateFormat(sample.getDtLastModifiedOn(), "yyyy-mm-dd") neq "1970-01-01">#dateFormat(sample.getDtLastModifiedOn(), "yyyy-mm-dd")#</cfif></td>
+					<td><cfif dateFormat(sample.getDtCreatedOn(), "yyyy-mm-dd") neq "1970-01-01">#dateFormat(sample.getDtCreatedOn(), "yyyy-mm-dd")#</cfif></td>
 				</tr>
 			</cfloop>
 			</table>
