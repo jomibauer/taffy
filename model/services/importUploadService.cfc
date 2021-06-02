@@ -22,14 +22,14 @@ component name="importUploadService" accessors="true" extends="baseService" sing
         if (len(sampleId)) {
             sample.setIntSampleId(toNumeric(parsedInputRow['Sample ID']));
             sample.setVcSampleUUID(parsedInputRow['Sample UUID']);
-            sample.setDtLastModifiedOn(now());
-            sample.setIntLastModifiedBy(session.user.getIntUserID());
+            sample.setDtModifiedOn(now());
+            sample.setIntModifiedById(session.user.getIntUserID());
         } else {
             sample.setVcSampleUUID(createUUID());
             sample.setBtIsActive(1);
             sample.setBtIsRemoved(0);
             sample.setDtCreatedOn(now());
-            sample.setIntCreatedBy(session.user.getIntUserID());
+            sample.setIntCreatedById(session.user.getIntUserID());
         }
 
         sample.setVcSampleName(parsedInputRow['Sample Name']);

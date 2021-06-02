@@ -58,9 +58,9 @@ component accessors=true extends="baseService" singleton=true {
 		group.setBtIsProtected(data.btIsProtected);
 		group.setBtIsRemoved(data.btIsRemoved);
 		group.setDtCreatedOn(data.dtCreatedOn);
-		group.setIntCreatedBy(data.intCreatedBy);
-		group.setDtLastModifiedOn(data.dtLastModifiedOn);
-		group.setIntLastModifiedBy(data.intLastModifiedBy);
+		group.setIntCreatedById(data.intCreatedById);
+		group.setDtModifiedOn(data.dtModifiedOn);
+		group.setIntModifiedById(data.intModifiedById);
 
 		return group;
 	}
@@ -118,16 +118,16 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "vcGroupAbbr");
 		assertExists(rc, "vcGroupDesc");
 		assertExists(rc, "vcGroupEmail");
-		assertExists(rc, "intCreatedBy");
+		assertExists(rc, "intCreatedById");
 		assertExists(rc, "dtCreatedOn");
 
-		/*var createdById = userService.load(rc.intCreatedBy);
+		/*var CreatedById = userService.load(rc.intCreatedById);
 
-		if (!createdById.getIntUserID()) {
+		if (!CreatedById.getIntUserID()) {
 			messenger.addAlert(messageType="ERROR",
 								message="Created By is not valid",
 								messageDetail="",
-								field="intCreatedBy");
+								field="intCreatedById");
 		}
 */
 		if (groupGateway.getGroupIDByGroupName(rc.vcGroupName)) {
@@ -179,16 +179,16 @@ component accessors=true extends="baseService" singleton=true {
 		assertExists(rc, "groupID");
 		assertExists(rc, "vcGroupDesc");
 		assertExists(rc, "vcGroupEmail");
-		assertExists(rc, "dtLastModifiedOn");
-		assertExists(rc, "intLastModifiedBy");
+		assertExists(rc, "dtModifiedOn");
+		assertExists(rc, "intModifiedById");
 
-		/*var modifiedById = userService.load(rc.intLastModifiedBy);
+		/*var ModifiedById = userService.load(rc.intModifiedById);
 
-		if (!modifiedById.getIntUserID()) {
+		if (!ModifiedById.getIntUserID()) {
 			messenger.addAlert(messageType="ERROR",
 								message="Last Modified By is not valid",
 								messageDetail="",
-								field="intLastModifiedBy");
+								field="ModifiedById");
 		}*/
 
 		validateLength(rc=rc

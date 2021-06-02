@@ -38,10 +38,10 @@ component name="sampleService" accessors="true" extends="baseService" singleton=
 		sample.setVcSampleName(data.vcSampleName);
 		sample.setVcSampleEmail(data.vcSampleEmail);
 		sample.setVcSamplePhone(data.vcSamplePhone);
-		sample.setIntCreatedBy(data.intCreatedBy);
+		sample.setIntCreatedById(data.intCreatedById);
 		sample.setDtCreatedOn(data.dtCreatedOn);
-		sample.setIntLastModifiedBy(data.intLastModifiedBy);
-		sample.setDtLastModifiedOn(data.dtLastModifiedOn);
+		sample.setIntModifiedById(data.intModifiedById);
+		sample.setDtModifiedOn(data.dtModifiedOn);
 		sample.setVcSampleUUID(data.vcSampleUUID);
 
 		return sample;

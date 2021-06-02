@@ -6,10 +6,10 @@ component name="Sample" accessors="true" extends="BaseDomain" {
 	property type="String" name="vcSampleName" getter=true;
 	property type="String" name="vcSampleEmail" getter=true;
 	property type="String" name="vcSamplePhone" getter=true;
-	property type="Numeric" name="intCreatedBy" getter=true;
+	property type="Numeric" name="intCreatedById" getter=true;
 	property type="date" name="dtCreatedOn" getter=true;
-	property type="Numeric" name="intLastModifiedBy" getter=true;
-	property type="date" name="dtLastModifiedOn" getter=true;
+	property type="Numeric" name="intModifiedById" getter=true;
+	property type="date" name="dtModifiedOn" getter=true;
 	property type="String" name="vcSampleUUID" getter=true;
 
 	public any function init () {
@@ -21,10 +21,10 @@ component name="Sample" accessors="true" extends="BaseDomain" {
 		setVcSampleName("");
 		setVcSampleEmail("");
 		setVcSamplePhone("");
-		setIntCreatedBy(0);
+		setIntCreatedById(0);
 		setDtCreatedOn(variables.instance.never);
-		setIntLastModifiedBy(0);
-		setDtLastModifiedOn(variables.instance.never);
+		setIntModifiedById(0);
+		setDtModifiedOn(variables.instance.never);
 		setVcSampleUUID("");
 
 		return this;
@@ -38,10 +38,10 @@ component name="Sample" accessors="true" extends="BaseDomain" {
 		sb.append(', "vcSampleName":' & serializeJSON(getVcSampleName()));
 		sb.append(', "vcSampleEmail":' & serializeJSON(getVcSampleEmail()));
 		sb.append(', "vcSamplePhone":' & serializeJSON(getVcSamplePhone()));
-		sb.append(', "intCreatedBy":' & getIntCreatedBy());
+		sb.append(', "intCreatedById":' & getIntCreatedById());
 		sb.append(', "dtCreatedOn":"' & formatterService.formatDateTime(getDtCreatedOn()) & '"');
-		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
-		sb.append(', "dtLastModifiedOn":"' & formatterService.formatDateTime(getDtLastModifiedOn()) & '"');
+		sb.append(', "intModifiedById":' & getIntModifiedById());
+		sb.append(', "dtModifiedOn":"' & formatterService.formatDateTime(getDtModifiedOn()) & '"');
 		sb.append(', "vcSampleUUID":' & serializeJSON(getVcSampleUUID()));
 		sb.append("}");
 		return sb.toString();
@@ -55,10 +55,10 @@ component name="Sample" accessors="true" extends="BaseDomain" {
 		sb.append(', "vcSampleName":' & serializeJSON(getVcSampleName()));
 		sb.append(', "vcSampleEmail":' & serializeJSON(getVcSampleEmail()));
 		sb.append(', "vcSamplePhone":' & serializeJSON(getVcSamplePhone()));
-		sb.append(', "intCreatedBy":' & getIntCreatedBy());
+		sb.append(', "intCreatedById":' & getIntCreatedById());
 		sb.append(', "dtCreatedOn":"' & formatterService.formatDateTime(getDtCreatedOn()) & '"');
-		sb.append(', "intLastModifiedBy":' & getIntLastModifiedBy());
-		sb.append(', "dtLastModifiedOn":"' & formatterService.formatDateTime(getDtLastModifiedOn()) & '"');
+		sb.append(', "intModifiedById":' & getIntModifiedById());
+		sb.append(', "dtModifiedOn":"' & formatterService.formatDateTime(getDtModifiedOn()) & '"');
 		sb.append(', "vcSampleUUID":' & serializeJSON(getVcSampleUUID()));
 		sb.append("}");
 		return sb.toString();

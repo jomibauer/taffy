@@ -32,10 +32,10 @@
 				, btIsProtected		/*  - bit*/
 				, btIsRemoved		/*  - bit*/
 				, dtCreatedOn		/*  - datetime*/
-				, intCreatedBy		/*  - int*/
+				, intCreatedById		/*  - int*/
 				, vcCreatedByIP		/*  - varchar(50)*/
-				, dtLastModifiedOn	/*  - datetime*/
-				, intLastModifiedBy	/*  - int*/
+				, dtModifiedOn	/*  - datetime*/
+				, intModifiedById	/*  - int*/
 				, vcLastModifiedByIP	/*  - varchar(50)*/
 			)
 			VALUES
@@ -66,10 +66,10 @@
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedBy()#"/>	/* intCreatedBy - int */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* intCreatedById - int */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
-				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntLastModifiedBy()#"/>	/* intLastModifiedBy - int */
+				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcLastModifiedByIP()#"/>	/* vcLastModifiedByIP - varchar (50) */
 			);
 		</cfquery>
@@ -109,10 +109,10 @@
 				, btIsProtected = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, dtCreatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, intCreatedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedBy()#"/>	/* intCreatedBy - int */
+				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* intCreatedByID - int */
 				, vcCreatedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
-				, dtLastModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
-				, intLastModifiedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntLastModifiedBy()#"/>	/* intLastModifiedBy - int */
+				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
+				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */
 				, vcLastModifiedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcLastModifiedByIP()#"/>	/* vcLastModifiedByIP - varchar (50) */
 			WHERE intUserID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntUserID()#"/>
 		</cfquery>
@@ -151,10 +151,10 @@
 				, tblUser.btIsProtected		/*  - bit*/
 				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
-				, tblUser.intCreatedBy		/*  - int*/
+				, tblUser.intCreatedById		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
-				, tblUser.dtLastModifiedOn	/*  - datetime*/
-				, tblUser.intLastModifiedBy	/*  - int*/
+				, tblUser.dtModifiedOn	/*  - datetime*/
+				, tblUser.intModifiedById	/*  - int*/
 				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
 			WHERE tblUser.intUserID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.intUserID#"/>
@@ -194,10 +194,10 @@
 				, tblUser.btIsProtected		/*  - bit*/
 				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
-				, tblUser.intCreatedBy		/*  - int*/
+				, tblUser.intCreatedById		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
-				, tblUser.dtLastModifiedOn	/*  - datetime*/
-				, tblUser.intLastModifiedBy	/*  - int*/
+				, tblUser.dtModifiedOn	/*  - datetime*/
+				, tblUser.intModifiedById	/*  - int*/
 				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
 			WHERE tblUser.btIsRemoved = 0
@@ -291,10 +291,10 @@
 				, tblUser.btIsProtected		/*  - bit*/
 				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
-				, tblUser.intCreatedBy		/*  - int*/
+				, tblUser.intCreatedById		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
-				, tblUser.dtLastModifiedOn	/*  - datetime*/
-				, tblUser.intLastModifiedBy	/*  - int*/
+				, tblUser.dtModifiedOn	/*  - datetime*/
+				, tblUser.intModifiedById	/*  - int*/
 				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
             WHERE tblUser.btIsRemoved = 0
@@ -335,10 +335,10 @@
 				, tblUser.btIsProtected
 				, tblUser.btIsRemoved
 				--, tblUser.dtCreatedOn
-				--, tblUser.intCreatedBy
+				--, tblUser.intCreatedById
 				--, tblUser.vcCreatedByIP
-				--, tblUser.dtLastModifiedOn
-				--, tblUser.intLastModifiedBy
+				--, tblUser.dtModifiedOn
+				--, tblUser.intModifiedById
 				--, tblUser.vcLastModifiedByIP
 			FROM dbo.tblUser
 			WHERE
@@ -391,10 +391,10 @@
 				, tblUser.btIsProtected		/*  - bit*/
 				, tblUser.btIsRemoved		/*  - bit*/
 				, tblUser.dtCreatedOn		/*  - datetime*/
-				, tblUser.intCreatedBy		/*  - int*/
+				, tblUser.intCreatedById		/*  - int*/
 				, tblUser.vcCreatedByIP		/*  - varchar(50)*/
-				, tblUser.dtLastModifiedOn	/*  - datetime*/
-				, tblUser.intLastModifiedBy	/*  - int*/
+				, tblUser.dtModifiedOn	/*  - datetime*/
+				, tblUser.intModifiedById	/*  - int*/
 				, tblUser.vcLastModifiedByIP	/*  - varchar(50)*/
 			FROM dbo.tblUser
 			WHERE

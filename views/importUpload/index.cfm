@@ -52,7 +52,7 @@
 					<td>#sample.getVcSampleEmail()#</td>
 					<td>#sample.getVcSamplePhone()#</td>
 					<td>#sample.getVcSampleUUID()#</td>
-					<td><cfif dateFormat(sample.getDtLastModifiedOn(), "yyyy-mm-dd") neq "1970-01-01">#dateFormat(sample.getDtLastModifiedOn(), "yyyy-mm-dd")#</cfif></td>
+					<td><cfif dateFormat(sample.getDtModifiedOn(), "yyyy-mm-dd") neq "1970-01-01">#dateFormat(sample.getDtModifiedOn(), "yyyy-mm-dd")#</cfif></td>
 					<td><cfif dateFormat(sample.getDtCreatedOn(), "yyyy-mm-dd") neq "1970-01-01">#dateFormat(sample.getDtCreatedOn(), "yyyy-mm-dd")#</cfif></td>
 				</tr>
 			</cfloop>

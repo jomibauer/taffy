@@ -11,10 +11,10 @@
 				, vcSampleName		/*  - varchar(128)*/
 				, vcSampleEmail	/*  - varchar(128)*/
 				, vcSamplePhone	/*  - varchar(128)*/
-				, intCreatedBy	/*  - int*/
+				, intCreatedById	/*  - int*/
 				, dtCreatedOn		/*  - datetime*/
-				, intLastModifiedBy	/*  - int*/
-				, dtLastModifiedOn		/*  - datetime*/
+				, intModifiedById	/*  - int*/
+				, dtModifiedOn		/*  - datetime*/
 				, vcSampleUUID
 			)
 			VALUES
@@ -24,10 +24,10 @@
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.sample.getVcSampleName()#"/>	/* vcSampleName - varchar (128) */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.sample.getVcSampleEmail()#"/>	/* vcSampleEmail - varchar (128) */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.sample.getVcSamplePhone()#"/>	/* vcSamplePhone - varchar (128) */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.sample.getIntCreatedBy()#"/>	/* intCreatedBy - int */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.sample.getIntCreatedById()#"/>	/* intCreatedById - int */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.sample.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.sample.getIntLastModifiedBy()#"/>	/* intLastModifiedBy - int */
-				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.sample.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.sample.getIntModifiedById()#"/>	/* intModifiedById - int */
+				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.sample.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#createUUID()#"/>
 			);
 		</cfquery>
@@ -46,10 +46,10 @@
 				, vcSampleName = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.sample.getVcSampleName()#"/>	/* vcSampleName - varchar (128) */
 				, vcSampleEmail = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.sample.getVcSampleEmail()#"/>	/* vcSampleEmail - varchar (128) */
 				, vcSamplePhone = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.sample.getVcSamplePhone()#"/>	/* vcSamplePhone - varchar (128) */
-				, intCreatedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.sample.getIntCreatedBy()#"/>	/* intCreatedBy - int */
+				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.sample.getIntCreatedById()#"/>	/* intCreatedById - int */
 				, dtCreatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.sample.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, intLastModifiedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.sample.getIntLastModifiedBy()#"/>	/* intLastModifiedBy - int */
-				, dtLastModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.sample.getDtLastModifiedOn()#"/>	/* dtLastModifiedOn - datetime */
+				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.sample.getIntModifiedById()#"/>	/* intModifiedById - int */
+				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.sample.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
 			WHERE
 				intSampleId = <cfqueryparam cfsqltype="cf_sql_bigint" value="#arguments.sample.getIntSampleId()#"/>
 		</cfquery>
@@ -67,10 +67,10 @@
 				, tblSample.vcSampleName		/*  - varchar(128)*/
 				, tblSample.vcSampleEmail	/*  - varchar(128)*/
 				, tblSample.vcSamplePhone	/*  - varchar(128)*/
-				, tblSample.intCreatedBy	/*  - int*/
+				, tblSample.intCreatedById	/*  - int*/
 				, tblSample.dtCreatedOn		/*  - datetime*/
-				, tblSample.intLastModifiedBy	/*  - int*/
-				, tblSample.dtLastModifiedOn		/*  - datetime*/
+				, tblSample.intModifiedById	/*  - int*/
+				, tblSample.dtModifiedOn		/*  - datetime*/
 				, tblSample.vcSampleUUID
 			FROM dbo.tblSample
 			WHERE
@@ -91,10 +91,10 @@
 				, tbSample.vcSampleName
 				, tbSample.vcSampleEmail
 				, tbSample.vcSamplePhone
-				, tbSample.intCreatedBy
+				, tbSample.intCreatedById
 				, tbSample.dtCreatedOn
-				, tbSample.intLastModifiedBy
-				, tbSample.dtLastModifiedOn
+				, tbSample.intModifiedById
+				, tbSample.dtModifiedOn
 				, tbSample.vSampleUUID
 			FROM dbo.tblSample
 			WHERE
@@ -114,10 +114,10 @@
 				, tblSample.vcSampleName		/*  - varchar(128)*/
 				, tblSample.vcSampleEmail	/*  - varchar(128)*/
 				, tblSample.vcSamplePhone	/*  - varchar(128)*/
-				, tblSample.intCreatedBy	/*  - int*/
+				, tblSample.intCreatedById	/*  - int*/
 				, tblSample.dtCreatedOn		/*  - datetime*/
-				, tblSample.intLastModifiedBy	/*  - int*/
-				, tblSample.dtLastModifiedOn		/*  - datetime*/
+				, tblSample.intModifiedById	/*  - int*/
+				, tblSample.dtModifiedOn		/*  - datetime*/
 				, tblSample.vcSampleUUID
 			FROM dbo.tblSample
 			ORDER BY 1 ASC
@@ -136,10 +136,10 @@
 				, tblSample.vcSampleName
 				, tblSample.vcSampleEmail
 				, tblSample.vcSamplePhone
-				, tblSample.intCreatedBy
+				, tblSample.intCreatedById
 				, tblSample.dtCreatedOn
-				, tblSample.intLastModifiedBy
-				, tblSample.dtLastModifiedOn
+				, tblSample.intModifiedById
+				, tblSample.dtModifiedOn
 				, tblSample.vcSampleUUID
 			FROM dbo.tblSample
 			WHERE tblSample.btIsRemoved = 0
@@ -156,8 +156,8 @@
 			UPDATE dbo.tblSample
 			SET
 				btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="1"/>
-				, intLastModifiedBy = <cfqueryparam cfsqltype="cf_sql_integer" value="#session.user.getIntUserID()#"/>
-				, dtLastModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#"/>
+				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#session.user.getIntUserID()#"/>
+				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#"/>
 			WHERE
 				intSampleId = <cfqueryparam cfsqltype="cf_sql_bigint" value="#arguments.sampleId#"/>
 		</cfquery>
