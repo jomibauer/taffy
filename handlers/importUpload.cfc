@@ -1,5 +1,6 @@
 component extends="coldbox.system.EventHandler" {
 
+	property name="environment" inject="coldbox:setting:environment";
 	property name="acceptedMimeTypes" inject="coldbox:setting:acceptedMimeTypes";
 	property name="importUploadService" inject="importUploadService";
 	property name="spreadSheetService" inject="spreadSheetService";
@@ -18,8 +19,8 @@ component extends="coldbox.system.EventHandler" {
 	/************************************ END IMPLICIT ACTIONS *******************************************/
 
 	function index (event,rc,prc) {
-		//TODO: Remove for production - display list of sample for qa purpose
-		rc.samples = sampleService.getAllNonRemovedSamples();
+		rc.isProduction = environment == "production" ? true : false ;
+		if (!rc.isProduction) { rc.samples = sampleService.getAllNonRemovedSamples(); }
 
 		prc.xeh.import = "importUpload.import";
     }

@@ -24,7 +24,7 @@
 					<div class="col">
 						<p><input id="removeExistingRecordCheckbox" name="removeExistingRecordCheckbox" type="checkbox"> Remove Existing Records</p>
 					</div>
-					</div class="col">
+				</div class="col">
 						<span class="float-right" id="importLoading"><img src="includes/img/ajax-loader.gif" /></span>
 						<button id="importBtn" type="submit" class="btn btn-primary float-right">Import</button>
 					</div>
@@ -32,7 +32,8 @@
 			</form>
 		</div>
 	</div>
-	<!--- TODO: Remove for production - display list of sample for qa purpose START --->
+
+	<cfif !rc.isProduction>
 		<div style="width: auto;text-align: center;margin: auto;padding: 50px;">
 			<h2>Sample List</h2>
 			<table class="table table-sm table-hover table-bordered table-striped">
@@ -58,7 +59,7 @@
 			</cfloop>
 			</table>
 		</div>
-	<!--- TODO: Remove for production END --->
+	</cfif>
 
 	<script src="includes/js/importUpload/index.js"></script>
 </cfoutput>

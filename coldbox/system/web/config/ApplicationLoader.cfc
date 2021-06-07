@@ -772,8 +772,8 @@ component accessors="true" {
 		var environments = arguments.oConfig.getPropertyMixin( "environments", "variables", {} );
 		var configStruct = arguments.config;
 
-		// Set default to development
-		configStruct[ "environment" ] = "development";
+		// Set default to production
+		configStruct[ "environment" ] = "production";
 
 		// Check if they have a `detectEnvironment()` method
 		if ( structKeyExists( arguments.oConfig, "detectEnvironment" ) ) {
