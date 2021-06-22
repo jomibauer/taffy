@@ -1,9 +1,10 @@
 component extends="coldbox.system.EventHandler" {
 
+	property name="environment" inject="coldbox:setting:environment";
 	property name="acceptedMimeTypes" inject="coldbox:setting:acceptedMimeTypes";
 	property name="importUploadService" inject="importUploadService";
 	property name="spreadSheetService" inject="spreadSheetService";
-	property name="companyService" inject="companyService";
+	property name="sampleService" inject="sampleService";
 
 	/************************************ IMPLICIT ACTIONS *******************************************/
 
@@ -18,6 +19,9 @@ component extends="coldbox.system.EventHandler" {
 	/************************************ END IMPLICIT ACTIONS *******************************************/
 
 	function index (event,rc,prc) {
+		rc.isProduction = environment == "production" ? true : false ;
+		if (!rc.isProduction) { rc.samples = sampleService.getAllNonRemovedSamples(); }
+
 		prc.xeh.import = "importUpload.import";
     }
 
@@ -80,7 +84,7 @@ component extends="coldbox.system.EventHandler" {
 		for (file in queryOfArchiveFiles) {
 			var outdatedFilePath = '';
 
-			if (dateAdd("d", 7, dateTimeFormat(file.dateLastModified)) < now()) {
+			if ((dateAdd("d", 7, dateTimeFormat(file.dateLastModified)) < now()) && file.size > 0) {
 				outdatedFilePath = tempArchiveFilePath & file.name;
 				fileDelete(outdatedFilePath);
 			}
@@ -117,11 +121,12 @@ component extends="coldbox.system.EventHandler" {
 
 				try {
 					// update all records with isRemoved=true
-					var isRemoved = structKeyExists(rc, "removeExistingRecordCheckbox") ? true : false;
-					if (isRemoved) { companyService.updateAllParsedInputWithIsRemoved(); }
+					if (structKeyExists(rc, "removeExistingRecordCheckbox")) {
+						sampleService.updateAllParsedInputWithIsRemoved();
+					}
 
-					// create & update records
-					companyService.saveParsedInput(parsedInput);
+					// create & update parsed records
+					sampleService.saveParsedInput(parsedInput);
 
 					session.messenger.addAlert(
 						messageType="SUCCESS"

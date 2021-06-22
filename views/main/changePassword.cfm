@@ -28,7 +28,7 @@
 				</div>
 				<div class="form-group row">
 					<div class="offset-3 col-5">
-						<input type="hidden" name="intPasswordLastSetBy" value="#session.user.getintUserID()#" />
+						<input type="hidden" name="intPasswordLastSetBy" value="#session.user.getIntUserID()#" />
 						<input type="hidden" name="userID" value="#prc.user.getIntUserID()#" />
 						<input type="submit" value="Update Account" class="btn btn-primary" />
 					</div>

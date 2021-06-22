@@ -38,7 +38,7 @@ component accessors=true extends="baseService" singleton=true {
 	}
 
 	function save (required any user) {
-		
+
 		if (user.getIntUserID()) {
 			return update(user);
 		}

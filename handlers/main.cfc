@@ -20,6 +20,7 @@
 		prc.xeh.processLogout = "main/processLogout";
 		prc.xeh.viewAccountDetail = "userManagement/viewAccountDetail";
 		prc.xeh.userManagementIndex = "userManagement/index";
+		prc.xeh.importUpload = "importUpload/index";
 	}
 
 	function onRequestEnd(event,rc,prc){

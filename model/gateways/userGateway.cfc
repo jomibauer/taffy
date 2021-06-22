@@ -66,7 +66,7 @@
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* intCreatedBy - int */
+				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* intCreatedById - int */
 				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
 				, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
 				, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */
@@ -109,7 +109,7 @@
 				, btIsProtected = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsProtected()#"/>	/* btIsProtected - bit */
 				, btIsRemoved = <cfqueryparam cfsqltype="cf_sql_bit" value="#arguments.user.getBtIsRemoved()#"/>	/* btIsRemoved - bit */
 				, dtCreatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtCreatedOn()#"/>	/* dtCreatedOn - datetime */
-				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* intCreatedBy - int */
+				, intCreatedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntCreatedById()#"/>	/* intCreatedByID - int */
 				, vcCreatedByIP = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getVcCreatedByIP()#"/>	/* vcCreatedByIP - varchar (50) */
 				, dtModifiedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.user.getDtModifiedOn()#"/>	/* dtModifiedOn - datetime */
 				, intModifiedById = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIntModifiedById()#"/>	/* intModifiedById - int */

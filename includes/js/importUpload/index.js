@@ -1,6 +1,6 @@
 $(function () {
-  const templateFile = 'companyDummyTemplate.xlsx';
-  const templateFilePath = 'templates/companyDummyTemplate.xlsx';
+  const templateFile = 'sampleDummyTemplate.xlsx';
+  const templateFilePath = 'templates/sampleDummyTemplate.xlsx';
 
   $('#downloadImportUploadTemplate').on('click')
   .attr('href', templateFilePath)

@@ -434,7 +434,7 @@ component extends="coldbox.system.EventHandler" {
 
 	function ajaxIsEmailAvailable (event,rc,prc) output=false renderdata="json"{
 		// IWB - 2015/02/11
-		// I'm not going to limit this to only users in USERMANAGE because 
+		// I'm not going to limit this to only users in USERMANAGE because
 		// we need this for the updateAccount() event which can be used by any user.
 
 		if( !structKeyExists(rc, "userID") || !isNumeric(rc.userID) ||

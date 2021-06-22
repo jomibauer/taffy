@@ -16,6 +16,9 @@
 							<li class="nav-item <cfif event.getCurrentHandler() EQ "main">active</cfif>">
 								<a class="nav-link" href="#getSetting("appMapping")#/testbox/tests/runner.cfm">Tests</a>
 							</li>
+							<li class="nav-item <cfif event.getCurrentHandler() EQ "main">active</cfif>">
+								<a class="nav-link" href="#event.buildLink(prc.xeh.importUpload)#">Import Upload</a>
+							</li>
 						</cfif>
 					</cfif>
 				</ul>
