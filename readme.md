@@ -1,6 +1,6 @@
 # ColdBox Base
 
-This is the base template for ColdBox. So far it has been tested and run on CF18 (mainly) and Lucee 4.5. 
+This is the base template for ColdBox. So far it has been tested and run on CF18 (mainly) and Lucee 4.5.
 
 
 ### Application Config
@@ -8,17 +8,17 @@ After checking out the project, go to `/Application.cfc` to set your name and da
 
 
 ### Coldbox Settings
-Then navigate to the `/config/Coldbox.cfc` to edit the bulk of the project coniguration. 
+Then navigate to the `/config/Coldbox.cfc` to edit the bulk of the project coniguration.
 
 In this file you will likely want to set up environments. It will already have default settings for production and an environment for local development but once the project is deployed to a QA space it will need an environment for that as well.
 
 
 ### Routes
-If you have any routes, set those up in `/config/Router.cfc`. There are a few examples to work off of. (and obviously you can search for "coldbox routes" to find the wiki on how those are used) 
+If you have any routes, set those up in `/config/Router.cfc`. There are a few examples to work off of. (and obviously you can search for "coldbox routes" to find the wiki on how those are used)
 
 ## Quick Installation
 
-This project contains a `sever.json` so it can leverage [CommandBox](http://www.ortussolutions.com/products/commandbox) to run locally.  
+This project contains a `sever.json` so it can leverage [CommandBox](http://www.ortussolutions.com/products/commandbox) to run locally.
 Just go into the project directory and type:
 
 ```
@@ -29,7 +29,7 @@ to run the application. You will still need to configure datasources and mail se
 
 ## Helpful Things
 By default, adding `fwreinit=true` (for prod you will need the reinitPassword from the config) to the url will refresh handler changes. Model information (domain, services, gateways) sometimes like to hold on so incrementing the name in the Application.cfc should usually clear those out.
-  
+
 Try to maintain clear organization between the request collection (rc) and private request collection (prc) when processing data in your events.
 
 The rc contains FORM/REMOTE/URL data merged into a single structure. You should access this information (and validate it) to perform operations.
@@ -57,7 +57,7 @@ You cannot inject sevices into domains in Coldbox. For example, previously we co
 ```
 property userService
 ```
- is 
+ is
  ```
  property name="userService" inject="userService"
  ```
@@ -65,8 +65,8 @@ property userService
 
 ```
 property never
-``` 
-is 
+```
+is
 ```
 property name="never" inject="coldbox:setting:never"
 ```
@@ -75,8 +75,8 @@ You can inject any coldbox setting from the config/Coldbox.cfc this way. (Note: 
 #### Creating an Empty Model
 ```
 beanFactory.getBean("User")
-``` 
-is 
+```
+is
 ```
 new model.domains.User()
 ```
@@ -86,8 +86,8 @@ Coldbox does not use bean factory but wirebox lets you create an object using th
 Preserving data across requests in FW/1 was done like this:
 ```
 fw.redirect(action='userManagement.viewUserCreate', preserve='user');
-``` 
-ColdBox has a built-in Flash RAM that we use in this way: 
+```
+ColdBox has a built-in Flash RAM that we use in this way:
 ```
 flash.put(name="user", value=rc.user);
 relocate(event='userManagement/viewUserCreate');
@@ -99,3 +99,18 @@ There is no "preserve" argument available for the redirect. Keeping data across 
 flash.put(name="name", value=prc.name, inflateToRC=false, inflateToPRC=true);
 ```
 The only difference is specifying `inflateToPRC=false` and `inflateToPRC=true`. If you fail to specify inflateToRC=false, the item you preserve will be inflated to both RC and PRC and may cause you some confusion later.
+
+## Import Upload
+Currently, application only import and export excel (.xlsx) file. Additionally, cfspreadsheet extension is required for application to read and write excel file.
+
+### Steps to download cfspreadsheet extension:
+```
+Login to Lucee server > Extension > Applications > Select `cfspreadsheet Application` > Select latest version from dropdown > Install
+```
+
+### A few things to note about file directory:
+*archive* - store all imported files
+
+*temp/importUpload* - store imported files with System Note text
+
+*templates* - store template files; Empty `System Note` column required for template to work
