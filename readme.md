@@ -101,7 +101,7 @@ flash.put(name="name", value=prc.name, inflateToRC=false, inflateToPRC=true);
 The only difference is specifying `inflateToPRC=false` and `inflateToPRC=true`. If you fail to specify inflateToRC=false, the item you preserve will be inflated to both RC and PRC and may cause you some confusion later.
 
 ## Import Upload
-Currently, application only import and export excel (.xlsx) file. Additionally, cfspreadsheet extension is required for application to read and write excel file.
+Currently, application only imports and exports excel (.xlsx) file. Additionally, cfspreadsheet extension is required for application to read and write excel file.
 
 ### Steps to download cfspreadsheet extension:
 ```
