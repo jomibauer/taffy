@@ -144,6 +144,7 @@
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
 		environments = {
 			local = "coldboxbase.loc*"
+			, qa = "^qalucaws.*"
 			, production = "mind-over-data\.com"
 			, development = "mod-llc\.com"
 		};
@@ -158,6 +159,13 @@
 		coldbox.eventCaching = false;
 		coldbox.viewCaching = false;
 		coldbox.singletonReload = true;
+	}
+
+	function qa() {
+		//coldbox.customErrorTemplate = "/coldbox/system/includes/BugReport.cfm";
+		coldbox.reinitPassword = "true";
+		coldbox.singletonReload = true;
+		settings["serverName"] = "https://" & cgi.server_name & replace(cgi.script_name, "/index.cfm", "");
 	}
 
 	function production() {
