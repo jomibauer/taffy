@@ -19,11 +19,18 @@ component name="importUploadService" accessors="true" extends="baseService" sing
 	}
 
     public any function getParsedInputObject (required any sample, required any parsedInputRow, required any sampleId) {
+        // update old record
         if (len(sampleId)) {
+            // loads the remaining data that's not in the excel
+            var qSample = sampleService.load(sampleId);
+
             sample.setIntSampleId(toNumeric(parsedInputRow['Sample ID']));
             sample.setVcSampleUUID(parsedInputRow['Sample UUID']);
             sample.setDtModifiedOn(now());
             sample.setIntModifiedById(session.user.getIntUserID());
+            sample.setDtCreatedOn(qSample.getDtCreatedOn());
+            sample.setIntCreatedById(qSample.getIntCreatedById());
+        // create new record
         } else {
             sample.setVcSampleUUID(createUUID());
             sample.setBtIsActive(1);
