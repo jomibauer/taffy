@@ -3,9 +3,9 @@
 * www.ortussolutions.com
 * ---
 */
-component{
+component extends="taffy.core.api"{
 	// Application properties
-	this.name = 'coldboxbase' & hash( getCurrentTemplatePath() ) & "2021-07-28-v0";
+	this.name = 'taffyDemo';
 	this.sessionManagement = true;
 	this.sessionTimeout = createTimeSpan(0,6,0,0);
 	this.applicationTimeout = createTimeSpan(2,0,0,0);
@@ -22,6 +22,7 @@ component{
 	this.mappings["/testbox"] = this.mappings["/base"] & "testbox/";
 	this.mappings["/uploads"] = this.mappings["/base"] & "uploads/";
 	this.mappings["/views"] = this.mappings["/base"] & "views/";
+	this.mappings["/taffy"] = this.mappings["/base"] & "api/";
 
 	function getBasePath () {
 		return reverse(reverse(replaceNoCase(getDirectoryFromPath(getCurrentTemplatePath()),"\","/","all")));
@@ -48,6 +49,7 @@ component{
 		//application.name = application.cbcontroller.getSetting("appName");
 		//application.datasource = application.cbcontroller.getSetting("datasource");
 
+		super.onApplicationStart();
 		return true;
 	}
 
@@ -61,6 +63,7 @@ component{
 		// Process ColdBox Request
 		application.cbBootstrap.onRequestStart( arguments.targetPage );
 
+		super.onRequestStart();
 		return true;
 	}
 
